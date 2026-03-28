@@ -11,6 +11,28 @@ This repository is used for live-coding interview practice.
 - Keep task size realistic for a live coding interview.
 - Prefer practical frontend tasks by default, but allow broader coding tasks such as data structures, algorithms, debugging, refactoring, and data transformation when appropriate.
 
+## Workspace boundaries
+
+### `/tasks`
+
+- Use `/tasks` as the main workspace for live-coding tasks.
+- Create new task folders inside `/tasks/<task-name>/`.
+- Keep all task-related files there, such as `task.md`, `main.tsx` or `main.ts`, and `review.md`.
+
+### `/codex`
+
+- Use `/codex` for Codex-specific workflow documents and instructions.
+- Read these files when scaffolding or reviewing tasks.
+- Do not create task solutions inside `/codex`.
+
+### `/gpt`
+
+- The `/gpt` folder is used for ChatGPT-side workflow and topic tracking.
+- Do not use `/gpt` as a task workspace.
+- Do not create task scaffolds, solution files, or review files inside `/gpt`.
+- Only read or update `/gpt/gpt_topics.md` when topic tracking is needed.
+- Treat `/gpt` as supporting context, not as the place where implementation work happens.
+
 ## Task scaffolding
 
 - When given a task brief, create the smallest useful scaffold.
