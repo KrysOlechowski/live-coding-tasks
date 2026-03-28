@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧪 Live Coding Interview Lab
 
-## Getting Started
+A lightweight repo for practicing **live-coding interview tasks** with help from:
 
-First, run the development server:
+- 💬 **ChatGPT** for generating task briefs
+- 🤖 **Codex** for scaffolding and review
+- 👨‍💻 **manual coding practice** in a real editor
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Goal
+
+This repo is built for:
+
+- ⚛️ frontend interview practice
+- 🧠 problem solving
+- 🔍 debugging
+- ♻️ refactoring
+- 📦 data transformation
+- 🧮 algorithms and data structures when useful
+
+The focus is on **realistic interview-sized tasks**, not collecting perfect solutions.
+
+---
+
+## 🧭 Workflow
+
+### 1. 💬 Generate a task brief
+
+Use ChatGPT to create a realistic task based on current interview prep.
+
+Files:
+
+- `gpt/gpt_new_task_template.md`
+- `gpt/gpt_chat_starter.md`
+- `gpt/gpt_topics.md`
+
+### 2. 🤖 Let Codex scaffold the task
+
+Codex creates a **minimal starter** for the task.
+
+Files:
+
+- `codex/codex_task_scaffold.md`
+- `AGENTS.md`
+
+### 3. 👨‍💻 Solve the task manually
+
+Write the solution yourself inside the task folder.
+
+### 4. 🔍 Review the solution
+
+Codex reviews the solution and saves feedback in `review.md`.
+
+Files:
+
+- `codex/codex_review_workflow.md`
+
+---
+
+## 🗂️ Structure
+
+```txt
+.
+├── AGENTS.md
+├── README.md
+├── gpt/
+│   ├── gpt_new_task_template.md
+│   ├── gpt_chat_starter.md
+│   └── gpt_topics.md
+├── codex/
+│   ├── codex_task_scaffold.md
+│   └── codex_review_workflow.md
+└── tasks/
+    └── <task-name>/
+        ├── task.md
+        ├── main.ts / main.tsx
+        └── review.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧩 Task Types
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This repo may include:
 
-## Learn More
+- ⚛️ React / UI tasks
+- 🔄 async flow tasks
+- 🐞 debugging tasks
+- 🧼 refactoring tasks
+- 📊 data transformation tasks
+- 🧠 algorithms / data structures
+- 🧱 architecture-oriented coding exercises
 
-To learn more about Next.js, take a look at the following resources:
+It is **frontend-focused**, but not limited to React-only tasks.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📌 Rules
 
-## Deploy on Vercel
+### For ChatGPT
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- generate task briefs
+- avoid repeated topics
+- keep tasks realistic
+- do not reveal solutions unless asked
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### For Codex
+
+- scaffold only the minimal needed files
+- do not solve the task during setup
+- review like a practical interviewer
+- save feedback in `review.md`
+
+### For the candidate
+
+- solve tasks manually
+- start simple
+- think about edge cases
+- improve after the first working version
+
+---
+
+## 🎯 Final idea
+
+This repo is a **practice lab**, not a showcase project.
+
+It exists to support a repeatable workflow:
+
+**task brief → scaffold → solve → review → learn**
