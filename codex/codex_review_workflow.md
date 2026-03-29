@@ -233,7 +233,8 @@ Do not spam the file with near-duplicates.
 
 ## Folder penalty markers
 
-After review, update the task folder name with penalty markers only if the solution contains serious issues.
+After review, update the task folder name to reflect the penalty level.
+Add penalty markers only if the solution contains serious issues.
 
 Penalty markers:
 
@@ -242,7 +243,10 @@ Penalty markers:
 - `_**` → 2 serious issues
 - `_***` → 3 serious issues
 
-Maximum penalty: `_***`
+A serious issue means a meaningful problem in correctness or requirement coverage, not a minor improvement suggestion.
+If the review says the solution still misses a required behavior, key requirement, or important edge case, apply at least one penalty marker.
+If the review describes the solution as partial, incomplete, or not fully solving the task, apply penalty markers.
+If the review says the solution is solid and meets the task requirements, keep no penalty marker.
 
 Examples:
 
@@ -271,6 +275,7 @@ Rules:
 - update only the penalty suffix
 - remove old penalty suffix before applying a new one
 - never exceed 3 penalty stars
+- if there are no serious issues, remove any existing penalty suffix
 
 Examples:
 
@@ -287,7 +292,29 @@ When reviewing:
 1. inspect the current task files
 2. evaluate the solution based on the actual task
 3. create or update `review.md`
-4. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
+4. determine the correct penalty level from the review
+5. rename the task folder to match the penalty level
+6. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
+
+---
+
+## Penalty decision guidance
+
+Use penalty markers conservatively, but apply them when the review clearly shows real task failure.
+
+Typical guidance:
+
+- no marker → the task is correct, solid, and meets requirements
+- `_*` → one important requirement or behavior is still wrong or missing
+- `_**` → multiple important requirements are wrong or missing, or the solution is significantly incomplete
+- `_***` → the core logic is broken or the task is largely unsolved
+
+Do not add penalty markers for:
+
+- style-only improvements
+- optional refactors
+- minor naming suggestions
+- "stronger candidate" polish that does not affect correctness
 
 ---
 
