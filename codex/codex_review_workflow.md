@@ -281,11 +281,19 @@ Do not skip the rename step.
 If the review shows one or more serious issues, the folder name must be updated to include the correct penalty suffix.
 If the review shows no serious issues, the folder name must not keep an old penalty suffix.
 
+Rename the existing task folder in place.
+Never create a second task folder just to add or remove a penalty suffix.
+After the rename, only one folder should remain for that task.
+
 Examples:
 
 - `tasks/react/_search-filter-users` → `tasks/react/_search-filter-users_*`
 - `tasks/dsa/__group-and-sort-transactions_*` → `tasks/dsa/__group-and-sort-transactions_**`
 - `tasks/debugging/___fix-broken-widget_***` → `tasks/debugging/___fix-broken-widget_**` if the review is updated and the solution improved
+
+If the current folder is `tasks/<category>/<name>` and the penalty becomes `_*`,
+the result must be the same folder renamed to `tasks/<category>/<name>_*`,
+not a newly created sibling folder.
 
 ---
 
@@ -297,7 +305,7 @@ When reviewing:
 2. evaluate the solution based on the actual task
 3. create or update `review.md`
 4. determine the correct penalty level from the review
-5. rename the task folder to match the penalty level
+5. rename the existing task folder in place to match the penalty level
 6. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
 
 ---

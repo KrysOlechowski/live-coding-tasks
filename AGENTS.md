@@ -64,6 +64,13 @@ This repository is used for live-coding interview practice.
 - If the core logic is broken or the task is largely unsolved, rename the task folder with `_***`.
 - If the solution is solid and meets requirements, keep no penalty suffix.
 
+## Task folder renaming
+
+- When a review changes the penalty level, rename the existing task folder in place.
+- Never create a second task folder just to add or remove a penalty suffix.
+- There must be only one task folder for a given task at a time.
+- If a folder with the updated penalty suffix is needed, move/rename the current folder instead of copying or recreating it.
+
 ## Topic tracking
 
 - When a task is completed or reviewed, update `/gpt/gpt_topics.md` with the main covered topics if they are not already listed.
