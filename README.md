@@ -72,11 +72,39 @@ Files:
 │   ├── codex_task_scaffold.md
 │   └── codex_review_workflow.md
 └── tasks/
-    └── <task-name>/
-        ├── task.md
-        ├── main.ts / main.tsx
-        └── review.md
+    └── <category>/
+        └── <difficulty-prefix><task-name>[_penalty]/
+            ├── task.md
+            ├── main.ts / main.tsx
+            └── review.md
 ```
+
+---
+
+## 🏷️ Task folder naming
+
+Task folders encode both **difficulty** and **review penalties**.
+
+### Difficulty prefixes
+
+- `_` = easy
+- `__` = medium
+- `___` = hard
+
+### Penalty suffixes
+
+After review, a task folder may receive penalty stars when the solution still has serious issues:
+
+- no suffix = solid solution
+- `_*` = one important issue
+- `_**` = multiple important issues
+- `_***` = major task failure / largely unsolved
+
+### Example
+
+- `tasks/react/_search-filter-users/`
+- `tasks/dsa/__group-and-sort-transactions_*`
+- `tasks/debugging/___fix-broken-widget_***`
 
 ---
 
@@ -111,6 +139,8 @@ It is **frontend-focused**, but not limited to React-only tasks.
 - do not solve the task during setup
 - review like a practical interviewer
 - save feedback in `review.md`
+- create task folders under the correct category
+- rename task folders after review to reflect penalty level when needed
 
 ### For the candidate
 
