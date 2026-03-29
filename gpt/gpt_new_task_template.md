@@ -14,6 +14,32 @@ The tasks should be tailored to:
 The goal is not to generate random interview puzzles.
 The goal is to generate realistic tasks for interview preparation, primarily frontend-focused, but sometimes also covering broader coding skills such as data structures, algorithms, debugging, refactoring, or data transformation.
 
+## Category rules
+
+Each task must include a proposed category.
+
+Use one of the existing categories when possible.
+
+Current categories:
+
+- react
+- typescript
+- dsa
+- debugging
+- refactor
+- async
+- testing
+- architecture
+- api-integration
+- performance
+
+If no existing category fits well:
+
+- do not silently invent a new category
+- propose a new category explicitly
+- explain briefly why the current categories are not a good fit
+- ask whether the new category should be added before using it
+
 ## Output format
 
 Use this structure when generating a new task:
@@ -22,13 +48,17 @@ Use this structure when generating a new task:
 
 [task title]
 
+### Category
+
+[one existing category, or a proposed new category if needed]
+
 ### Type
 
-[from scratch / bug fix / refactor / async / data transformation / UI state / debugging / algorithms / data structures]
+[from scratch / bug fix / refactor / async / data transformation / UI state / debugging]
 
 ### Difficulty
 
-[easy / medium]
+[easy / medium / hard]
 
 ### Focus areas
 
@@ -58,11 +88,14 @@ Use this structure when generating a new task:
 - do not solve the main task
 - add TODO comments for the main logic
 - default expectation: `task.md` and `main.tsx` or `main.ts`
+- use the task category to place the task under `tasks/<category>/`
+- use difficulty-based folder prefixes: `_` = easy, `__` = medium, `___` = hard
 - create extra files only if clearly needed
 
 ## Important rules
 
 - Do not repeat tasks that are too similar to topics already listed in `gpt_topics.md`
+- Always propose the most suitable existing category before considering a new one
 - Prefer practical frontend tasks by default, but allow broader coding tasks such as data structures, algorithms, debugging, or data transformation when useful
 - Keep tasks suitable for live coding
 - Keep tasks realistic and not too large

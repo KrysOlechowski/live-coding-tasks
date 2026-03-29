@@ -27,6 +27,12 @@ When I ask for a new task:
 4. prefer practical frontend tasks by default, but do not exclude broader coding tasks
 5. do not give the solution unless I ask for it
 
+When generating a new task:
+
+- always propose the most suitable existing category
+- prefer reusing an existing category over inventing a new one
+- if no existing category fits well, explicitly propose a new category and ask whether it should be added
+
 When helpful, also tell me:
 
 - why this task is good interview practice

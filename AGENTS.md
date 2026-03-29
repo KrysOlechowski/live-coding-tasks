@@ -16,7 +16,8 @@ This repository is used for live-coding interview practice.
 ### `/tasks`
 
 - Use `/tasks` as the main workspace for live-coding tasks.
-- Create new task folders inside `/tasks/<task-name>/`.
+- Create new task folders inside `/tasks/<category>/<difficulty-prefix><task-name>/`.
+- Use the category and difficulty from the task brief when creating the task folder.
 - Keep all task-related files there, such as `task.md`, `main.tsx` or `main.ts`, and `review.md`.
 
 ### `/codex`
@@ -43,6 +44,7 @@ This repository is used for live-coding interview practice.
   - `main.ts` for non-React tasks
 - Only create extra files like `types.ts`, `mockData.ts`, or `api.ts` when they are clearly necessary.
 - Add TODO comments where the core interview logic should be implemented.
+- Use difficulty-based folder prefixes: `_` = easy, `__` = medium, `___` = hard.
 - Do not implement the full solution during scaffolding.
 
 ## Task review
@@ -60,4 +62,4 @@ This repository is used for live-coding interview practice.
 
 ## Topic tracking
 
-- When a task is completed or reviewed, update `/gpt/topics.md` with the main covered topics if they are not already listed.
+- When a task is completed or reviewed, update `/gpt/gpt_topics.md` with the main covered topics if they are not already listed.

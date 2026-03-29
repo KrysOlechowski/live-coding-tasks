@@ -16,19 +16,48 @@ Do not implement the full solution.
 
 ---
 
+## Category handling
+
+Each task brief should include a category.
+
+Use that category to decide where the task folder should be created.
+
+Do not guess a different category if one is already provided in the task brief.
+If the category is missing, ask for clarification instead of choosing silently.
+
 ## Task location
 
 Create each new task inside:
 
-`tasks/<task-name>/`
-
-Use short, readable kebab-case names for task folders.
+`tasks/<category>/<difficulty-prefix><task-name>/`
 
 Examples:
 
-- `tasks/search-filter-users/`
-- `tasks/async-account-widget/`
-- `tasks/group-transactions/`
+- `tasks/react/_search-filter-users/`
+- `tasks/dsa/__group-and-sort-transactions/`
+- `tasks/debugging/___fix-broken-widget/`
+
+Use the category from the task brief.
+Use the difficulty prefix from the task brief.
+Do not create tasks directly under `tasks/` without a category folder.
+
+## Difficulty-based folder naming
+
+Use the task difficulty to prefix the task folder name:
+
+- `_` for `easy`
+- `__` for `medium`
+- `___` for `hard`
+
+Examples:
+
+- `tasks/react/_search-filter-users/`
+- `tasks/dsa/__group-and-sort-transactions/`
+- `tasks/debugging/___fix-broken-widget/`
+
+Do not use any other prefix format.
+
+If the task brief does not include difficulty, ask for clarification instead of guessing.
 
 ---
 
@@ -75,6 +104,7 @@ Examples:
 `task.md` should contain:
 
 - task title
+- category
 - type
 - difficulty
 - focus areas
@@ -100,6 +130,7 @@ Create only a minimal starter.
 - minimal component skeleton
 - TODO comments for the core logic
 - minimal sample data only if clearly necessary
+- a minimal export or render target if needed for the task to run
 
 ### Not allowed:
 
@@ -164,12 +195,32 @@ For algorithm / data transformation / utility tasks:
 
 When given a task brief:
 
-1. choose the smallest useful scaffold
-2. create only the necessary files
-3. add TODO comments where the main logic belongs
-4. stop before solving the task
+1. read the category and difficulty from the task brief
+2. create the task folder under `tasks/<category>/<difficulty-prefix><task-name>/`
+3. choose the smallest useful scaffold
+4. create only the necessary files
+5. add TODO comments where the main logic belongs
+6. stop before solving the task
 
-If the task brief is ambiguous, prefer the lighter scaffold.
+---
+
+## Folder naming summary
+
+Use this naming rule for each new task folder:
+
+`tasks/<category>/<difficulty-prefix><task-name>/`
+
+Difficulty prefix mapping:
+
+- `_` = easy
+- `__` = medium
+- `___` = hard
+
+Examples:
+
+- `tasks/react/_search-filter-users/`
+- `tasks/dsa/__group-and-sort-transactions/`
+- `tasks/debugging/___fix-broken-widget/`
 
 ---
 

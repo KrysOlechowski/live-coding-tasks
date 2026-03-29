@@ -37,8 +37,8 @@ Save the review inside the task folder as:
 
 Example:
 
-- `tasks/search-filter-users/review.md`
-- `tasks/async-account-widget/review.md`
+- `tasks/react/_search-filter-users/review.md`
+- `tasks/async/__async-account-widget/review.md`
 
 If `review.md` already exists, update it instead of creating a duplicate.
 
@@ -220,7 +220,7 @@ Keep it short.
 
 ## Updating topic tracking
 
-After reviewing a task, update `gpt/gpt_topics.md` if needed.
+After reviewing a task, update `/gpt/gpt_topics.md` if needed.
 
 Only add:
 
@@ -231,6 +231,55 @@ Do not spam the file with near-duplicates.
 
 ---
 
+## Folder penalty markers
+
+After review, update the task folder name with penalty markers only if the solution contains serious issues.
+
+Penalty markers:
+
+- no marker → solid solution, no serious issues
+- `_*` → 1 serious issue
+- `_**` → 2 serious issues
+- `_***` → 3 serious issues
+
+Maximum penalty: `_***`
+
+Examples:
+
+- `tasks/dsa/__group-and-sort-transactions`
+- `tasks/dsa/__group-and-sort-transactions_*`
+- `tasks/dsa/__group-and-sort-transactions_**`
+- `tasks/dsa/__group-and-sort-transactions_***`
+
+Do not add penalty markers for minor style issues or tiny improvements.
+Only use them for clearly important problems such as:
+
+- wrong core logic
+- missing key requirement
+- broken async handling
+- important edge cases missed
+- solution that does not really solve the task
+
+## Folder renaming after review
+
+After writing `review.md`, rename the task folder if needed to reflect the penalty level.
+
+Rules:
+
+- keep the original difficulty prefix (`_`, `__`, or `___`)
+- keep the original task name
+- update only the penalty suffix
+- remove old penalty suffix before applying a new one
+- never exceed 3 penalty stars
+
+Examples:
+
+- `tasks/react/_search-filter-users` → `tasks/react/_search-filter-users_*`
+- `tasks/dsa/__group-and-sort-transactions_*` → `tasks/dsa/__group-and-sort-transactions_**`
+- `tasks/debugging/___fix-broken-widget_***` → `tasks/debugging/___fix-broken-widget_**` if the review is updated and the solution improved
+
+---
+
 ## Important behavior
 
 When reviewing:
@@ -238,7 +287,7 @@ When reviewing:
 1. inspect the current task files
 2. evaluate the solution based on the actual task
 3. create or update `review.md`
-4. update `gpt/gpt_topics.md` only if the task introduced something meaningfully new
+4. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
 
 ---
 
