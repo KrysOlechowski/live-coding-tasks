@@ -58,7 +58,11 @@ This repository is used for live-coding interview practice.
   - React / TypeScript quality when relevant
   - general coding quality for non-frontend tasks
 - Keep review practical and concise.
-- After review, create or update a `review.md` file inside that task folder.
+- After writing or updating `review.md`, renaming the task folder to match the penalty level is required, not optional.
+- If one important requirement or behavior is still missing, rename the task folder with `_*`.
+- If multiple important requirements are still wrong or missing, rename the task folder with `_**`.
+- If the core logic is broken or the task is largely unsolved, rename the task folder with `_***`.
+- If the solution is solid and meets requirements, keep no penalty suffix.
 
 ## Topic tracking
 

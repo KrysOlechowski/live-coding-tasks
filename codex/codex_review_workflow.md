@@ -266,7 +266,7 @@ Only use them for clearly important problems such as:
 
 ## Folder renaming after review
 
-After writing `review.md`, rename the task folder if needed to reflect the penalty level.
+After writing or updating `review.md`, renaming the task folder to match the penalty level is required, not optional.
 
 Rules:
 
@@ -276,6 +276,10 @@ Rules:
 - remove old penalty suffix before applying a new one
 - never exceed 3 penalty stars
 - if there are no serious issues, remove any existing penalty suffix
+
+Do not skip the rename step.
+If the review shows one or more serious issues, the folder name must be updated to include the correct penalty suffix.
+If the review shows no serious issues, the folder name must not keep an old penalty suffix.
 
 Examples:
 
@@ -315,6 +319,27 @@ Do not add penalty markers for:
 - optional refactors
 - minor naming suggestions
 - "stronger candidate" polish that does not affect correctness
+
+---
+
+## Review-to-penalty mapping
+
+Use the language in the review as a direct signal for folder penalties.
+
+Examples:
+
+- "one core requirement is still missing" → at least `_*`
+- "one important requirement or behavior is still wrong or missing" → at least `_*`
+- "partial fix" → at least `_*`
+- "incomplete solution" → at least `_*`
+- "multiple important requirements are wrong or missing" → at least `_**`
+- "core logic is broken" → at least `_***`
+- "solid solution" or "meets requirements" → no penalty
+
+When in doubt:
+
+- prefer no penalty for style-only improvements
+- apply a penalty when a required behavior is still missing or wrong
 
 ---
 
