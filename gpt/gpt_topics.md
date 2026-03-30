@@ -9,10 +9,14 @@ It is used to avoid generating overly similar tasks again.
 ## Covered topics
 
 <!-- Add completed or already-practiced topics here -->
+- conditional rendering
+- independent widget states
+- loading / error / success UI states
 
 ## Covered task types
 
 <!-- Add used task types here, e.g. from scratch, bug fix, refactor, async -->
+- UI state
 
 ## Notes
 
