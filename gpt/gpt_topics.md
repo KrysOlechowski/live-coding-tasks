@@ -12,11 +12,15 @@ It is used to avoid generating overly similar tasks again.
 - conditional rendering
 - independent widget states
 - loading / error / success UI states
+- derived state vs props
+- keeping selected UI in sync
+- debugging a subtle React bug
 
 ## Covered task types
 
 <!-- Add used task types here, e.g. from scratch, bug fix, refactor, async -->
 - UI state
+- bug fix
 
 ## Notes
 
