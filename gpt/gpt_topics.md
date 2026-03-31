@@ -18,6 +18,8 @@ It is used to avoid generating overly similar tasks again.
 - discriminated unions
 - safe normalization of API-like data
 - mapping backend values to UI-friendly labels
+- optional field handling
+- deriving UI-friendly values
 
 ## Covered task types
 
