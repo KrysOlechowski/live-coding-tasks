@@ -20,6 +20,8 @@ It is used to avoid generating overly similar tasks again.
 - mapping backend values to UI-friendly labels
 - optional field handling
 - deriving UI-friendly values
+- sorting by multiple rules
+- grouping UI data into sections
 
 ## Covered task types
 
