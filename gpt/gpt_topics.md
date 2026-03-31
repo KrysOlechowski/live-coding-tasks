@@ -15,12 +15,16 @@ It is used to avoid generating overly similar tasks again.
 - derived state vs props
 - keeping selected UI in sync
 - debugging a subtle React bug
+- discriminated unions
+- safe normalization of API-like data
+- mapping backend values to UI-friendly labels
 
 ## Covered task types
 
 <!-- Add used task types here, e.g. from scratch, bug fix, refactor, async -->
 - UI state
 - bug fix
+- data transformation
 
 ## Notes
 
