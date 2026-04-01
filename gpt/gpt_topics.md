@@ -29,6 +29,9 @@ It is used to avoid generating overly similar tasks again.
 - array state updates
 - preventing duplicates
 - predictable toggle behavior
+- controlled inputs
+- React state timing
+- debugging derived filtered state
 
 ## Covered task types
 
