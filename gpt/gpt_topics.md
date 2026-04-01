@@ -26,6 +26,9 @@ It is used to avoid generating overly similar tasks again.
 - React state updates
 - stale closures
 - debugging event handler logic
+- array state updates
+- preventing duplicates
+- predictable toggle behavior
 
 ## Covered task types
 
