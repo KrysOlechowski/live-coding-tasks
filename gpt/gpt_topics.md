@@ -22,6 +22,7 @@ It is used to avoid generating overly similar tasks again.
 - deriving UI-friendly values
 - sorting by multiple rules
 - grouping UI data into sections
+- writing clear business rules in TypeScript
 
 ## Covered task types
 
