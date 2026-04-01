@@ -1,0 +1,29 @@
+{
+  // =========================
+  // Shared base
+  // =========================
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.inlineSuggest.enabled": false,
+
+  // Reminder: "ctrl+space", to autocomplete
+
+  // =========================
+  // SOFT MODE
+  // =========================
+  // "editor.quickSuggestions": false
+
+  // =========================
+  // BALANCED MODE
+  // =========================
+  // "editor.quickSuggestions": false,
+  // "typescript.suggest.autoImports": false,
+  // "javascript.suggest.autoImports": false
+
+  // =========================
+  // HARD MODE
+  // =========================
+  "editor.quickSuggestions": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "typescript.suggest.autoImports": false,
+  "javascript.suggest.autoImports": false
+}
