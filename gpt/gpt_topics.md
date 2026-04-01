@@ -23,6 +23,9 @@ It is used to avoid generating overly similar tasks again.
 - sorting by multiple rules
 - grouping UI data into sections
 - writing clear business rules in TypeScript
+- React state updates
+- stale closures
+- debugging event handler logic
 
 ## Covered task types
 
