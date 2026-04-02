@@ -45,6 +45,9 @@ It is used to avoid generating overly similar tasks again.
 - derived values vs stored state
 - form-like updates in React
 - business logic in UI
+- shared state across multiple controls
+- filtering logic in React
+- maintainable component structure
 
 ## Covered task types
 
