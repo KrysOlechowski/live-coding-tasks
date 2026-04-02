@@ -32,6 +32,11 @@ It is used to avoid generating overly similar tasks again.
 - controlled inputs
 - React state timing
 - debugging derived filtered state
+- copied props into local state
+- derived state stored separately
+- inconsistent sources of truth
+- incorrect useEffect usage
+- maintainability in React components
 
 ## Covered task types
 
