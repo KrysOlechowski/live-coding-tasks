@@ -37,6 +37,10 @@ It is used to avoid generating overly similar tasks again.
 - inconsistent sources of truth
 - incorrect useEffect usage
 - maintainability in React components
+- async flow in React
+- loading and error handling
+- missing res.ok checks
+- cleanup and race-condition-adjacent issues
 
 ## Covered task types
 
