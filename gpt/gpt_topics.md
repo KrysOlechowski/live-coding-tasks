@@ -41,6 +41,10 @@ It is used to avoid generating overly similar tasks again.
 - loading and error handling
 - missing res.ok checks
 - cleanup and race-condition-adjacent issues
+- shared state across multiple components
+- derived values vs stored state
+- form-like updates in React
+- business logic in UI
 
 ## Covered task types
 
