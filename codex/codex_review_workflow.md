@@ -12,6 +12,10 @@ The goal is to provide practical interview-style feedback and save it in a consi
 
 Review the candidate's solution like a realistic technical interviewer.
 
+Anchor the review in the actual task requirements.
+Before criticizing implementation details, first decide whether the solution meets the required behavior.
+Do not let one minor issue dominate the whole review if the core task is solved.
+
 Be practical and concise.
 Do not rewrite the whole solution immediately.
 Do not turn the review into a full tutorial unless explicitly asked.
@@ -77,6 +81,15 @@ Keep the review:
 
 Prefer clear observations over long theory.
 
+Prioritize issues in this order:
+
+1. required behavior and correctness
+2. important edge cases explicitly relevant to the task
+3. maintainability and readability
+4. optional polish
+
+Do not over-focus on one low-impact issue while missing broader technical quality.
+
 Good:
 
 - what is good
@@ -94,9 +107,12 @@ Avoid:
 
 ## review.md structure
 
-Use this format:
-
 # Task Review
+
+## Requirement check
+
+- Meets the task requirements: yes / partially / no
+- Most important missing or incorrect behavior: ...
 
 ## Strengths
 
@@ -124,6 +140,7 @@ Use this format:
 
 - ...
 - ...
+- ...
 
 ## Final verdict
 
@@ -146,6 +163,27 @@ Examples:
 
 ---
 
+## Requirement check
+
+Start by explicitly judging whether the solution actually meets the task.
+This should be short and practical.
+
+Example placeholder lines:
+
+- Meets the task requirements: yes
+- Meets the task requirements: partially
+- Meets the task requirements: no
+- These are only examples of wording. Replace them with task-specific findings.
+- Most important missing or incorrect behavior: [insert the biggest task-specific gap here]
+- Example: clear filters does not reset category
+- Example: retry still leaves stale error UI visible
+
+Do not skip this section.
+If the task is mostly correct, say so clearly.
+If the task is only partially solved, say so clearly.
+
+---
+
 ## Weaknesses
 
 List the main weaknesses without exaggerating.
@@ -157,6 +195,10 @@ Examples:
 - too much duplicated code
 - unnecessary complexity
 - incomplete state handling
+
+Keep weaknesses proportional.
+Do not present a minor UX issue, wording issue, or polish item as the main failure if the core logic is correct.
+If the biggest issue is only a requirement-detail mismatch, say so explicitly instead of making the review sound broader than it is.
 
 ---
 
@@ -213,6 +255,11 @@ Examples:
 - Solid baseline solution with a few missed edge cases.
 - Good practical solution, but could be cleaner and more robust.
 - Correct direction, but the implementation needs stronger handling of async and edge states.
+
+The final verdict must clearly answer two questions:
+
+- did the candidate solve the task?
+- if not, what is the single most important gap?
 
 Keep it short.
 
@@ -344,6 +391,15 @@ Examples:
 - "core logic is broken" → at least `_***`
 - "solid solution" or "meets requirements" → no penalty
 
+Never assign a penalty based mainly on:
+
+- typo-level issues
+- summary wording that does not affect core behavior
+- small presentation mismatches
+- optional refactor suggestions
+
+A penalty requires a real gap in required behavior, correctness, or important edge-case handling.
+
 When in doubt:
 
 - prefer no penalty for style-only improvements
@@ -353,10 +409,9 @@ When in doubt:
 
 ## Goal
 
-The review should help the candidate understand:
+The review should help the candidate understand, in priority order:
 
 - what was good
 - what was weak
 - what a stronger interview answer or implementation would look like
-
-without turning the feedback into unnecessary theory.
+- whether the task was actually solved or only partially solved
