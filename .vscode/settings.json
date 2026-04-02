@@ -25,5 +25,6 @@
   "editor.quickSuggestions": false,
   "editor.suggestOnTriggerCharacters": false,
   "typescript.suggest.autoImports": false,
-  "javascript.suggest.autoImports": false
+  "javascript.suggest.autoImports": false,
+  "editor.parameterHints.enabled": false
 }
