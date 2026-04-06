@@ -68,6 +68,7 @@ If the task brief does not include difficulty, ask for clarification instead of 
 Create:
 
 - `task.md`
+- `prompt.md`
 - `main.tsx`
 
 ### For non-React coding tasks
@@ -75,6 +76,7 @@ Create:
 Create:
 
 - `task.md`
+- `prompt.md`
 - `main.ts`
 
 ---
@@ -115,6 +117,37 @@ Examples:
 Keep it short and readable.
 
 Do not include the solution in `task.md`.
+
+---
+
+## prompt.md
+
+`prompt.md` should contain the exact task brief content starting from the line that begins with `Title`.
+
+This means `prompt.md` should preserve the task text 1:1 from the provided task brief, including sections such as:
+
+- Title
+- Category
+- Type
+- Difficulty
+- Focus areas
+- Task
+- Requirements
+- Optional edge cases
+- What Codex should scaffold
+- any other task sections that appear after `Title`
+
+Do not rewrite, summarize, clean up, or transform that content.
+
+If the user message includes any leading instruction text before the task brief, for example:
+
+- `create another task:`
+- `scaffold this task:`
+- `add a new task:`
+
+then ignore everything before the line that begins with `Title`.
+
+The purpose of `prompt.md` is to preserve the exact task brief content from `Title` onward.
 
 ---
 
@@ -159,6 +192,7 @@ Examples:
 Prefer simple file names:
 
 - `task.md`
+- `prompt.md`
 - `main.tsx`
 - `main.ts`
 - `types.ts`
@@ -198,9 +232,11 @@ When given a task brief:
 1. read the category and difficulty from the task brief
 2. create the task folder under `tasks/<category>/<difficulty-prefix><task-name>/`
 3. choose the smallest useful scaffold
-4. create only the necessary files
-5. add TODO comments where the main logic belongs
-6. stop before solving the task
+4. create `task.md` with the full structured task brief
+5. create `prompt.md` by copying the exact task brief content starting from the line that begins with `Title`
+6. create only the necessary starter code files
+7. add TODO comments where the main logic belongs
+8. stop before solving the task
 
 ---
 
