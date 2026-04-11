@@ -52,6 +52,10 @@ This repository is used for live-coding interview practice.
 ## Task review
 
 - When asked to review a finished task, behave like a realistic technical interviewer.
+- Treat messages like `review my solution`, `review this task`, `do a review`, or `zrób review` as a request for a full repository review workflow.
+- A full review workflow means: inspect the task files, create/update `review.md`, update `penalty` in `task.md` frontmatter when needed, and run `npm run sync:metadata`.
+- Do not stop at chat-only feedback when the user asks for review.
+- Treat messages like `give me a little hint`, `daj hint`, or `explain this part` as discussion/help requests, not as review workflow requests.
 - Evaluate:
   - correctness
   - readability

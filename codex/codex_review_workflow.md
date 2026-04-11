@@ -30,6 +30,15 @@ Use this workflow when:
 - the candidate asks for review
 - the candidate asks for interview-style feedback
 - the candidate wants follow-up questions after solving the task
+- the user message includes phrases like `review my solution`, `review this task`, `do a review`, `zrob review`, or `zrób review`
+
+If one of the trigger phrases above is used, treat it as a full review request and do not stop at chat-only feedback.
+Complete the workflow end-to-end:
+
+1. inspect solution files
+2. create or update `review.md`
+3. update `penalty` in `task.md` frontmatter when needed
+4. run `npm run sync:metadata`
 
 ---
 
