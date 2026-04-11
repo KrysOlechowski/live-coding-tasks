@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate:preview-manifest": "node scripts/generate-preview-manifest.mjs",
+    "predev": "npm run generate:preview-manifest",
+    "prebuild": "npm run generate:preview-manifest",
+    "prelint": "npm run generate:preview-manifest",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

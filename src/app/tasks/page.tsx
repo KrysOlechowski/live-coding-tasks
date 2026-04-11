@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-import { filterTasks, getAllTasks, getPenaltyLabel, getTaskFilterOptions } from "@/lib/tasks";
+import {
+  filterTasks,
+  getAllTasks,
+  getPenaltyLabel,
+  getProgressLabel,
+  getTaskFilterOptions,
+} from "@/lib/tasks";
 
 function getValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
@@ -17,6 +23,7 @@ export default async function TasksPage({
     difficulty: getValue(resolvedSearchParams.difficulty),
     penalty: getValue(resolvedSearchParams.penalty),
     preview: getValue(resolvedSearchParams.preview),
+    progress: getValue(resolvedSearchParams.progress),
   };
 
   const [tasks, filterOptions] = await Promise.all([
@@ -61,7 +68,7 @@ export default async function TasksPage({
       </section>
 
       <section className="rounded-[2rem] border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
-        <form className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto]">
+        <form className="grid gap-4 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto]">
           <label className="grid gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
             Category
             <select
@@ -123,6 +130,22 @@ export default async function TasksPage({
             </select>
           </label>
 
+          <label className="grid gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
+            Progress
+            <select
+              name="progress"
+              defaultValue={filters.progress ?? ""}
+              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-zinc-950 outline-none transition focus:border-amber-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white"
+            >
+              <option value="">All statuses</option>
+              {filterOptions.progress.map((progress) => (
+                <option key={progress} value={progress}>
+                  {progress === "not-started" ? "Not started" : "Reviewed"}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <div className="flex items-end gap-3">
             <button
               type="submit"
@@ -165,6 +188,9 @@ export default async function TasksPage({
                   Preview
                 </span>
               ) : null}
+              <span className="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-900 dark:bg-sky-500/20 dark:text-sky-200">
+                {getProgressLabel(task.hasReview)}
+              </span>
             </div>
 
             <div className="space-y-2">

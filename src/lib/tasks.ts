@@ -24,6 +24,7 @@ export type TaskSummary = TaskFrontmatter & {
   mainFileName: string | null;
   promptFilePath: string | null;
   reviewFilePath: string | null;
+  hasReview: boolean;
 };
 
 export type TaskDocument = TaskSummary & {
@@ -36,6 +37,7 @@ type TaskFilters = {
   difficulty?: string;
   penalty?: string;
   preview?: string;
+  progress?: string;
 };
 
 function parseFrontmatterValue(value: string): boolean | number | string {
@@ -196,6 +198,7 @@ async function readTaskSummary(
     mainFileName,
     promptFilePath: promptBody ? promptFilePath : null,
     reviewFilePath: reviewBody ? reviewFilePath : null,
+    hasReview: reviewBody !== null,
   };
 }
 
@@ -263,6 +266,7 @@ export async function getTaskFilterOptions() {
     categories: Array.from(new Set(tasks.map((task) => task.category))).sort(),
     difficulties: Array.from(new Set(tasks.map((task) => task.difficulty))).sort(),
     penalties: Array.from(new Set(tasks.map((task) => String(task.penalty)))).sort(),
+    progress: ["not-started", "reviewed"],
   };
 }
 
@@ -288,6 +292,14 @@ export function filterTasks(tasks: TaskSummary[], filters: TaskFilters): TaskSum
       return false;
     }
 
+    if (filters.progress === "not-started" && task.hasReview) {
+      return false;
+    }
+
+    if (filters.progress === "reviewed" && !task.hasReview) {
+      return false;
+    }
+
     return true;
   });
 }
@@ -298,4 +310,8 @@ export function getPenaltyLabel(penalty: number) {
   }
 
   return `${"★".repeat(penalty)}${"☆".repeat(Math.max(0, 3 - penalty))}`;
+}
+
+export function getProgressLabel(hasReview: boolean) {
+  return hasReview ? "Reviewed" : "Not started";
 }
