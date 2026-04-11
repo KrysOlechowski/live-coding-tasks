@@ -1,20 +1,34 @@
-# Review
+# Task Review
 
-## Findings
+## Requirement check
 
-1. [main.tsx:2](/Users/krystian/Documents/Projects/live-coding-tasks/tasks/debugging/fix-search-filtering-lag-by-one-character/main.tsx#L2) `useEffect` is imported but unused. This does not affect behavior, but it should be removed as cleanup.
+- Meets the task requirements: yes.
+- Most important missing or incorrect behavior: none.
 
-## Assessment
+## Strengths
 
-The main fix is correct. Filtering is now derived directly from the latest `query` value, so the list no longer lags by one character.
+- `query` stays controlled and filtering uses current value, fixing lag-by-one behavior.
+- Case-insensitive matching behavior is preserved.
+- Solution is small and easy to explain in interview context.
 
-The solution also matches the task well:
+## Weaknesses
 
-- the input remains controlled
-- filtering uses the latest typed value
-- the component stays small and easy to explain
-- the case-insensitive behavior is preserved
+- `tasks/debugging/fix-search-filtering-lag-by-one-character/main.tsx:2` keeps an unused `useEffect` import (cleanup only).
 
-## Notes
+## Missed edge cases
 
-- Deriving `filteredItems` from `query` during render is a good fit here because it avoids synchronizing duplicate state.
+- none
+
+## What a stronger candidate would improve
+
+- Remove unused import to keep the file clean.
+- Add a tiny test that verifies no lag on consecutive keystrokes.
+
+## Follow-up questions
+
+- Why is derived filtering during render preferable here over storing filtered state?
+- What bug appears when filtering logic depends on stale state snapshots?
+
+## Final verdict
+
+Core bug fix is correct; only minor cleanup remains.

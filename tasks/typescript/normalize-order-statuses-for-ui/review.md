@@ -1,17 +1,35 @@
-# Review
+# Task Review
 
-## Findings
+## Requirement check
 
-No functional issues found.
+- Meets the task requirements: yes.
+- Most important missing or incorrect behavior: none.
 
-## Notes
+## Strengths
 
-- The normalization handles both `status` and `state`.
-- Missing and unexpected values fall back safely to `"Unknown"`.
-- Case-insensitive input such as `"PAID"` is handled correctly.
-- The returned array is derived via `map`, so the input is not mutated.
+- Handles both `status` and `state` inputs.
+- Unknown or missing values are normalized safely to `"Unknown"`.
+- Case-insensitive normalization is implemented.
+- Transformation is immutable (`map`-based).
 
-## Residual risks
+## Weaknesses
 
-- The conflict rule for `status` vs `state` is a reasonable assumption, but it is still an assumption because the brief does not define precedence explicitly.
-- The focus area mentions discriminated unions, but the task requirements do not actually require them, so not using one is acceptable here.
+- No major functional weaknesses.
+
+## Missed edge cases
+
+- none
+
+## What a stronger candidate would improve
+
+- Document explicit precedence when both `status` and `state` are present.
+- Add focused tests for precedence and unknown-value normalization.
+
+## Follow-up questions
+
+- What precedence rule did you choose when both `status` and `state` exist, and why?
+- How would you make status mapping easier to extend without touching core logic?
+
+## Final verdict
+
+Solid solution that meets requirements and is production-usable for the defined scope.

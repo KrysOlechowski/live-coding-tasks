@@ -1,21 +1,35 @@
-No major findings.
+# Task Review
 
-The solution meets the task requirements:
-- quantity can be increased and decreased
-- quantity does not go below `1`
-- items can be removed
-- totals are derived from `items`
-- the empty state appears when the list becomes empty
-- item names are trimmed before display
+## Requirement check
 
-What is good:
-- state is kept in one place with `items`, which avoids duplicated sources of truth
-- `totalItems` and `totalPrice` are derived during render instead of being stored separately
-- the code is interview-sized and easy to explain
-- the UI logic is split into small presentational components without overengineering
+- Meets the task requirements: yes.
+- Most important missing or incorrect behavior: none.
 
-Minor improvement to mention in interview discussion:
-- `setItems` could use the functional form (`setItems(current => ...)`) in the handlers to make the updates safer under React batching and repeated rapid clicks
+## Strengths
 
-Residual risk:
-- there are no tests, so edge-case behavior is only verified by reading the code
+- Quantity increment/decrement behavior is correct and bounded at `1`.
+- Remove flow and empty state behavior are correct.
+- `totalItems` and `totalPrice` are derived from `items`, avoiding duplicated state.
+- Code stays interview-sized and readable.
+
+## Weaknesses
+
+- No major functional weaknesses.
+
+## Missed edge cases
+
+- none
+
+## What a stronger candidate would improve
+
+- Use functional `setItems(current => ...)` consistently in handlers for safer concurrent updates.
+- Add a small interaction test for remove and quantity updates.
+
+## Follow-up questions
+
+- Why is deriving totals during render safer than storing them in separate state?
+- How would you test that removing the last item immediately shows empty state?
+
+## Final verdict
+
+Good, complete implementation that meets the task requirements with only minor polish opportunities.

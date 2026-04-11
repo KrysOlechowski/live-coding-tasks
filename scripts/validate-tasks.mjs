@@ -13,6 +13,18 @@ const REQUIRED_FRONTMATTER_KEYS = [
   "hasPreview",
 ];
 
+const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
+const ALLOWED_PENALTIES = new Set(["0", "1", "2", "3"]);
+const REQUIRED_REVIEW_SECTIONS = [
+  "Requirement check",
+  "Strengths",
+  "Weaknesses",
+  "Missed edge cases",
+  "What a stronger candidate would improve",
+  "Follow-up questions",
+  "Final verdict",
+];
+
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---\n?/);
 
@@ -41,6 +53,20 @@ function parseFrontmatter(content) {
   }
 
   return data;
+}
+
+function getFirstNonEmptyLine(content) {
+  for (const line of content.split("\n")) {
+    if (line.trim()) {
+      return line.trim();
+    }
+  }
+
+  return "";
+}
+
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 async function fileExists(filePath) {
@@ -89,8 +115,9 @@ async function validateTaskDir(task) {
   const mainTsxPath = path.join(task.dir, "main.tsx");
   const scaffoldTsPath = path.join(task.dir, "main.scaffold.ts");
   const scaffoldTsxPath = path.join(task.dir, "main.scaffold.tsx");
+  const reviewMdPath = path.join(task.dir, "review.md");
 
-  const [hasTaskMd, hasPromptMd, hasMainTs, hasMainTsx, hasScaffoldTs, hasScaffoldTsx] =
+  const [hasTaskMd, hasPromptMd, hasMainTs, hasMainTsx, hasScaffoldTs, hasScaffoldTsx, hasReviewMd] =
     await Promise.all([
       fileExists(taskMdPath),
       fileExists(promptMdPath),
@@ -98,6 +125,7 @@ async function validateTaskDir(task) {
       fileExists(mainTsxPath),
       fileExists(scaffoldTsPath),
       fileExists(scaffoldTsxPath),
+      fileExists(reviewMdPath),
     ]);
 
   if (!hasTaskMd) {
@@ -107,6 +135,13 @@ async function validateTaskDir(task) {
 
   if (!hasPromptMd) {
     errors.push("missing prompt.md");
+  } else {
+    const promptMd = await fs.readFile(promptMdPath, "utf8");
+    const promptFirstLine = getFirstNonEmptyLine(promptMd.replace(/^\uFEFF/, ""));
+
+    if (promptFirstLine !== "Title") {
+      errors.push('prompt.md should preserve the brief and start with "Title"');
+    }
   }
 
   if (hasMainTs && hasMainTsx) {
@@ -147,17 +182,54 @@ async function validateTaskDir(task) {
     );
   }
 
+  if (frontmatter.difficulty && !ALLOWED_DIFFICULTIES.has(frontmatter.difficulty)) {
+    errors.push(
+      `frontmatter difficulty must be one of: ${Array.from(ALLOWED_DIFFICULTIES).join(", ")}`,
+    );
+  }
+
+  if (frontmatter.penalty && !ALLOWED_PENALTIES.has(frontmatter.penalty)) {
+    errors.push(
+      `frontmatter penalty must be one of: ${Array.from(ALLOWED_PENALTIES).join(", ")}`,
+    );
+  }
+
+  if (frontmatter.hasPreview && !["true", "false"].includes(frontmatter.hasPreview)) {
+    errors.push('frontmatter hasPreview must be "true" or "false"');
+  }
+
   const hasPreview = frontmatter.hasPreview === "true";
+  const previewEntry = frontmatter.previewEntry;
 
   if (hasPreview) {
-    const previewEntry = frontmatter.previewEntry;
-
     if (!previewEntry) {
       errors.push("frontmatter hasPreview=true but previewEntry is missing");
     } else {
       const previewEntryPath = path.join(task.dir, previewEntry);
       if (!(await fileExists(previewEntryPath))) {
         errors.push(`previewEntry points to missing file: ${previewEntry}`);
+      }
+    }
+  } else if (previewEntry) {
+    errors.push("frontmatter previewEntry should be omitted when hasPreview=false");
+  }
+
+  if (!hasReviewMd && frontmatter.penalty && Number(frontmatter.penalty) > 0) {
+    errors.push("penalty > 0 requires review.md");
+  }
+
+  if (hasReviewMd) {
+    const reviewMd = await fs.readFile(reviewMdPath, "utf8");
+    const reviewFirstLine = getFirstNonEmptyLine(reviewMd);
+
+    if (reviewFirstLine !== "# Task Review") {
+      errors.push('review.md must start with "# Task Review"');
+    }
+
+    for (const section of REQUIRED_REVIEW_SECTIONS) {
+      const sectionPattern = new RegExp(`^##\\s+${escapeRegex(section)}\\s*$`, "m");
+      if (!sectionPattern.test(reviewMd)) {
+        errors.push(`review.md missing required section: ${section}`);
       }
     }
   }
