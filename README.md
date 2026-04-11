@@ -85,7 +85,7 @@ This is useful for quick live-coding practice because it reruns the file after e
 │   └── codex_review_workflow.md
 └── tasks/
     └── <category>/
-        └── <difficulty-prefix><task-name>[_penalty]/
+        └── <slug>/
             ├── task.md
             ├── main.ts / main.tsx
             └── review.md
@@ -95,28 +95,15 @@ This is useful for quick live-coding practice because it reruns the file after e
 
 ## 🏷️ Task folder naming
 
-Task folders encode both **difficulty** and **review penalties**.
+Task folders use a stable slug.
 
-### Difficulty prefixes
-
-- `_` = easy
-- `__` = medium
-- `___` = hard
-
-### Penalty suffixes
-
-After review, a task folder may receive penalty stars when the solution still has serious issues:
-
-- no suffix = solid solution
-- `_*` = one important issue
-- `_**` = multiple important issues
-- `_***` = major task failure / largely unsolved
+Difficulty, task type, and penalty level live in `task.md` frontmatter instead of being encoded in the folder name.
 
 ### Example
 
-- `tasks/react/_search-filter-users/`
-- `tasks/dsa/__group-and-sort-transactions_*`
-- `tasks/debugging/___fix-broken-widget_***`
+- `tasks/react/search-filter-users/`
+- `tasks/dsa/group-and-sort-transactions/`
+- `tasks/debugging/fix-broken-widget/`
 
 ---
 
@@ -152,7 +139,7 @@ It is **frontend-focused**, but not limited to React-only tasks.
 - review like a practical interviewer
 - save feedback in `review.md`
 - create task folders under the correct category
-- rename task folders after review to reflect penalty level when needed
+- keep task folder names stable and update task metadata instead of renaming folders after review
 
 ### For the candidate
 

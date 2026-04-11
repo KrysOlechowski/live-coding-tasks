@@ -13,4 +13,4 @@
 
 ## Penalty
 
-`_*` because one important requirement is still missing.
+Recommended `penalty: 1` because one important requirement is still missing.

@@ -3,7 +3,7 @@
 ## Findings
 
 1. `displayName` is incorrect when `firstName` exists but `lastName` is missing or empty.
-   In [main.ts](/Users/krystian/Documents/Projects/live-coding-tasks/tasks/typescript/_format-table-rows-from-partial-user-data_**/main.ts), `getDisplayName()` handles "no names" and "last name only", but not "first name only". That produces values like `"Ada undefined"` instead of `"Ada"`.
+   In [main.ts](/Users/krystian/Documents/Projects/live-coding-tasks/tasks/typescript/format-table-rows-from-partial-user-data/main.ts), `getDisplayName()` handles "no names" and "last name only", but not "first name only". That produces values like `"Ada undefined"` instead of `"Ada"`.
 
 2. `statusLabel` does not handle differently-cased status values.
    The task explicitly mentions inputs like `"ACTIVE"`, but `getStatusLabel()` switches on the raw trimmed value. `"ACTIVE"` and `"INVITED"` therefore become `"Unknown"` instead of the expected mapped labels.

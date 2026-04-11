@@ -41,10 +41,11 @@ Save the review inside the task folder as:
 
 Example:
 
-- `tasks/react/_search-filter-users/review.md`
-- `tasks/async/__async-account-widget/review.md`
+- `tasks/react/search-filter-users/review.md`
+- `tasks/async/async-account-widget/review.md`
 
 If `review.md` already exists, update it instead of creating a duplicate.
+`review.md` should represent the latest review only.
 
 ---
 
@@ -246,6 +247,21 @@ Keep the questions practical and relevant.
 
 ---
 
+## Penalty handling
+
+Do not encode review outcome in the folder name.
+
+If the review should affect the task's penalty level, update the `penalty` field in `task.md` frontmatter instead.
+
+Penalty guidance:
+
+- `0` = solid solution
+- `1` = one important issue
+- `2` = multiple important issues
+- `3` = core logic broken or largely unsolved
+
+Keep the folder name stable and based on the task slug.
+
 ## Final verdict
 
 Give a short summary.
@@ -278,118 +294,37 @@ Do not spam the file with near-duplicates.
 
 ---
 
-## Folder penalty markers
-
-After review, update the task folder name to reflect the penalty level.
-Add penalty markers only if the solution contains serious issues.
-
-Penalty markers:
-
-- no marker → solid solution, no serious issues
-- `_*` → 1 serious issue
-- `_**` → 2 serious issues
-- `_***` → 3 serious issues
-
-A serious issue means a meaningful problem in correctness or requirement coverage, not a minor improvement suggestion.
-If the review says the solution still misses a required behavior, key requirement, or important edge case, apply at least one penalty marker.
-If the review describes the solution as partial, incomplete, or not fully solving the task, apply penalty markers.
-If the review says the solution is solid and meets the task requirements, keep no penalty marker.
-
-Examples:
-
-- `tasks/dsa/__group-and-sort-transactions`
-- `tasks/dsa/__group-and-sort-transactions_*`
-- `tasks/dsa/__group-and-sort-transactions_**`
-- `tasks/dsa/__group-and-sort-transactions_***`
-
-Do not add penalty markers for minor style issues or tiny improvements.
-Only use them for clearly important problems such as:
-
-- wrong core logic
-- missing key requirement
-- broken async handling
-- important edge cases missed
-- solution that does not really solve the task
-
-## Folder renaming after review
-
-After writing or updating `review.md`, renaming the task folder to match the penalty level is required, not optional.
-
-Rules:
-
-- keep the original difficulty prefix (`_`, `__`, or `___`)
-- keep the original task name
-- update only the penalty suffix
-- remove old penalty suffix before applying a new one
-- never exceed 3 penalty stars
-- if there are no serious issues, remove any existing penalty suffix
-
-Do not skip the rename step.
-If the review shows one or more serious issues, the folder name must be updated to include the correct penalty suffix.
-If the review shows no serious issues, the folder name must not keep an old penalty suffix.
-
-Rename the existing task folder in place.
-Never create a second task folder just to add or remove a penalty suffix.
-After the rename, only one folder should remain for that task.
-
-Examples:
-
-- `tasks/react/_search-filter-users` → `tasks/react/_search-filter-users_*`
-- `tasks/dsa/__group-and-sort-transactions_*` → `tasks/dsa/__group-and-sort-transactions_**`
-- `tasks/debugging/___fix-broken-widget_***` → `tasks/debugging/___fix-broken-widget_**` if the review is updated and the solution improved
-
-If the current folder is `tasks/<category>/<name>` and the penalty becomes `_*`,
-the result must be the same folder renamed to `tasks/<category>/<name>_*`,
-not a newly created sibling folder.
-
----
-
-## Important behavior
-
-When reviewing:
-
-1. inspect the current task files
-2. evaluate the solution based on the actual task
-3. create or update `review.md`
-4. determine the correct penalty level from the review
-5. rename the existing task folder in place to match the penalty level
-6. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
-
----
-
 ## Penalty decision guidance
 
-Use penalty markers conservatively, but apply them when the review clearly shows real task failure.
+Use the numeric `penalty` field conservatively, but update it when the review clearly shows real task failure.
 
 Typical guidance:
 
-- no marker → the task is correct, solid, and meets requirements
-- `_*` → one important requirement or behavior is still wrong or missing
-- `_**` → multiple important requirements are wrong or missing, or the solution is significantly incomplete
-- `_***` → the core logic is broken or the task is largely unsolved
+- `0` → the task is correct, solid, and meets requirements
+- `1` → one important requirement or behavior is still wrong or missing
+- `2` → multiple important requirements are wrong or missing, or the solution is significantly incomplete
+- `3` → the core logic is broken or the task is largely unsolved
 
-Do not add penalty markers for:
+Do not raise the penalty for:
 
 - style-only improvements
 - optional refactors
 - minor naming suggestions
 - "stronger candidate" polish that does not affect correctness
 
----
-
 ## Review-to-penalty mapping
 
-Use the language in the review as a direct signal for folder penalties.
+Use the language in the review as a direct signal for the `penalty` field in `task.md` frontmatter.
 
 Examples:
 
-- "one core requirement is still missing" → at least `_*`
-- "one important requirement or behavior is still wrong or missing" → at least `_*`
-- "partial fix" → at least `_*`
-- "incomplete solution" → at least `_*`
-- "multiple important requirements are wrong or missing" → at least `_**`
-- "core logic is broken" → at least `_***`
-- "solid solution" or "meets requirements" → no penalty
+- "one core requirement is still missing" → at least `1`
+- "one important requirement or behavior is still wrong or missing" → at least `1`
+- "partial fix" → at least `1`
+- "incomplete solution" → at least `1`
+- "multiple important requirements are wrong or missing" → at least `2`
+- "core logic is broken" → `3`
+- "solid solution" or "meets requirements" → `0`
 
 Never assign a penalty based mainly on:
 
@@ -402,8 +337,22 @@ A penalty requires a real gap in required behavior, correctness, or important ed
 
 When in doubt:
 
-- prefer no penalty for style-only improvements
-- apply a penalty when a required behavior is still missing or wrong
+- prefer `0` for style-only improvements
+- raise the penalty when a required behavior is still missing or wrong
+
+---
+
+## Important behavior
+
+When reviewing:
+
+1. inspect the current task files
+2. evaluate the solution based on the actual task
+3. create or update `review.md`
+4. determine the correct numeric penalty level from the review
+5. update the `penalty` field in `task.md` frontmatter if needed
+6. keep the task folder name unchanged
+7. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
 
 ---
 

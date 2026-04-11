@@ -16,8 +16,9 @@ This repository is used for live-coding interview practice.
 ### `/tasks`
 
 - Use `/tasks` as the main workspace for live-coding tasks.
-- Create new task folders inside `/tasks/<category>/<difficulty-prefix><task-name>/`.
-- Use the category and difficulty from the task brief when creating the task folder.
+- Create new task folders inside `/tasks/<category>/<slug>/`.
+- Use the category from the task brief when creating the task folder.
+- Use a stable slug for the folder name.
 - Keep all task-related files there, such as `task.md`, `main.tsx` or `main.ts`, and `review.md`.
 
 ### `/codex`
@@ -44,7 +45,7 @@ This repository is used for live-coding interview practice.
   - `main.ts` for non-React tasks
 - Only create extra files like `types.ts`, `mockData.ts`, or `api.ts` when they are clearly necessary.
 - Add TODO comments where the core interview logic should be implemented.
-- Use difficulty-based folder prefixes: `_` = easy, `__` = medium, `___` = hard.
+- Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.
 - Do not implement the full solution during scaffolding.
 
 ## Task review
@@ -58,18 +59,15 @@ This repository is used for live-coding interview practice.
   - React / TypeScript quality when relevant
   - general coding quality for non-frontend tasks
 - Keep review practical and concise.
-- After writing or updating `review.md`, renaming the task folder to match the penalty level is required, not optional.
-- If one important requirement or behavior is still missing, rename the task folder with `_*`.
-- If multiple important requirements are still wrong or missing, rename the task folder with `_**`.
-- If the core logic is broken or the task is largely unsolved, rename the task folder with `_***`.
-- If the solution is solid and meets requirements, keep no penalty suffix.
+- `review.md` should represent only the latest review for the task.
+- If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
 
 ## Task folder renaming
 
-- When a review changes the penalty level, rename the existing task folder in place.
-- Never create a second task folder just to add or remove a penalty suffix.
+- The task folder name should stay stable after creation.
+- Never rename a task folder just to reflect difficulty or review outcome.
 - There must be only one task folder for a given task at a time.
-- If a folder with the updated penalty suffix is needed, move/rename the current folder instead of copying or recreating it.
+- If a task folder ever needs to be renamed, move/rename the current folder instead of copying or recreating it.
 
 ## Topic tracking
 

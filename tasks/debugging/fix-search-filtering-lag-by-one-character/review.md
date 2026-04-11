@@ -2,7 +2,7 @@
 
 ## Findings
 
-1. [main.tsx:2](/Users/krystian/Documents/Projects/live-coding-tasks/tasks/debugging/_fix-search-filtering-lag-by-one-character/main.tsx#L2) `useEffect` is imported but unused. This does not affect behavior, but it should be removed as cleanup.
+1. [main.tsx:2](/Users/krystian/Documents/Projects/live-coding-tasks/tasks/debugging/fix-search-filtering-lag-by-one-character/main.tsx#L2) `useEffect` is imported but unused. This does not affect behavior, but it should be removed as cleanup.
 
 ## Assessment
 

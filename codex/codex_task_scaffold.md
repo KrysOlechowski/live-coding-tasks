@@ -29,35 +29,17 @@ If the category is missing, ask for clarification instead of choosing silently.
 
 Create each new task inside:
 
-`tasks/<category>/<difficulty-prefix><task-name>/`
+`tasks/<category>/<slug>/`
 
 Examples:
 
-- `tasks/react/_search-filter-users/`
-- `tasks/dsa/__group-and-sort-transactions/`
-- `tasks/debugging/___fix-broken-widget/`
+- `tasks/react/search-filter-users/`
+- `tasks/dsa/group-and-sort-transactions/`
+- `tasks/debugging/fix-broken-widget/`
 
 Use the category from the task brief.
-Use the difficulty prefix from the task brief.
+Use a stable slug for the folder name.
 Do not create tasks directly under `tasks/` without a category folder.
-
-## Difficulty-based folder naming
-
-Use the task difficulty to prefix the task folder name:
-
-- `_` for `easy`
-- `__` for `medium`
-- `___` for `hard`
-
-Examples:
-
-- `tasks/react/_search-filter-users/`
-- `tasks/dsa/__group-and-sort-transactions/`
-- `tasks/debugging/___fix-broken-widget/`
-
-Do not use any other prefix format.
-
-If the task brief does not include difficulty, ask for clarification instead of guessing.
 
 ---
 
@@ -105,10 +87,14 @@ Examples:
 
 `task.md` should contain:
 
-- task title
-- category
-- type
-- difficulty
+- frontmatter metadata for:
+  - title
+  - slug
+  - category
+  - type
+  - difficulty
+  - penalty
+  - preview information when relevant
 - focus areas
 - task description
 - requirements
@@ -117,6 +103,7 @@ Examples:
 Keep it short and readable.
 
 Do not include the solution in `task.md`.
+Do not duplicate `category`, `type`, or `difficulty` in the markdown body when they already exist in frontmatter.
 
 ---
 
@@ -230,9 +217,9 @@ For algorithm / data transformation / utility tasks:
 When given a task brief:
 
 1. read the category and difficulty from the task brief
-2. create the task folder under `tasks/<category>/<difficulty-prefix><task-name>/`
+2. create the task folder under `tasks/<category>/<slug>/`
 3. choose the smallest useful scaffold
-4. create `task.md` with the full structured task brief
+4. create `task.md` with frontmatter metadata and the structured task brief body
 5. create `prompt.md` by copying the exact task brief content starting from the line that begins with `Title`
 6. create only the necessary starter code files
 7. add TODO comments where the main logic belongs
@@ -244,19 +231,13 @@ When given a task brief:
 
 Use this naming rule for each new task folder:
 
-`tasks/<category>/<difficulty-prefix><task-name>/`
-
-Difficulty prefix mapping:
-
-- `_` = easy
-- `__` = medium
-- `___` = hard
+`tasks/<category>/<slug>/`
 
 Examples:
 
-- `tasks/react/_search-filter-users/`
-- `tasks/dsa/__group-and-sort-transactions/`
-- `tasks/debugging/___fix-broken-widget/`
+- `tasks/react/search-filter-users/`
+- `tasks/dsa/group-and-sort-transactions/`
+- `tasks/debugging/fix-broken-widget/`
 
 ---
 
