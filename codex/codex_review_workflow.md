@@ -38,7 +38,7 @@ Complete the workflow end-to-end:
 1. inspect solution files
 2. create or update `review.md`
 3. update `penalty` in `task.md` frontmatter when needed
-4. run `npm run sync:metadata`
+4. run `npm run finalize:tasks`
 
 ---
 
@@ -316,7 +316,7 @@ Do not spam the file with near-duplicates.
 
 After review-related updates (including `review.md`, `task.md` frontmatter, or `gpt_topics.md`), run:
 
-`npm run sync:metadata`
+`npm run finalize:tasks`
 
 ---
 

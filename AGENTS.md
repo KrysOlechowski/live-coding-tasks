@@ -51,14 +51,15 @@ This repository is used for live-coding interview practice.
 - Add TODO comments where the core interview logic should be implemented.
 - Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.
 - Do not implement the full solution during scaffolding.
-- Scaffold is complete only when `npm run validate:tasks` passes.
-- After creating or renaming task folders/files, run `npm run sync:metadata`.
+- Scaffold is complete only when `npm run finalize:tasks` passes.
+- After creating or renaming task folders/files, Codex must run `npm run finalize:tasks` automatically before finishing the response.
+- Do not ask the user to run metadata/validation commands manually.
 
 ## Task review
 
 - When asked to review a finished task, behave like a realistic technical interviewer.
 - Treat messages like `review my solution`, `review this task`, `do a review`, or `zrób review` as a request for a full repository review workflow.
-- A full review workflow means: inspect the task files, create/update `review.md`, update `penalty` in `task.md` frontmatter when needed, and run `npm run sync:metadata`.
+- A full review workflow means: inspect the task files, create/update `review.md`, update `penalty` in `task.md` frontmatter when needed, and run `npm run finalize:tasks`.
 - Do not stop at chat-only feedback when the user asks for review.
 - Treat messages like `give me a little hint`, `daj hint`, or `explain this part` as discussion/help requests, not as review workflow requests.
 - Evaluate:
@@ -71,7 +72,7 @@ This repository is used for live-coding interview practice.
 - Keep review practical and concise.
 - `review.md` should represent only the latest review for the task.
 - If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
-- After review updates (including `gpt_topics.md`), run `npm run sync:metadata`.
+- After review updates (including `gpt_topics.md`), Codex must run `npm run finalize:tasks` automatically before finishing the response.
 - For each important issue in review findings, include a concrete file reference in `path:line` form.
 - In `Missed edge cases`, list only true edge cases beyond baseline requirements. Do not repeat the main missing requirement from `Requirement check`.
 
