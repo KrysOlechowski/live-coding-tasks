@@ -51,6 +51,7 @@ This repository is used for live-coding interview practice.
 - Add TODO comments where the core interview logic should be implemented.
 - Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.
 - Do not implement the full solution during scaffolding.
+- Scaffold is complete only when `npm run validate:tasks` passes.
 - After creating or renaming task folders/files, run `npm run sync:metadata`.
 
 ## Task review

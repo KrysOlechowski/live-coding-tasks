@@ -70,9 +70,13 @@ This is useful for quick live-coding practice because it reruns the file after e
 
 ## 🔄 Sync generated metadata
 
-After creating/updating tasks or GPT workflow files, refresh generated metadata:
+After creating/updating tasks or GPT workflow files:
+
+1. validate task structure
+2. refresh generated metadata
 
 ```bash
+npm run validate:tasks
 npm run sync:metadata
 ```
 
