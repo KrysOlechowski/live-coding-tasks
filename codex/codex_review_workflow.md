@@ -113,6 +113,17 @@ Avoid:
 - over-explaining basic concepts unless asked
 - giving a full solved alternative unless asked
 
+## Findings format
+
+When you describe a concrete issue, include a concrete file reference in `path:line` form.
+
+Examples:
+
+- `main.tsx:32` toggle logic does not close the currently open FAQ item.
+- `main.ts:47` function still returns an empty array instead of grouped output.
+
+Do not keep findings purely generic if a file/line can be referenced.
+
 ---
 
 ## review.md structure
@@ -215,6 +226,8 @@ If the biggest issue is only a requirement-detail mismatch, say so explicitly in
 ## Missed edge cases
 
 Only list edge cases that actually matter for the task.
+Do not repeat the same baseline requirement gap already listed in `Requirement check`.
+If there are no additional edge-case misses beyond the main requirement gap, write `- none`.
 
 Examples:
 

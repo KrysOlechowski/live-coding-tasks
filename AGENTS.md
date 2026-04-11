@@ -67,6 +67,8 @@ This repository is used for live-coding interview practice.
 - `review.md` should represent only the latest review for the task.
 - If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
 - After review updates (including `gpt_topics.md`), run `npm run sync:metadata`.
+- For each important issue in review findings, include a concrete file reference in `path:line` form.
+- In `Missed edge cases`, list only true edge cases beyond baseline requirements. Do not repeat the main missing requirement from `Requirement check`.
 
 ## Task folder renaming
 
