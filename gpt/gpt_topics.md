@@ -8,11 +8,14 @@ It is used to avoid generating overly similar tasks again.
 
 ## Covered topics
 
-<!-- Add completed or already-practiced topics here -->
+- TypeScript array data transformation
+- String normalization (`trim` + case-insensitive comparison)
+- Grouping duplicates with `Map`/`Set`
+- Preserving output order semantics during grouping
 
 ## Covered task types
 
-<!-- Add used task types here, e.g. from scratch, bug fix, refactor, async -->
+- data transformation
 
 ## Notes
 
