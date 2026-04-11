@@ -1,8 +1,15 @@
-# Review user panel state and effect issues
+---
+title: Review user panel state and effect issues
+slug: review-user-panel-state-and-effect-issues
+category: debugging
+type: debugging
+difficulty: easy
+penalty: 2
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: debugging
-- Type: debugging
-- Difficulty: easy
+# Review user panel state and effect issues
 
 ## Focus areas
 

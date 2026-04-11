@@ -1,8 +1,15 @@
-# Fix stale counter updates
+---
+title: Fix stale counter updates
+slug: fix-stale-counter-updates
+category: debugging
+type: bug-fix
+difficulty: easy
+penalty: 0
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: debugging
-- Type: bug fix
-- Difficulty: easy
+# Fix stale counter updates
 
 ## Focus areas
 

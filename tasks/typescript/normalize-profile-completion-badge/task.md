@@ -1,8 +1,14 @@
-# Normalize profile completion badge
+---
+title: Normalize profile completion badge
+slug: normalize-profile-completion-badge
+category: typescript
+type: data-transformation
+difficulty: easy
+penalty: 0
+hasPreview: false
+---
 
-- Category: typescript
-- Type: data transformation
-- Difficulty: easy
+# Normalize profile completion badge
 
 ## Focus areas
 

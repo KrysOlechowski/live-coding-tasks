@@ -1,8 +1,15 @@
-# Fix duplicate selection in tag picker
+---
+title: Fix duplicate selection in tag picker
+slug: fix-duplicate-selection-in-tag-picker
+category: debugging
+type: bug-fix
+difficulty: easy
+penalty: 0
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: debugging
-- Type: bug fix
-- Difficulty: easy
+# Fix duplicate selection in tag picker
 
 ## Focus areas
 

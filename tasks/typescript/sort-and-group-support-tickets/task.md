@@ -1,8 +1,14 @@
-# Sort and group support tickets
+---
+title: Sort and group support tickets
+slug: sort-and-group-support-tickets
+category: typescript
+type: data-transformation
+difficulty: easy
+penalty: 3
+hasPreview: false
+---
 
-- Category: typescript
-- Type: data transformation
-- Difficulty: easy
+# Sort and group support tickets
 
 ## Focus areas
 

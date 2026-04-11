@@ -1,8 +1,14 @@
-# Build query string from filters
+---
+title: Build query string from filters
+slug: build-query-string-from-filters
+category: typescript
+type: data-transformation
+difficulty: easy
+penalty: 3
+hasPreview: false
+---
 
-- Category: typescript
-- Type: data transformation
-- Difficulty: easy
+# Build query string from filters
 
 ## Focus areas
 

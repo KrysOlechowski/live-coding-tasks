@@ -1,8 +1,15 @@
-# Review async product list fetch and UI state issues
+---
+title: Review async product list fetch and UI state issues
+slug: review-async-product-list-fetch-and-ui-state-issues
+category: debugging
+type: debugging
+difficulty: easy
+penalty: 1
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: debugging
-- Type: debugging
-- Difficulty: easy
+# Review async product list fetch and UI state issues
 
 ## Focus areas
 

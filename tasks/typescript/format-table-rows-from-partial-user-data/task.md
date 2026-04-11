@@ -1,8 +1,14 @@
-# Format table rows from partial user data
+---
+title: Format table rows from partial user data
+slug: format-table-rows-from-partial-user-data
+category: typescript
+type: data-transformation
+difficulty: easy
+penalty: 2
+hasPreview: false
+---
 
-- Category: typescript
-- Type: data transformation
-- Difficulty: easy
+# Format table rows from partial user data
 
 ## Focus areas
 

@@ -1,8 +1,15 @@
-# Build product filters with shared state and active summary
+---
+title: Build product filters with shared state and active summary
+slug: product-filters-with-shared-state-and-active-summary
+category: react
+type: ui-state
+difficulty: medium
+penalty: 1
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: react
-- Type: UI state
-- Difficulty: medium
+# Build product filters with shared state and active summary
 
 ## Focus areas
 

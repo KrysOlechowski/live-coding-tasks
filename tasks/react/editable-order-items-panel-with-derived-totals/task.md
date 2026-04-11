@@ -1,8 +1,15 @@
-# Build editable order items panel with derived totals
+---
+title: Build editable order items panel with derived totals
+slug: editable-order-items-panel-with-derived-totals
+category: react
+type: ui-state
+difficulty: medium
+penalty: 0
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: react
-- Type: UI state
-- Difficulty: medium
+# Build editable order items panel with derived totals
 
 ## Focus areas
 

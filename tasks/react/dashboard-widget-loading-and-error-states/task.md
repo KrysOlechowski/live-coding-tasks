@@ -1,8 +1,15 @@
-# Dashboard widget loading and error states
+---
+title: Dashboard widget loading and error states
+slug: dashboard-widget-loading-and-error-states
+category: react
+type: ui-state
+difficulty: easy
+penalty: 1
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: react
-- Type: UI state
-- Difficulty: easy
+# Dashboard widget loading and error states
 
 ## Focus areas
 

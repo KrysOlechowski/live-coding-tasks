@@ -1,8 +1,15 @@
-# Fix stale selected user details
+---
+title: Fix stale selected user details
+slug: fix-stale-selected-user-details
+category: debugging
+type: bug-fix
+difficulty: easy
+penalty: 1
+hasPreview: true
+previewEntry: main.tsx
+---
 
-- Category: debugging
-- Type: bug fix
-- Difficulty: easy
+# Fix stale selected user details
 
 ## Focus areas
 

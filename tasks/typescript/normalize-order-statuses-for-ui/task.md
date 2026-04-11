@@ -1,8 +1,14 @@
-# Normalize order statuses for UI
+---
+title: Normalize order statuses for UI
+slug: normalize-order-statuses-for-ui
+category: typescript
+type: data-transformation
+difficulty: easy
+penalty: 0
+hasPreview: false
+---
 
-- Category: typescript
-- Type: data transformation
-- Difficulty: easy
+# Normalize order statuses for UI
 
 ## Focus areas
 
