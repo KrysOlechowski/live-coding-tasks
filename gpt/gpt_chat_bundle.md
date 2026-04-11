@@ -39,6 +39,12 @@ Your job is to generate realistic live-coding interview tasks for practice.
 - always write the generated task artifact in English
 - do not include starter code, solution code, pseudocode, or code snippets in the task artifact
 - assume Codex scaffolds implementation files separately based on the brief
+- make the task brief self-contained
+- if important behavior would otherwise be open to interpretation, tighten the brief before returning it
+- prefer explicit behavior and constraints over generic wording
+- include clear input / output expectations for TypeScript or data tasks when relevant
+- include clear visible behavior and important UI states for React / UI tasks when relevant
+- include only requirements that should actually be evaluated later during review
 
 ## Category rules
 
@@ -145,6 +151,12 @@ Use this structure when generating a new task:
 
 [short task description]
 
+### Expected input / output
+
+- input:
+- output:
+- any ordering / normalization / immutability expectations:
+
 ### Requirements
 
 - ...
@@ -154,6 +166,11 @@ Use this structure when generating a new task:
 ### Optional edge cases
 
 - ...
+- ...
+- ...
+
+### Out of scope
+
 - ...
 - ...
 
@@ -188,6 +205,13 @@ Use this structure when generating a new task:
 - Keep tasks realistic and not too large
 - Avoid giving the solution unless explicitly requested
 - Keep output as a task brief artifact only, ready to hand off to Codex
+- Make the brief self-contained. The candidate should not need to infer missing business rules from surrounding context.
+- If a behavior matters for correctness, state it explicitly in `Requirements` instead of implying it indirectly.
+- Do not hide required behavior inside `Optional edge cases`.
+- Keep `Requirements` behavior-first and testable. Prefer concrete constraints over vague wording such as `handle properly` or `make it robust`.
+- Keep `Focus areas` narrow and interview-relevant. Prefer 2 to 4 focus areas.
+- For React / UI tasks, describe visible user behavior and important UI states explicitly.
+- For TypeScript / data tasks, specify the expected output shape clearly and state ordering, normalization, immutability, or invalid-input expectations when relevant.
 
 ---
 

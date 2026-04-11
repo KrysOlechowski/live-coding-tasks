@@ -58,6 +58,7 @@ This repository is used for live-coding interview practice.
 ## Task review
 
 - When asked to review a finished task, behave like a realistic technical interviewer.
+- Read `/codex/codex_review_workflow.md` and `/codex/review_rubric.md` when reviewing tasks.
 - Treat messages like `review my solution`, `review this task`, `do a review`, or `zrób review` as a request for a full repository review workflow.
 - A full review workflow means: inspect the task files, create/update `review.md`, update `penalty` in `task.md` frontmatter when needed, and run `npm run finalize:tasks`.
 - Do not stop at chat-only feedback when the user asks for review.
@@ -70,6 +71,11 @@ This repository is used for live-coding interview practice.
   - React / TypeScript quality when relevant
   - general coding quality for non-frontend tasks
 - Keep review practical and concise.
+- Prefer high-signal findings over minor polish.
+- For each major issue, explain both the broken requirement and the implementation detail that causes it when both are visible.
+- Do not explain junior-level basics unless they are directly relevant to a bug or missing requirement.
+- Keep issue explanations short and specific to the task.
+- Include one short learning takeaway and one concrete next step in `review.md`.
 - `review.md` should represent only the latest review for the task.
 - If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
 - After review updates (including `gpt_topics.md`), Codex must run `npm run finalize:tasks` automatically before finishing the response.

@@ -4,7 +4,7 @@
 
 This document explains how Codex should review completed live-coding tasks in this repository.
 
-The goal is to provide practical interview-style feedback and save it in a consistent format.
+The goal is to provide practical interview-style feedback, save it in a consistent format, and help the candidate learn from the review without turning it into a long tutorial.
 
 ---
 
@@ -14,11 +14,11 @@ Review the candidate's solution like a realistic technical interviewer.
 
 Anchor the review in the actual task requirements.
 Before criticizing implementation details, first decide whether the solution meets the required behavior.
-Do not let one minor issue dominate the whole review if the core task is solved.
+Use `codex/review_rubric.md` to calibrate severity, penalty, and what not to mention.
 
-Be practical and concise.
-Do not rewrite the whole solution immediately.
-Do not turn the review into a full tutorial unless explicitly asked.
+Prefer high-signal review over exhaustive review.
+Do not let one minor issue dominate the whole review if the core task is solved.
+Do not turn the review into a full tutorial or a full rewrite unless explicitly asked.
 
 ---
 
@@ -33,12 +33,17 @@ Use this workflow when:
 - the user message includes phrases like `review my solution`, `review this task`, `do a review`, `zrob review`, or `zrób review`
 
 If one of the trigger phrases above is used, treat it as a full review request and do not stop at chat-only feedback.
+
 Complete the workflow end-to-end:
 
-1. inspect solution files
-2. create or update `review.md`
-3. update `penalty` in `task.md` frontmatter when needed
-4. run `npm run finalize:tasks`
+1. inspect `task.md` and extract the explicit requirements
+2. inspect the current solution files
+3. compare the implementation against each explicit requirement
+4. identify the highest-signal findings
+5. create or update `review.md`
+6. update `penalty` in `task.md` frontmatter when needed
+7. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
+8. run `npm run finalize:tasks`
 
 ---
 
@@ -65,6 +70,7 @@ Evaluate the solution based on what is relevant for the task.
 Possible areas:
 
 - correctness
+- requirement compliance
 - readability
 - maintainability
 - edge cases
@@ -77,6 +83,8 @@ Possible areas:
 - general coding quality
 
 Do not force irrelevant categories.
+Do not review beyond the task scope.
+Do not promote optional polish above broken required behavior.
 
 ---
 
@@ -88,8 +96,11 @@ Keep the review:
 - practical
 - concise
 - interviewer-like
+- issue-first
 
 Prefer clear observations over long theory.
+Assume the candidate is at least intermediate level unless the solution clearly shows a more basic gap.
+Do not explain junior-level basics unless they are directly necessary to explain a bug or missed requirement.
 
 Prioritize issues in this order:
 
@@ -98,20 +109,28 @@ Prioritize issues in this order:
 3. maintainability and readability
 4. optional polish
 
-Do not over-focus on one low-impact issue while missing broader technical quality.
+Avoid trivial findings unless they materially affect:
 
-Good:
+- correctness
+- requirement compliance
+- maintainability
+- debugging difficulty
+- interview signal
 
-- what is good
-- what is weak
-- what is missing
-- what could be improved
+For each major issue, explain briefly:
 
-Avoid:
+- what is wrong
+- why it matters in this task
+- what kind of improvement would fix it
 
-- rewriting everything from scratch too early
-- over-explaining basic concepts unless asked
-- giving a full solved alternative unless asked
+Keep that explanation to 1 to 3 short sentences.
+Do not turn one issue into a long essay.
+
+If the task is mostly correct, say so clearly.
+If the task is only partially solved, say so clearly.
+If the remaining issues are only minor polish, keep the review short.
+
+---
 
 ## Findings format
 
@@ -122,7 +141,14 @@ Examples:
 - `main.tsx:32` toggle logic does not close the currently open FAQ item.
 - `main.ts:47` function still returns an empty array instead of grouped output.
 
-Do not keep findings purely generic if a file/line can be referenced.
+When possible, each major finding should include:
+
+- the requirement or behavior that is affected
+- the `path:line` reference
+- the root cause, not only the visible symptom
+
+If the visible behavior and the root cause are different, explain both.
+Do not stop at the first symptom if the deeper cause is visible in code.
 
 ---
 
@@ -135,13 +161,13 @@ Do not keep findings purely generic if a file/line can be referenced.
 - Meets the task requirements: yes / partially / no
 - Most important missing or incorrect behavior: ...
 
-## Strengths
-
-- ...
-- ...
-- ...
-
 ## Weaknesses
+
+- ...
+- ...
+- ...
+
+## Strengths
 
 - ...
 - ...
@@ -157,6 +183,14 @@ Do not keep findings purely generic if a file/line can be referenced.
 - ...
 - ...
 
+## Main learning takeaway
+
+- ...
+
+## Suggested next step
+
+- ...
+
 ## Follow-up questions
 
 - ...
@@ -166,6 +200,38 @@ Do not keep findings purely generic if a file/line can be referenced.
 ## Final verdict
 
 [short summary]
+
+---
+
+## Requirement check
+
+Start by explicitly judging whether the solution actually meets the task.
+This should be short and practical.
+
+Before writing the section, compare the implementation against each explicit requirement from `task.md`.
+For each requirement, decide:
+
+- met
+- partially met
+- not met
+
+If multiple bugs are related, explain both:
+
+- the visible behavior problem
+- the root cause in the implementation
+
+Do not skip this section.
+
+---
+
+## Weaknesses
+
+List the main weaknesses without exaggerating.
+Prefer 1 to 3 high-signal weaknesses.
+
+Do not present a minor polish issue as the main failure if the core logic is correct.
+If the biggest issue is only a requirement-detail mismatch, say so explicitly instead of making the review sound broader than it is.
+If blockers exist, do not spend review space on low-value minor polish.
 
 ---
 
@@ -184,72 +250,38 @@ Examples:
 
 ---
 
-## Requirement check
-
-Start by explicitly judging whether the solution actually meets the task.
-This should be short and practical.
-
-Example placeholder lines:
-
-- Meets the task requirements: yes
-- Meets the task requirements: partially
-- Meets the task requirements: no
-- These are only examples of wording. Replace them with task-specific findings.
-- Most important missing or incorrect behavior: [insert the biggest task-specific gap here]
-- Example: clear filters does not reset category
-- Example: retry still leaves stale error UI visible
-
-Do not skip this section.
-If the task is mostly correct, say so clearly.
-If the task is only partially solved, say so clearly.
-
----
-
-## Weaknesses
-
-List the main weaknesses without exaggerating.
-
-Examples:
-
-- logic mixed in one place
-- weak handling of edge cases
-- too much duplicated code
-- unnecessary complexity
-- incomplete state handling
-
-Keep weaknesses proportional.
-Do not present a minor UX issue, wording issue, or polish item as the main failure if the core logic is correct.
-If the biggest issue is only a requirement-detail mismatch, say so explicitly instead of making the review sound broader than it is.
-
----
-
 ## Missed edge cases
 
 Only list edge cases that actually matter for the task.
 Do not repeat the same baseline requirement gap already listed in `Requirement check`.
 If there are no additional edge-case misses beyond the main requirement gap, write `- none`.
 
-Examples:
-
-- empty input
-- invalid values
-- retry not handled
-- loading state missing
-- no-result scenario missing
-
 ---
 
 ## What a stronger candidate would improve
 
 This section should explain what would make the solution better in an interview context.
+Keep it practical and specific to this task.
+
+---
+
+## Main learning takeaway
+
+Write one short lesson the candidate should remember from this review.
+Focus on a reusable engineering habit or decision, not on junior-level theory.
 
 Examples:
 
-- cleaner separation of responsibilities
-- safer handling of invalid input
-- better naming
-- more complete async state handling
-- reduced unnecessary re-renders
+- Preserve required behavior first, then optimize structure.
+- When order matters, avoid sorting unless the requirement explicitly allows it.
+- If mutability is constrained, avoid in-place array operations on function inputs.
+
+---
+
+## Suggested next step
+
+Write one concrete next improvement the candidate should make first.
+Do not turn this into a multi-step tutorial.
 
 ---
 
@@ -274,32 +306,23 @@ Keep the questions practical and relevant.
 Do not encode review outcome in the folder name.
 
 If the review should affect the task's penalty level, update the `penalty` field in `task.md` frontmatter instead.
+Use `codex/review_rubric.md` as the default calibration guide.
 
-Penalty guidance:
+Typical guidance:
 
-- `0` = solid solution
-- `1` = one important issue
-- `2` = multiple important issues
-- `3` = core logic broken or largely unsolved
+- `0` = solid solution, or only minor issues remain
+- `1` = mostly correct, but one important requirement or behavior is still wrong or missing
+- `2` = multiple important requirements or behaviors are wrong or missing, or the solution is significantly incomplete
+- `3` = core logic is broken or the task is largely unsolved
+
+Do not raise the penalty for:
+
+- style-only improvements
+- optional refactors
+- minor naming suggestions
+- stronger-candidate polish that does not affect correctness
 
 Keep the folder name stable and based on the task slug.
-
-## Final verdict
-
-Give a short summary.
-
-Examples:
-
-- Solid baseline solution with a few missed edge cases.
-- Good practical solution, but could be cleaner and more robust.
-- Correct direction, but the implementation needs stronger handling of async and edge states.
-
-The final verdict must clearly answer two questions:
-
-- did the candidate solve the task?
-- if not, what is the single most important gap?
-
-Keep it short.
 
 ---
 
@@ -320,73 +343,12 @@ After review-related updates (including `review.md`, `task.md` frontmatter, or `
 
 ---
 
-## Penalty decision guidance
-
-Use the numeric `penalty` field conservatively, but update it when the review clearly shows real task failure.
-
-Typical guidance:
-
-- `0` → the task is correct, solid, and meets requirements
-- `1` → one important requirement or behavior is still wrong or missing
-- `2` → multiple important requirements are wrong or missing, or the solution is significantly incomplete
-- `3` → the core logic is broken or the task is largely unsolved
-
-Do not raise the penalty for:
-
-- style-only improvements
-- optional refactors
-- minor naming suggestions
-- "stronger candidate" polish that does not affect correctness
-
-## Review-to-penalty mapping
-
-Use the language in the review as a direct signal for the `penalty` field in `task.md` frontmatter.
-
-Examples:
-
-- "one core requirement is still missing" → at least `1`
-- "one important requirement or behavior is still wrong or missing" → at least `1`
-- "partial fix" → at least `1`
-- "incomplete solution" → at least `1`
-- "multiple important requirements are wrong or missing" → at least `2`
-- "core logic is broken" → `3`
-- "solid solution" or "meets requirements" → `0`
-
-Never assign a penalty based mainly on:
-
-- typo-level issues
-- summary wording that does not affect core behavior
-- small presentation mismatches
-- optional refactor suggestions
-
-A penalty requires a real gap in required behavior, correctness, or important edge-case handling.
-
-When in doubt:
-
-- prefer `0` for style-only improvements
-- raise the penalty when a required behavior is still missing or wrong
-
----
-
-## Important behavior
-
-When reviewing:
-
-1. inspect the current task files
-2. evaluate the solution based on the actual task
-3. create or update `review.md`
-4. determine the correct numeric penalty level from the review
-5. update the `penalty` field in `task.md` frontmatter if needed
-6. keep the task folder name unchanged
-7. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
-
----
-
 ## Goal
 
 The review should help the candidate understand, in priority order:
 
-- what was good
-- what was weak
-- what a stronger interview answer or implementation would look like
 - whether the task was actually solved or only partially solved
+- what the highest-signal weaknesses are
+- what was good
+- what a stronger interview answer or implementation would look like
+- what single lesson is most worth carrying into the next task

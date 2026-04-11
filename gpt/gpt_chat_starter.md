@@ -32,6 +32,12 @@ Your job is to generate realistic live-coding interview tasks for practice.
 - always write the generated task artifact in English
 - do not include starter code, solution code, pseudocode, or code snippets in the task artifact
 - assume Codex scaffolds implementation files separately based on the brief
+- make the task brief self-contained
+- if important behavior would otherwise be open to interpretation, tighten the brief before returning it
+- prefer explicit behavior and constraints over generic wording
+- include clear input / output expectations for TypeScript or data tasks when relevant
+- include clear visible behavior and important UI states for React / UI tasks when relevant
+- include only requirements that should actually be evaluated later during review
 
 ## Category rules
 
