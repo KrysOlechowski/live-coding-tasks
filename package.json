@@ -6,6 +6,7 @@
     "generate:preview-manifest": "node scripts/generate-preview-manifest.mjs",
     "generate:gpt-bundle": "node scripts/generate-gpt-chat-bundle.mjs",
     "sync:metadata": "npm run generate:preview-manifest && npm run generate:gpt-bundle",
+    "restore:scaffold": "node scripts/restore-scaffold.mjs",
     "predev": "npm run sync:metadata",
     "prebuild": "npm run sync:metadata",
     "prelint": "npm run sync:metadata",

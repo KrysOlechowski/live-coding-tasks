@@ -52,6 +52,7 @@ Create:
 - `task.md`
 - `prompt.md`
 - `main.tsx`
+- `main.scaffold.tsx` (exact snapshot of the initial `main.tsx` scaffold)
 
 ### For non-React coding tasks
 
@@ -60,6 +61,7 @@ Create:
 - `task.md`
 - `prompt.md`
 - `main.ts`
+- `main.scaffold.ts` (exact snapshot of the initial `main.ts` scaffold)
 
 ---
 
@@ -159,6 +161,9 @@ Create only a minimal starter.
 - completed business logic
 - full polished UI
 - solving the interview problem
+
+After creating `main.tsx` or `main.ts`, create an exact snapshot copy as `main.scaffold.tsx` or `main.scaffold.ts`.
+This snapshot is used to restore the original scaffold later.
 
 ---
 

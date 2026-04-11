@@ -43,6 +43,10 @@ This repository is used for live-coding interview practice.
   - `task.md`
   - `main.tsx` for React tasks
   - `main.ts` for non-React tasks
+- Always keep a scaffold snapshot copy:
+  - `main.scaffold.tsx` for React tasks
+  - `main.scaffold.ts` for non-React tasks
+- `main.scaffold.*` must be an exact copy of the initial scaffolded `main.*` file.
 - Only create extra files like `types.ts`, `mockData.ts`, or `api.ts` when they are clearly necessary.
 - Add TODO comments where the core interview logic should be implemented.
 - Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.

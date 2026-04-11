@@ -95,9 +95,13 @@ npm run sync:metadata
     └── <category>/
         └── <slug>/
             ├── task.md
+            ├── main.scaffold.ts / main.scaffold.tsx
             ├── main.ts / main.tsx
             └── review.md
 ```
+
+`main.scaffold.*` is the untouched original scaffold snapshot.
+`main.*` is your working solution file.
 
 ---
 
