@@ -88,8 +88,20 @@ Use this structure when generating a new task:
 - do not solve the main task
 - add TODO comments for the main logic
 - default expectation: `task.md` and `main.tsx` or `main.ts`
-- use the task category to place the task under `tasks/<category>/`
-- use difficulty-based folder prefixes: `_` = easy, `__` = medium, `___` = hard
+- place the task under `tasks/<category>/<slug>/` using a stable slug
+- use `task.md` frontmatter metadata with at least:
+  - `title`
+  - `slug`
+  - `category`
+  - `type`
+  - `difficulty`
+  - `penalty` (default `0`)
+  - `hasPreview` (`true` or `false`)
+  - `previewEntry` only when `hasPreview` is `true`
+- keep `category`, `type`, and `difficulty` in frontmatter, not duplicated in task body
+- if the task needs a UI/runtime preview, set `hasPreview: true` and `previewEntry: main.tsx`
+- if no UI preview is needed, set `hasPreview: false`
+- keep `review.md` as the latest review only (absence of `review.md` means not started yet)
 - create extra files only if clearly needed
 
 ## Important rules
@@ -100,3 +112,4 @@ Use this structure when generating a new task:
 - Keep tasks suitable for live coding
 - Keep tasks realistic and not too large
 - Avoid giving the solution unless explicitly requested
+- Keep output as a task brief artifact only, ready to hand off to Codex

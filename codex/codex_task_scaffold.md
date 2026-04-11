@@ -223,7 +223,8 @@ When given a task brief:
 5. create `prompt.md` by copying the exact task brief content starting from the line that begins with `Title`
 6. create only the necessary starter code files
 7. add TODO comments where the main logic belongs
-8. stop before solving the task
+8. run `npm run sync:metadata` to refresh generated metadata files
+9. stop before solving the task
 
 ---
 

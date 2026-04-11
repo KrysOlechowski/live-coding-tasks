@@ -68,6 +68,14 @@ npx tsx --watch tasks/<category>/<task>/main.ts
 
 This is useful for quick live-coding practice because it reruns the file after every save and shows `console.log` output without wiring the task into the Next.js app.
 
+## 🔄 Sync generated metadata
+
+After creating/updating tasks or GPT workflow files, refresh generated metadata:
+
+```bash
+npm run sync:metadata
+```
+
 ---
 
 ## 🗂️ Structure

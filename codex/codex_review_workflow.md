@@ -292,6 +292,10 @@ Only add:
 
 Do not spam the file with near-duplicates.
 
+After review-related updates (including `review.md`, `task.md` frontmatter, or `gpt_topics.md`), run:
+
+`npm run sync:metadata`
+
 ---
 
 ## Penalty decision guidance

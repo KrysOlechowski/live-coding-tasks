@@ -9,52 +9,10 @@ It is used to avoid generating overly similar tasks again.
 ## Covered topics
 
 <!-- Add completed or already-practiced topics here -->
-- conditional rendering
-- independent widget states
-- loading / error / success UI states
-- derived state vs props
-- keeping selected UI in sync
-- debugging a subtle React bug
-- discriminated unions
-- safe normalization of API-like data
-- mapping backend values to UI-friendly labels
-- optional field handling
-- deriving UI-friendly values
-- sorting by multiple rules
-- grouping UI data into sections
-- writing clear business rules in TypeScript
-- React state updates
-- stale closures
-- debugging event handler logic
-- array state updates
-- preventing duplicates
-- predictable toggle behavior
-- controlled inputs
-- React state timing
-- debugging derived filtered state
-- copied props into local state
-- derived state stored separately
-- inconsistent sources of truth
-- incorrect useEffect usage
-- maintainability in React components
-- async flow in React
-- loading and error handling
-- missing res.ok checks
-- cleanup and race-condition-adjacent issues
-- shared state across multiple components
-- derived values vs stored state
-- form-like updates in React
-- business logic in UI
-- shared state across multiple controls
-- filtering logic in React
-- maintainable component structure
 
 ## Covered task types
 
 <!-- Add used task types here, e.g. from scratch, bug fix, refactor, async -->
-- UI state
-- bug fix
-- data transformation
 
 ## Notes
 

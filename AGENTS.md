@@ -47,6 +47,7 @@ This repository is used for live-coding interview practice.
 - Add TODO comments where the core interview logic should be implemented.
 - Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.
 - Do not implement the full solution during scaffolding.
+- After creating or renaming task folders/files, run `npm run sync:metadata`.
 
 ## Task review
 
@@ -61,6 +62,7 @@ This repository is used for live-coding interview practice.
 - Keep review practical and concise.
 - `review.md` should represent only the latest review for the task.
 - If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
+- After review updates (including `gpt_topics.md`), run `npm run sync:metadata`.
 
 ## Task folder renaming
 
