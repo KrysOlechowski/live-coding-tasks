@@ -22,7 +22,11 @@
   // =========================
   // HARD MODE
   // =========================
-  "editor.quickSuggestions": false,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  },
   "editor.suggestOnTriggerCharacters": false,
   "typescript.suggest.autoImports": false,
   "javascript.suggest.autoImports": false,
