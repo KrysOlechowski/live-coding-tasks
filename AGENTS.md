@@ -76,6 +76,7 @@ This repository is used for live-coding interview practice.
 - Do not explain junior-level basics unless they are directly relevant to a bug or missing requirement.
 - Keep issue explanations short and specific to the task.
 - Include one short learning takeaway and one concrete next step in `review.md`.
+- Keep the top-line verdict in `Requirement check` consistent with the actual findings; do not mark the task as solved if the review still says an explicit requirement is unmet.
 - `review.md` should represent only the latest review for the task.
 - If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
 - After review updates (including `gpt_topics.md`), Codex must run `npm run finalize:tasks` automatically before finishing the response.

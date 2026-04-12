@@ -222,6 +222,15 @@ If multiple bugs are related, explain both:
 
 Do not skip this section.
 
+Use this bar for the top-line verdict:
+
+- `yes` -> all explicit required behaviors are met; only minor polish or clarity issues remain
+- `partially` -> the solution mostly works, but at least one explicit requirement is not met exactly
+- `no` -> core behavior is broken or the task is not solved
+
+Do not write `yes` if the review still claims an explicit required behavior is missing.
+If the remaining issue is only markup polish, wording preference, or non-blocking clarity, keep `yes`.
+
 ---
 
 ## Weaknesses

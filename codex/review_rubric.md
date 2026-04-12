@@ -46,6 +46,12 @@ Every review should include:
 
 Keep both short and practical.
 
+## Requirement verdict rule
+
+- exact mismatch on an explicit required behavior -> usually `partially`
+- minor markup or readability issue with correct user-visible behavior -> usually still `yes`
+- do not mix `yes` with wording that says an explicit requirement is still missing
+
 ## Penalty guide
 
 - `0`: correct solution, or only minor issues remain
