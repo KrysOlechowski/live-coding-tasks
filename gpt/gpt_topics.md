@@ -11,6 +11,7 @@ It is used to avoid generating overly similar tasks again.
 - order status grouping
 - immutable data transformation
 - object accumulation
+- array deduplication
 - string normalization
 - conditional formatting
 - controlled React inputs
