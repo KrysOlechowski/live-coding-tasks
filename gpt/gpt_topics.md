@@ -8,7 +8,13 @@ It is used to avoid generating overly similar tasks again.
 
 ## Covered topics
 
+- order status grouping
+- immutable data transformation
+- object accumulation
+
 ## Covered task types
+
+- TypeScript data transformation
 
 ## Notes
 
