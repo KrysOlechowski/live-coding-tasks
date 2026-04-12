@@ -153,6 +153,7 @@ Create only a minimal starter.
 - TODO comments for the core logic
 - minimal sample data only if clearly necessary
 - a minimal export or render target if needed for the task to run
+- for non-React `main.ts` tasks with sample data, a tiny direct-run block guarded by `if (import.meta.main)` so the file can be executed with `tsx` without extra imports
 
 ### Not allowed:
 
@@ -214,6 +215,13 @@ For algorithm / data transformation / utility tasks:
 - prefer a single `main.ts`
 - add minimal sample input only if needed
 - keep the file focused on the problem
+- if sample input is included, prefer making the scaffold directly runnable with:
+  ```ts
+  if (import.meta.main) {
+    console.log(exampleFunction(sampleInput));
+  }
+  ```
+- keep the direct-run block tiny and generic; it should only help inspect output, not solve the task
 
 ---
 

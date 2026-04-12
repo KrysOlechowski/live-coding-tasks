@@ -193,6 +193,7 @@ Use this structure when generating a new task:
 - keep `category`, `type`, and `difficulty` in frontmatter, not duplicated in task body
 - if the task needs a UI/runtime preview, set `hasPreview: true` and `previewEntry: main.tsx`
 - if no UI preview is needed, set `hasPreview: false`
+- for non-React tasks that include sample input data, prefer a directly runnable `main.ts` scaffold via a tiny `if (import.meta.main)` block instead of requiring a separate runner file
 - keep `review.md` as the latest review only (absence of `review.md` means not started yet)
 - create extra files only if clearly needed
 
@@ -227,7 +228,13 @@ It is used to avoid generating overly similar tasks again.
 
 ## Covered topics
 
+- order status grouping
+- immutable data transformation
+- object accumulation
+
 ## Covered task types
+
+- TypeScript data transformation
 
 ## Notes
 
