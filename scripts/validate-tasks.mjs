@@ -65,6 +65,11 @@ function getFirstNonEmptyLine(content) {
   return "";
 }
 
+function hasUseClientDirective(content) {
+  const firstLine = getFirstNonEmptyLine(content.replace(/^\uFEFF/, ""));
+  return firstLine === '"use client";' || firstLine === "'use client';";
+}
+
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -208,6 +213,14 @@ async function validateTaskDir(task) {
       const previewEntryPath = path.join(task.dir, previewEntry);
       if (!(await fileExists(previewEntryPath))) {
         errors.push(`previewEntry points to missing file: ${previewEntry}`);
+      } else if (task.category === "react" && previewEntry.endsWith(".tsx")) {
+        const previewEntryContent = await fs.readFile(previewEntryPath, "utf8");
+
+        if (!hasUseClientDirective(previewEntryContent)) {
+          errors.push(
+            'React preview entry must start with "use client"; to avoid Next.js Server Component preview errors',
+          );
+        }
       }
     }
   } else if (previewEntry) {

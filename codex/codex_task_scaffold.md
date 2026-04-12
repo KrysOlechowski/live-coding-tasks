@@ -54,6 +54,14 @@ Create:
 - `main.tsx`
 - `main.scaffold.tsx` (exact snapshot of the initial `main.tsx` scaffold)
 
+If the React task has `hasPreview: true` and the preview entry is rendered by the Next.js task preview app, start the preview entry file with:
+
+```tsx
+"use client";
+```
+
+Treat this as the default for React preview entries, even for small scaffolds. This avoids Next.js Server Component errors when the scaffold uses hooks or event handlers.
+
 ### For non-React coding tasks
 
 Create:
@@ -205,6 +213,7 @@ For React tasks:
 - do not build extra structure unless needed
 - do not add unnecessary styling
 - do not introduce extra libraries unless explicitly requested
+- if the task has a runtime preview, default the preview entry to a Client Component with `"use client"` at the top of the file
 
 ---
 
