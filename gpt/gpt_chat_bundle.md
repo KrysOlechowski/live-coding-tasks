@@ -234,6 +234,8 @@ It is used to avoid generating overly similar tasks again.
 - array deduplication
 - string normalization
 - conditional formatting
+- conflict resolution rules
+- sorting derived output
 - controlled React inputs
 - derived list filtering
 - empty state handling
