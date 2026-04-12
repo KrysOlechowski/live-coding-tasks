@@ -9,6 +9,7 @@ It is used to avoid generating overly similar tasks again.
 ## Covered topics
 
 - order status grouping
+- counting occurrences
 - immutable data transformation
 - object accumulation
 - array deduplication
