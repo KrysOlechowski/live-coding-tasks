@@ -234,6 +234,8 @@ It is used to avoid generating overly similar tasks again.
 - controlled React inputs
 - derived list filtering
 - empty state handling
+- derived counters from state
+- immutable per-item React state updates
 
 ## Covered task types
 
