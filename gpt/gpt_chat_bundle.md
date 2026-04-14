@@ -242,6 +242,8 @@ It is used to avoid generating overly similar tasks again.
 - empty state handling
 - derived counters from state
 - immutable per-item React state updates
+- set-like lookup
+- range construction
 
 ## Covered task types
 
