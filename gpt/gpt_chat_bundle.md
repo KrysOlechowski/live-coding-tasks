@@ -247,6 +247,9 @@ It is used to avoid generating overly similar tasks again.
 - frequency lookup
 - string traversal
 - ordered selection
+- frequency comparison
+- string normalization rules
+- early mismatch detection
 
 ## Covered task types
 
