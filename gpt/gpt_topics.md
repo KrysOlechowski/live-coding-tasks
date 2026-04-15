@@ -24,6 +24,9 @@ It is used to avoid generating overly similar tasks again.
 - immutable per-item React state updates
 - set-like lookup
 - range construction
+- frequency lookup
+- string traversal
+- ordered selection
 
 ## Covered task types
 
