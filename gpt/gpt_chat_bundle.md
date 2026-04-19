@@ -250,6 +250,8 @@ It is used to avoid generating overly similar tasks again.
 - frequency comparison
 - string normalization rules
 - early mismatch detection
+- stack-like thinking
+- character filtering
 
 ## Covered task types
 
