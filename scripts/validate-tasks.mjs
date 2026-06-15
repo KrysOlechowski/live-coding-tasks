@@ -5,25 +5,61 @@ const TASKS_ROOT = path.join(process.cwd(), "tasks");
 
 const REQUIRED_FRONTMATTER_KEYS = [
   "title",
-  "slug",
   "category",
-  "type",
+  "taskType",
   "difficulty",
-  "penalty",
-  "hasPreview",
+  "primarySkill",
+  "secondarySkill",
+  "problemShape",
+  "interviewFocus",
+  "reviewFocus",
+  "tags",
 ];
 
+const ALLOWED_CATEGORIES = new Set([
+  "react",
+  "typescript",
+  "data-transformation",
+  "algorithms",
+  "async",
+  "api-integration",
+  "testing",
+  "performance",
+]);
+const ALLOWED_TASK_TYPES = new Set([
+  "build-from-requirements",
+  "fix-bug",
+  "refactor-existing-code",
+  "complete-partial-implementation",
+  "write-tests",
+  "model-types",
+  "handle-edge-cases",
+  "optimize-performance",
+  "review-and-improve",
+]);
 const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
-const ALLOWED_PENALTIES = new Set(["0", "1", "2", "3"]);
 const REQUIRED_REVIEW_SECTIONS = [
   "Requirement check",
   "Strengths",
   "Weaknesses",
   "Missed edge cases",
   "What a stronger candidate would improve",
+  "Main learning takeaway",
+  "Suggested next step",
   "Follow-up questions",
   "Final verdict",
 ];
+
+function stripQuotes(value) {
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    return value.slice(1, -1);
+  }
+
+  return value;
+}
 
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---\n?/);
@@ -33,11 +69,21 @@ function parseFrontmatter(content) {
   }
 
   const data = {};
+  let currentArrayKey = null;
 
   for (const line of match[1].split("\n")) {
     const trimmedLine = line.trim();
 
     if (!trimmedLine) {
+      continue;
+    }
+
+    if (trimmedLine.startsWith("- ")) {
+      if (!currentArrayKey || !Array.isArray(data[currentArrayKey])) {
+        return null;
+      }
+
+      data[currentArrayKey].push(stripQuotes(trimmedLine.slice(2).trim()));
       continue;
     }
 
@@ -49,7 +95,15 @@ function parseFrontmatter(content) {
 
     const key = trimmedLine.slice(0, separatorIndex).trim();
     const value = trimmedLine.slice(separatorIndex + 1).trim();
-    data[key] = value;
+
+    if (!value) {
+      data[key] = [];
+      currentArrayKey = key;
+      continue;
+    }
+
+    data[key] = stripQuotes(value);
+    currentArrayKey = null;
   }
 
   return data;
@@ -63,11 +117,6 @@ function getFirstNonEmptyLine(content) {
   }
 
   return "";
-}
-
-function hasUseClientDirective(content) {
-  const firstLine = getFirstNonEmptyLine(content.replace(/^\uFEFF/, ""));
-  return firstLine === '"use client";' || firstLine === "'use client';";
 }
 
 function escapeRegex(value) {
@@ -115,17 +164,15 @@ async function collectTaskDirs() {
 async function validateTaskDir(task) {
   const errors = [];
   const taskMdPath = path.join(task.dir, "task.md");
-  const promptMdPath = path.join(task.dir, "prompt.md");
   const mainTsPath = path.join(task.dir, "main.ts");
   const mainTsxPath = path.join(task.dir, "main.tsx");
   const scaffoldTsPath = path.join(task.dir, "main.scaffold.ts");
   const scaffoldTsxPath = path.join(task.dir, "main.scaffold.tsx");
   const reviewMdPath = path.join(task.dir, "review.md");
 
-  const [hasTaskMd, hasPromptMd, hasMainTs, hasMainTsx, hasScaffoldTs, hasScaffoldTsx, hasReviewMd] =
+  const [hasTaskMd, hasMainTs, hasMainTsx, hasScaffoldTs, hasScaffoldTsx, hasReviewMd] =
     await Promise.all([
       fileExists(taskMdPath),
-      fileExists(promptMdPath),
       fileExists(mainTsPath),
       fileExists(mainTsxPath),
       fileExists(scaffoldTsPath),
@@ -136,17 +183,6 @@ async function validateTaskDir(task) {
   if (!hasTaskMd) {
     errors.push("missing task.md");
     return errors;
-  }
-
-  if (!hasPromptMd) {
-    errors.push("missing prompt.md");
-  } else {
-    const promptMd = await fs.readFile(promptMdPath, "utf8");
-    const promptFirstLine = getFirstNonEmptyLine(promptMd.replace(/^\uFEFF/, ""));
-
-    if (promptFirstLine !== "Title") {
-      errors.push('prompt.md should preserve the brief and start with "Title"');
-    }
   }
 
   if (hasMainTs && hasMainTsx) {
@@ -177,13 +213,27 @@ async function validateTaskDir(task) {
     }
   }
 
-  if (frontmatter.slug && frontmatter.slug !== task.slug) {
-    errors.push(`frontmatter slug mismatch (expected "${task.slug}", got "${frontmatter.slug}")`);
+  for (const key of Object.keys(frontmatter)) {
+    if (!REQUIRED_FRONTMATTER_KEYS.includes(key)) {
+      errors.push(`frontmatter includes unsupported workflow key: ${key}`);
+    }
   }
 
   if (frontmatter.category && frontmatter.category !== task.category) {
     errors.push(
       `frontmatter category mismatch (expected "${task.category}", got "${frontmatter.category}")`,
+    );
+  }
+
+  if (frontmatter.category && !ALLOWED_CATEGORIES.has(frontmatter.category)) {
+    errors.push(
+      `frontmatter category must be one of: ${Array.from(ALLOWED_CATEGORIES).join(", ")}`,
+    );
+  }
+
+  if (frontmatter.taskType && !ALLOWED_TASK_TYPES.has(frontmatter.taskType)) {
+    errors.push(
+      `frontmatter taskType must be one of: ${Array.from(ALLOWED_TASK_TYPES).join(", ")}`,
     );
   }
 
@@ -193,42 +243,10 @@ async function validateTaskDir(task) {
     );
   }
 
-  if (frontmatter.penalty && !ALLOWED_PENALTIES.has(frontmatter.penalty)) {
-    errors.push(
-      `frontmatter penalty must be one of: ${Array.from(ALLOWED_PENALTIES).join(", ")}`,
-    );
-  }
-
-  if (frontmatter.hasPreview && !["true", "false"].includes(frontmatter.hasPreview)) {
-    errors.push('frontmatter hasPreview must be "true" or "false"');
-  }
-
-  const hasPreview = frontmatter.hasPreview === "true";
-  const previewEntry = frontmatter.previewEntry;
-
-  if (hasPreview) {
-    if (!previewEntry) {
-      errors.push("frontmatter hasPreview=true but previewEntry is missing");
-    } else {
-      const previewEntryPath = path.join(task.dir, previewEntry);
-      if (!(await fileExists(previewEntryPath))) {
-        errors.push(`previewEntry points to missing file: ${previewEntry}`);
-      } else if (task.category === "react" && previewEntry.endsWith(".tsx")) {
-        const previewEntryContent = await fs.readFile(previewEntryPath, "utf8");
-
-        if (!hasUseClientDirective(previewEntryContent)) {
-          errors.push(
-            'React preview entry must start with "use client"; to avoid Next.js Server Component preview errors',
-          );
-        }
-      }
+  for (const key of ["reviewFocus", "tags"]) {
+    if (frontmatter[key] && !Array.isArray(frontmatter[key])) {
+      errors.push(`frontmatter ${key} must be a YAML list`);
     }
-  } else if (previewEntry) {
-    errors.push("frontmatter previewEntry should be omitted when hasPreview=false");
-  }
-
-  if (!hasReviewMd && frontmatter.penalty && Number(frontmatter.penalty) > 0) {
-    errors.push("penalty > 0 requires review.md");
   }
 
   if (hasReviewMd) {

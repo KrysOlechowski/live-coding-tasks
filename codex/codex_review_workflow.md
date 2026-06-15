@@ -14,11 +14,13 @@ Review the candidate's solution like a realistic technical interviewer.
 
 Anchor the review in the actual task requirements.
 Before criticizing implementation details, first decide whether the solution meets the required behavior.
-Use `codex/review_rubric.md` to calibrate severity, penalty, and what not to mention.
+Use `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus` from `task.md` frontmatter to calibrate what matters most.
+Calibrate severity using the explicit task requirements, `reviewFocus`, and the priority rules in this document.
 
 Prefer high-signal review over exhaustive review.
 Do not let one minor issue dominate the whole review if the core task is solved.
 Do not turn the review into a full tutorial or a full rewrite unless explicitly asked.
+Do not modify the candidate's solution during review unless explicitly asked. Save feedback in `review.md` instead.
 
 ---
 
@@ -37,12 +39,12 @@ If one of the trigger phrases above is used, treat it as a full review request a
 Complete the workflow end-to-end:
 
 1. inspect `task.md` and extract the explicit requirements
-2. inspect the current solution files
-3. compare the implementation against each explicit requirement
-4. identify the highest-signal findings
-5. create or update `review.md`
-6. update `penalty` in `task.md` frontmatter when needed
-7. update `/gpt/gpt_topics.md` only if the task introduced something meaningfully new
+2. read frontmatter, especially `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus`
+3. inspect the current solution files
+4. compare the implementation against each explicit requirement
+5. identify the highest-signal findings
+6. create or update `review.md`
+7. update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`
 8. run `npm run finalize:tasks`
 
 ---
@@ -80,11 +82,14 @@ Possible areas:
 - async flow handling
 - error handling
 - data transformation quality
+- test coverage
+- performance
 - general coding quality
 
 Do not force irrelevant categories.
 Do not review beyond the task scope.
 Do not promote optional polish above broken required behavior.
+Prefer the areas listed in `reviewFocus` when deciding what to prioritize.
 
 ---
 
@@ -310,43 +315,17 @@ Keep the questions practical and relevant.
 
 ---
 
-## Penalty handling
-
-Do not encode review outcome in the folder name.
-
-If the review should affect the task's penalty level, update the `penalty` field in `task.md` frontmatter instead.
-Use `codex/review_rubric.md` as the default calibration guide.
-
-Typical guidance:
-
-- `0` = solid solution, or only minor issues remain
-- `1` = mostly correct, but one important requirement or behavior is still wrong or missing
-- `2` = multiple important requirements or behaviors are wrong or missing, or the solution is significantly incomplete
-- `3` = core logic is broken or the task is largely unsolved
-
-Do not raise the penalty for:
-
-- style-only improvements
-- optional refactors
-- minor naming suggestions
-- stronger-candidate polish that does not affect correctness
-
-Keep the folder name stable and based on the task slug.
-
----
-
 ## Updating topic tracking
 
-After reviewing a task, update `/gpt/gpt_topics.md` if needed.
+After saving `review.md`, update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`.
 
-Only add:
+Track generated task history and coverage, not raw topic lists.
 
-- genuinely new covered topics
-- genuinely new task types
+Only add or update entries that reflect real task history.
 
 Do not spam the file with near-duplicates.
 
-After review-related updates (including `review.md`, `task.md` frontmatter, or `gpt_topics.md`), run:
+After review-related updates, run:
 
 `npm run finalize:tasks`
 

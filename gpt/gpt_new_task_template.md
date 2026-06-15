@@ -2,133 +2,132 @@
 
 ## Purpose
 
-This template is used in ChatGPT to generate new live-coding interview tasks for practice.
+Use this template to generate one realistic, self-contained live-coding interview task. The task should be frontend-oriented by default, interview-sized, and focused on one or two clear skills.
 
-The tasks should be tailored to:
+Do not include solution hints, starter code, solution code, pseudocode, or code snippets.
 
-- frontend interview preparation
-- realistic live coding practice
-- the current recruitment context
-- topics that have not already been covered in `gpt_topics.md`
+## Taxonomy
 
-The goal is not to generate random interview puzzles.
-The goal is to generate realistic tasks for interview preparation, primarily frontend-focused, but sometimes also covering broader coding skills such as data structures, algorithms, debugging, refactoring, or data transformation.
+Use the repo taxonomy:
 
-## Category rules
+- `category`: technical domain.
+- `taskType`: candidate activity or interview mode.
+- `difficulty`: `easy`, `medium`, or `hard`.
+- `problemShape`: inferred mental/problem pattern used to avoid repetition.
 
-Each task must include a proposed category.
+Allowed categories:
 
-Use one of the existing categories when possible.
+- `react`
+- `typescript`
+- `data-transformation`
+- `algorithms`
+- `async`
+- `api-integration`
+- `testing`
+- `performance`
 
-Current categories:
+Allowed taskTypes:
 
-- react
-- typescript
-- dsa
-- debugging
-- refactor
-- async
-- testing
-- architecture
-- api-integration
-- performance
+- `build-from-requirements`
+- `fix-bug`
+- `refactor-existing-code`
+- `complete-partial-implementation`
+- `write-tests`
+- `model-types`
+- `handle-edge-cases`
+- `optimize-performance`
+- `review-and-improve`
 
-If no existing category fits well:
+Do not use `debugging` or `refactor` as categories.
 
-- do not silently invent a new category
-- propose a new category explicitly
-- explain briefly why the current categories are not a good fit
-- ask whether the new category should be added before using it
+## Output Format
 
-## Output format
+Generate the task artifact exactly in this general shape:
 
-Use this structure when generating a new task:
+```md
+---
+title: "..."
+category: "react"
+taskType: "fix-bug"
+difficulty: "medium"
+primarySkill: "..."
+secondarySkill: "..."
+problemShape: "..."
+interviewFocus: "..."
+reviewFocus:
+  - "correctness"
+  - "ui-behavior"
+  - "edge-cases"
+tags:
+  - "react"
+  - "state"
+---
 
-### Title
+# Task Title
 
-[task title]
+## Context
 
-### Category
+Short realistic context.
 
-[one existing category, or a proposed new category if needed]
+## Goal
 
-### Type
+Clear goal for the candidate.
 
-[from scratch / bug fix / refactor / async / data transformation / UI state / debugging]
+## Requirements
 
-### Difficulty
+Specific, reviewable requirements.
 
-[easy / medium / hard]
+## Constraints
 
-### Focus areas
+Only include if useful.
 
-- ...
-- ...
-- ...
+## Non-goals
 
-### Task
+Only include if useful.
 
-[short task description]
+## Acceptance Criteria
 
-### Expected input / output
+Reviewable acceptance criteria.
+```
 
-- input:
-- output:
-- any ordering / normalization / immutability expectations:
+Frontmatter should include exactly these workflow fields:
 
-### Requirements
+- `title`
+- `category`
+- `taskType`
+- `difficulty`
+- `primarySkill`
+- `secondarySkill`
+- `problemShape`
+- `interviewFocus`
+- `reviewFocus`
+- `tags`
 
-- ...
-- ...
-- ...
+## Content Rules
 
-### Optional edge cases
+- Output only the task artifact, with no explanation before or after it, unless the user explicitly asks for discussion.
+- Make the task brief self-contained.
+- Keep the task realistic, interview-sized, and suitable for manual live-coding practice.
+- Practice one or two clear interview skills, not a large project.
+- State important behavior explicitly in `Requirements`.
+- Include constraints when they clarify implementation boundaries.
+- Include non-goals when they prevent scope creep.
+- Include reviewable acceptance criteria.
+- For React/UI tasks, include visible behavior, user interactions, and important UI states.
+- For non-UI tasks, include clear input/output expectations when relevant.
+- Use `focus` from the user as a soft direction.
+- Use `avoid` and `gpt_topics.md` to avoid repeated topics, domains, problem shapes, or task styles.
+- Do not include `focus` or `avoid` as frontmatter fields. They are request parameters only.
+- Use `reviewFocus` values that match the task, such as `correctness`, `edge-cases`, `type-safety`, `readability`, `ui-behavior`, `async-safety`, `performance`, or `test-coverage`.
+- Prefer underused categories, taskTypes, and problemShapes.
 
-- ...
-- ...
-- ...
+## Quality Check
 
-### Out of scope
+Before returning the task artifact, verify that:
 
-- ...
-- ...
-
-### What Codex should scaffold
-
-- create only the minimal files needed
-- do not solve the main task
-- add TODO comments for the main logic
-- default expectation: `task.md` and `main.tsx` or `main.ts`
-- place the task under `tasks/<category>/<slug>/` using a stable slug
-- use `task.md` frontmatter metadata with at least:
-  - `title`
-  - `slug`
-  - `category`
-  - `type`
-  - `difficulty`
-  - `penalty` (default `0`)
-  - `hasPreview` (`true` or `false`)
-  - `previewEntry` only when `hasPreview` is `true`
-- keep `category`, `type`, and `difficulty` in frontmatter, not duplicated in task body
-- if the task needs a UI/runtime preview, set `hasPreview: true` and `previewEntry: main.tsx`
-- if no UI preview is needed, set `hasPreview: false`
-- for non-React tasks that include sample input data, prefer a directly runnable `main.ts` scaffold via a tiny `console.log(exampleFunction(sampleInput))` line instead of requiring a separate runner file
-- keep `review.md` as the latest review only (absence of `review.md` means not started yet)
-- create extra files only if clearly needed
-
-## Important rules
-
-- Do not repeat tasks that are too similar to topics already listed in `gpt_topics.md`
-- Always propose the most suitable existing category before considering a new one
-- Prefer practical frontend tasks by default, but allow broader coding tasks such as data structures, algorithms, debugging, or data transformation when useful
-- Keep tasks suitable for live coding
-- Keep tasks realistic and not too large
-- Avoid giving the solution unless explicitly requested
-- Keep output as a task brief artifact only, ready to hand off to Codex
-- Make the brief self-contained. The candidate should not need to infer missing business rules from surrounding context.
-- If a behavior matters for correctness, state it explicitly in `Requirements` instead of implying it indirectly.
-- Do not hide required behavior inside `Optional edge cases`.
-- Keep `Requirements` behavior-first and testable. Prefer concrete constraints over vague wording such as `handle properly` or `make it robust`.
-- Keep `Focus areas` narrow and interview-relevant. Prefer 2 to 4 focus areas.
-- For React / UI tasks, describe visible user behavior and important UI states explicitly.
-- For TypeScript / data tasks, specify the expected output shape clearly and state ordering, normalization, immutability, or invalid-input expectations when relevant.
+- the selected `category` matches the actual technical domain
+- the selected `taskType` matches the candidate activity
+- the `problemShape` is specific enough to help avoid repetition
+- the task does not reveal an implementation strategy
+- the acceptance criteria are reviewable
+- the task can be solved as a focused live-coding exercise

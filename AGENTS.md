@@ -9,7 +9,10 @@ This repository is used for live-coding interview practice.
 - Keep all task scaffolding lightweight and interview-appropriate.
 - Do not solve the full task unless explicitly asked.
 - Keep task size realistic for a live coding interview.
-- Prefer practical frontend tasks by default, but allow broader coding tasks such as data structures, algorithms, debugging, refactoring, and data transformation when appropriate.
+- Prefer practical frontend tasks by default, but allow broader coding tasks such as algorithms, async, API integration, testing, performance, TypeScript modeling, and data transformation when appropriate.
+- Follow the taxonomy in `/TASK_TAXONOMY.md`.
+- Use `category` for technical domain and `taskType` for candidate activity or interview mode.
+- Do not use `debugging` or `refactor` as categories; use taskType values such as `fix-bug`, `refactor-existing-code`, or `review-and-improve`.
 
 ## Workspace boundaries
 
@@ -49,8 +52,15 @@ This repository is used for live-coding interview practice.
 - `main.scaffold.*` must be an exact copy of the initial scaffolded `main.*` file.
 - Only create extra files like `types.ts`, `mockData.ts`, or `api.ts` when they are clearly necessary.
 - Add TODO comments where the core interview logic should be implemented.
+- For `fix-bug`, `refactor-existing-code`, `optimize-performance`, and `review-and-improve`, do not add TODO comments that reveal the exact issue.
 - Store task metadata in `task.md` frontmatter instead of encoding it in the folder name.
+- Task frontmatter should use the workflow fields defined in `/TASK_TAXONOMY.md`.
 - Do not implement the full solution during scaffolding.
+- Use `category + taskType` to decide scaffold shape.
+- For `fix-bug`, scaffold intentionally broken code matching the brief.
+- For `refactor-existing-code`, scaffold working but intentionally messy, duplicated, unsafe, or hard-to-maintain code.
+- For `complete-partial-implementation`, scaffold clear missing implementation sections without solving them.
+- For `write-tests`, scaffold behavior or weak/incomplete tests depending on the brief.
 - Scaffold is complete only when `npm run finalize:tasks` passes.
 - After creating or renaming task folders/files, Codex must run `npm run finalize:tasks` automatically before finishing the response.
 - Do not ask the user to run metadata/validation commands manually.
@@ -58,9 +68,9 @@ This repository is used for live-coding interview practice.
 ## Task review
 
 - When asked to review a finished task, behave like a realistic technical interviewer.
-- Read `/codex/codex_review_workflow.md` and `/codex/review_rubric.md` when reviewing tasks.
+- Read `/codex/codex_review_workflow.md` when reviewing tasks. Calibrate review severity using the task requirements, `reviewFocus`, and the rules in that workflow.
 - Treat messages like `review my solution`, `review this task`, `do a review`, or `zrób review` as a request for a full repository review workflow.
-- A full review workflow means: inspect the task files, create/update `review.md`, update `penalty` in `task.md` frontmatter when needed, and run `npm run finalize:tasks`.
+- A full review workflow means: inspect the task files, create/update `review.md`, update existing task tracking if the repo has a mechanism for it, and run `npm run finalize:tasks`.
 - Do not stop at chat-only feedback when the user asks for review.
 - Treat messages like `give me a little hint`, `daj hint`, or `explain this part` as discussion/help requests, not as review workflow requests.
 - Evaluate:
@@ -78,7 +88,6 @@ This repository is used for live-coding interview practice.
 - Include one short learning takeaway and one concrete next step in `review.md`.
 - Keep the top-line verdict in `Requirement check` consistent with the actual findings; do not mark the task as solved if the review still says an explicit requirement is unmet.
 - `review.md` should represent only the latest review for the task.
-- If the review needs to reflect task quality, update the `penalty` field in `task.md` frontmatter instead of renaming the folder.
 - After review updates (including `gpt_topics.md`), Codex must run `npm run finalize:tasks` automatically before finishing the response.
 - For each important issue in review findings, include a concrete file reference in `path:line` form.
 - In `Missed edge cases`, list only true edge cases beyond baseline requirements. Do not repeat the main missing requirement from `Requirement check`.
@@ -92,4 +101,4 @@ This repository is used for live-coding interview practice.
 
 ## Topic tracking
 
-- When a task is completed or reviewed, update `/gpt/gpt_topics.md` with the main covered topics if they are not already listed.
+- When Codex scaffolds or reviews a task, update `/gpt/gpt_topics.md` task history.

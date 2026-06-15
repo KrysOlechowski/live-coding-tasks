@@ -1,62 +1,32 @@
-# 🧪 Live Coding Interview Lab
+# Live Coding Interview Lab
 
-A lightweight repo for practicing **live-coding interview tasks** with help from:
+A lightweight repo for practicing live-coding interview tasks with help from:
 
-- 💬 **ChatGPT** for generating task briefs
-- 🤖 **Codex** for scaffolding and review
-- 👨‍💻 **manual coding practice** in a real editor
+- ChatGPT for generating task briefs
+- Codex for scaffolding and review
+- manual coding practice in a real editor
 
----
+The focus is realistic, interview-sized frontend practice, with broader coding tasks when useful.
 
-## ✨ Goal
+## Workflow
 
-This repo is built for:
+1. ChatGPT generates a task brief from the core request: `category`, `taskType`, and `difficulty`.
+2. Optional `focus` and `avoid` inputs guide the topic and reduce repetition.
+3. Codex scaffolds the smallest useful task files under `tasks/<category>/<slug>/`.
+4. You solve the task manually.
+5. Codex reviews the solution and saves feedback in `review.md`.
 
-- ⚛️ frontend interview practice
-- 🧠 problem solving
-- 🔍 debugging
-- ♻️ refactoring
-- 📦 data transformation
-- 🧮 algorithms and data structures when useful
+The taxonomy reference is [TASK_TAXONOMY.md](TASK_TAXONOMY.md). It defines allowed categories, task types, difficulty values, problem shapes, and repetition guard rules.
 
-The focus is on **realistic interview-sized tasks**, not collecting perfect solutions.
+## Core Metadata
 
----
+Task briefs use this model:
 
-## 🧭 Workflow
+- `category`: technical domain, such as `react`, `typescript`, `async`, or `api-integration`.
+- `taskType`: candidate activity or interview mode, such as `fix-bug`, `refactor-existing-code`, or `write-tests`.
+- `difficulty`: `easy`, `medium`, or `hard`.
 
-### 1. 💬 Generate a task brief
-
-Use ChatGPT to create a realistic task based on current interview prep.
-
-Files:
-
-- `gpt/gpt_new_task_template.md`
-- `gpt/gpt_chat_starter.md`
-- `gpt/gpt_topics.md`
-
-### 2. 🤖 Let Codex scaffold the task
-
-Codex creates a **minimal starter** for the task.
-
-Files:
-
-- `codex/codex_task_scaffold.md`
-- `AGENTS.md`
-
-### 3. 👨‍💻 Solve the task manually
-
-Write the solution yourself inside the task folder.
-
-### 4. 🔍 Review the solution
-
-Codex reviews the solution and saves feedback in `review.md`.
-
-Files:
-
-- `codex/codex_review_workflow.md`
-
----
+ChatGPT infers supporting metadata such as `primarySkill`, `secondarySkill`, `problemShape`, `interviewFocus`, `reviewFocus`, and `tags`.
 
 ## ▶️ Running a single task file
 
@@ -68,26 +38,25 @@ npx tsx --watch tasks/<category>/<task>/main.ts
 
 This is useful for quick live-coding practice because it reruns the file after every save and shows `console.log` output without wiring the task into the Next.js app.
 
-## 🔄 Sync generated metadata
+## Finalize Task Metadata
 
-After creating/updating tasks or GPT workflow files:
-
-1. validate task structure
-2. refresh generated metadata
+After creating or updating task files, run:
 
 ```bash
-npm run validate:tasks
-npm run sync:metadata
+npm run finalize:tasks
 ```
+
+This validates task structure and refreshes generated metadata.
 
 ---
 
-## 🗂️ Structure
+## Structure
 
 ```txt
 .
 ├── AGENTS.md
 ├── README.md
+├── TASK_TAXONOMY.md
 ├── gpt/
 │   ├── gpt_new_task_template.md
 │   ├── gpt_chat_starter.md
@@ -107,55 +76,38 @@ npm run sync:metadata
 `main.scaffold.*` is the untouched original scaffold snapshot.
 `main.*` is your working solution file.
 
----
-
-## 🏷️ Task folder naming
+## Task Folder Naming
 
 Task folders use a stable slug.
 
-Difficulty, task type, and penalty level live in `task.md` frontmatter instead of being encoded in the folder name.
+Difficulty, task type, skills, problem shape, and review focus live in `task.md` frontmatter instead of being encoded in the folder name.
 
 ### Example
 
 - `tasks/react/search-filter-users/`
-- `tasks/dsa/group-and-sort-transactions/`
-- `tasks/debugging/fix-broken-widget/`
+- `tasks/data-transformation/normalize-orders/`
+- `tasks/async/fix-stale-search-results/`
 
----
-
-## 🧩 Task Types
-
-This repo may include:
-
-- ⚛️ React / UI tasks
-- 🔄 async flow tasks
-- 🐞 debugging tasks
-- 🧼 refactoring tasks
-- 📊 data transformation tasks
-- 🧠 algorithms / data structures
-- 🧱 architecture-oriented coding exercises
-
-It is **frontend-focused**, but not limited to React-only tasks.
-
----
-
-## 📌 Rules
+## Rules
 
 ### For ChatGPT
 
 - generate task briefs
 - avoid repeated topics
 - keep tasks realistic
-- do not reveal solutions unless asked
+- do not reveal solutions, starter code, pseudocode, or hints unless asked
+- follow `gpt/gpt_new_task_template.md`
 
 ### For Codex
 
 - scaffold only the minimal needed files
 - do not solve the task during setup
+- use `category + taskType` to choose scaffold shape
 - review like a practical interviewer
 - save feedback in `review.md`
+- update `gpt/gpt_topics.md` during scaffolding and review
 - create task folders under the correct category
-- keep task folder names stable and update task metadata instead of renaming folders after review
+- keep task folder names stable
 
 ### For the candidate
 
@@ -164,11 +116,9 @@ It is **frontend-focused**, but not limited to React-only tasks.
 - think about edge cases
 - improve after the first working version
 
----
+## Final Idea
 
-## 🎯 Final idea
-
-This repo is a **practice lab**, not a showcase project.
+This repo is a practice lab, not a showcase project.
 
 It exists to support a repeatable workflow:
 

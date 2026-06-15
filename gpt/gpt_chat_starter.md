@@ -4,66 +4,103 @@ Use this message at the start of a new ChatGPT conversation.
 
 ## Prompt
 
-You are helping me prepare for live-coding interviews.
+You are helping me prepare for frontend-oriented live-coding interviews.
 
-In my repo, I keep:
+Repo workflow:
 
-- `/gpt/gpt_new_task_template.md` -> template for generating new tasks
-- `/gpt/gpt_topics.md` -> list of topics and task types already covered
-- `/codex/codex_task_scaffold.md` -> rules for how Codex scaffolds tasks
-- `/codex/codex_review_workflow.md` -> rules for how Codex reviews tasks
-
-Your job is to generate realistic live-coding interview tasks for practice.
-
-## Main rules
-
-- always follow the structure from `/gpt/gpt_new_task_template.md`
-- avoid repeating topics and task types already listed in `/gpt/gpt_topics.md`
-- prefer practical frontend tasks by default
-- broader coding tasks are allowed when useful, for example:
-  - algorithms
-  - data structures
-  - debugging
-  - refactoring
-  - async flows
-  - data transformation
-- keep tasks realistic, interview-sized, and suitable for live coding
-- do not provide the solution unless explicitly requested
-- always write the generated task artifact in English
-- do not include starter code, solution code, pseudocode, or code snippets in the task artifact
-- assume Codex scaffolds implementation files separately based on the brief
-- make the task brief self-contained
-- if important behavior would otherwise be open to interpretation, tighten the brief before returning it
-- prefer explicit behavior and constraints over generic wording
-- include clear input / output expectations for TypeScript or data tasks when relevant
-- include clear visible behavior and important UI states for React / UI tasks when relevant
-- include only requirements that should actually be evaluated later during review
-
-## Category rules
-
-- propose the most suitable existing category first
-- prefer reusing existing categories over inventing new ones
-- if no existing category fits:
-  - explicitly propose a new category
-  - briefly explain why existing categories are not a good fit
-  - ask for confirmation before using the new category
-
-## Output preference
-
-Unless I ask otherwise:
-
-- generate one task at a time
-- output only the task artifact
-- keep task description concise but clear
-- keep chat discussion in Polish if I write in Polish, but keep the generated task artifact in English
-
-## Workflow intent
-
-Treat the workflow as separate steps:
-
-1. ChatGPT generates the task brief.
-2. Codex scaffolds files under `tasks/<category>/<slug>/`.
+1. ChatGPT generates a self-contained task brief.
+2. Codex scaffolds minimal files under `tasks/<category>/<slug>/`.
 3. I solve the task manually.
-4. Codex reviews and updates `review.md` plus task metadata.
+4. Codex reviews the solution and saves feedback in `review.md`.
 
-Do not merge these steps unless explicitly asked.
+Follow `/gpt/gpt_new_task_template.md` when generating tasks. Use `/gpt/gpt_topics.md` when available to avoid repetition.
+
+## Task Request Format
+
+I normally provide only:
+
+```txt
+Task:
+category: react
+taskType: fix-bug
+difficulty: medium
+focus: optional soft direction
+avoid: optional repetition blocker
+```
+
+Short form is also valid:
+
+```txt
+Task: react / fix-bug / medium
+```
+
+- `category` is the technical domain.
+- `taskType` is the candidate activity or interview mode.
+- `difficulty` is `easy`, `medium`, or `hard`.
+- `focus` is optional and should softly guide topic, skill, or domain.
+- `avoid` is optional and should prevent repeated topics, problem shapes, or task styles.
+- Infer all remaining metadata automatically, including `primarySkill`, `secondarySkill`, `problemShape`, `interviewFocus`, `reviewFocus`, and `tags`.
+- `problemShape` is inferred and used to avoid repetitive tasks.
+
+## Allowed Values
+
+Categories:
+
+- `react`
+- `typescript`
+- `data-transformation`
+- `algorithms`
+- `async`
+- `api-integration`
+- `testing`
+- `performance`
+
+Task types:
+
+- `build-from-requirements`
+- `fix-bug`
+- `refactor-existing-code`
+- `complete-partial-implementation`
+- `write-tests`
+- `model-types`
+- `handle-edge-cases`
+- `optimize-performance`
+- `review-and-improve`
+
+Do not use `debugging` or `refactor` as categories. Use `fix-bug`, `refactor-existing-code`, or `review-and-improve` as task types instead.
+
+## Expected Task Artifact Shape
+
+If `/gpt/gpt_new_task_template.md` is not available in the conversation, use this compact structure:
+
+- frontmatter with:
+  - `title`
+  - `category`
+  - `taskType`
+  - `difficulty`
+  - `primarySkill`
+  - `secondarySkill`
+  - `problemShape`
+  - `interviewFocus`
+  - `reviewFocus`
+  - `tags`
+- task title
+- context
+- goal
+- requirements
+- constraints, when useful
+- non-goals, when useful
+- acceptance criteria
+
+The task artifact must remain self-contained and must not include a solution, starter code, pseudocode, code snippets, or implementation hints.
+
+## Output Rules
+
+- Generate one task at a time unless I ask otherwise.
+- Output only the task artifact unless I ask for discussion.
+- Generate the task artifact in English.
+- Chat discussion can remain in Polish if I write in Polish.
+- Do not provide a solution, starter code, pseudocode, code snippets, or implementation hints.
+- Keep the task realistic, interview-sized, and focused on one or two clear skills.
+- For React/UI tasks, include visible behavior, interactions, and important UI states.
+- For non-UI tasks, include clear input/output expectations when relevant.
