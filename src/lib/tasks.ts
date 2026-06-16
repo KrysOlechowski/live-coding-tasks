@@ -55,11 +55,18 @@ function parseFrontmatterValue(value: string): boolean | number | string {
     return Number(trimmedValue);
   }
 
+  if (
+    (trimmedValue.startsWith('"') && trimmedValue.endsWith('"')) ||
+    (trimmedValue.startsWith("'") && trimmedValue.endsWith("'"))
+  ) {
+    return trimmedValue.slice(1, -1);
+  }
+
   return trimmedValue;
 }
 
 function parseFrontmatter(source: string): {
-  data: Record<string, boolean | number | string>;
+  data: Record<string, boolean | number | string | string[]>;
   body: string;
 } {
   const match = source.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -69,12 +76,24 @@ function parseFrontmatter(source: string): {
   }
 
   const [, rawFrontmatter, body] = match;
-  const data: Record<string, boolean | number | string> = {};
+  const data: Record<string, boolean | number | string | string[]> = {};
+  let currentArrayKey: string | null = null;
 
   for (const line of rawFrontmatter.split("\n")) {
     const trimmedLine = line.trim();
 
     if (!trimmedLine) {
+      continue;
+    }
+
+    if (trimmedLine.startsWith("- ")) {
+      const currentValue = currentArrayKey ? data[currentArrayKey] : null;
+
+      if (!Array.isArray(currentValue)) {
+        throw new Error(`Invalid frontmatter line: "${trimmedLine}"`);
+      }
+
+      currentValue.push(String(parseFrontmatterValue(trimmedLine.slice(2))));
       continue;
     }
 
@@ -86,7 +105,15 @@ function parseFrontmatter(source: string): {
 
     const key = trimmedLine.slice(0, separatorIndex).trim();
     const value = trimmedLine.slice(separatorIndex + 1);
+
+    if (!value.trim()) {
+      data[key] = [];
+      currentArrayKey = key;
+      continue;
+    }
+
     data[key] = parseFrontmatterValue(value);
+    currentArrayKey = null;
   }
 
   return {
@@ -110,16 +137,17 @@ async function readOptionalFile(filePath: string): Promise<string | null> {
 }
 
 function coerceFrontmatter(
-  data: Record<string, boolean | number | string>,
+  data: Record<string, boolean | number | string | string[]>,
   filePath: string,
+  fallbackSlug: string,
 ): TaskFrontmatter {
   const title = data.title;
-  const slug = data.slug;
+  const slug = data.slug ?? fallbackSlug;
   const category = data.category;
-  const type = data.type;
+  const type = data.type ?? data.taskType;
   const difficulty = data.difficulty;
-  const penalty = data.penalty;
-  const hasPreview = data.hasPreview;
+  const penalty = data.penalty ?? 0;
+  const hasPreview = data.hasPreview ?? false;
   const previewEntry = data.previewEntry;
 
   if (
@@ -163,7 +191,7 @@ async function readTaskSummary(
   }
 
   const { data, body } = parseFrontmatter(taskFile);
-  const frontmatter = coerceFrontmatter(data, taskFilePath);
+  const frontmatter = coerceFrontmatter(data, taskFilePath, slug);
 
   if (frontmatter.slug !== slug) {
     throw new Error(
