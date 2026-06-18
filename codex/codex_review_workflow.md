@@ -316,6 +316,33 @@ Keep the questions practical and relevant.
 
 ---
 
+## Suggested Git Name
+
+After each review, include a suggested git name the user can use for a commit, branch, or change label.
+
+Use this exact format:
+
+```txt
+tasks/<category>/<task-folder-name>
+```
+
+Rules:
+
+- use `category` from `task.md` frontmatter
+- use the task folder name as the last path segment
+- do not include spaces
+- do not include quotes
+- do not invent a different naming scheme
+- do not run git commands
+
+Example:
+
+```txt
+tasks/react/format-user-display-names
+```
+
+---
+
 ## Updating topic tracking
 
 After saving `review.md`, update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`.
@@ -329,6 +356,18 @@ Do not spam the file with near-duplicates.
 After review-related updates, run:
 
 `npm run finalize:tasks`
+
+---
+
+## Final chat response
+
+When the review is complete, keep the final chat response concise and include:
+
+- the main finding
+- the suggested git name
+- whether `review.md` was saved
+- whether `/gpt/gpt_topics.md` was updated
+- which validation commands passed, if any were run
 
 ---
 
