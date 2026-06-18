@@ -41,6 +41,7 @@ Complete the workflow end-to-end:
 1. inspect `task.md` and extract the explicit requirements
 2. read frontmatter, especially `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus`
 3. inspect the current solution files
+   When the user provides an explicit task path or opens/adds a file from a task folder, treat that folder as the current task. Inspect only that task folder, shared workflow files, and `/gpt/gpt_topics.md`. Do not inspect unrelated task folders unless explicitly asked.
 4. compare the implementation against each explicit requirement
 5. identify the highest-signal findings
 6. create or update `review.md`
