@@ -104,6 +104,18 @@ Use short, reviewable labels:
 - `test-coverage`
 - `performance`
 
+## Review Mastery
+
+Mastery is the positive, evidence-based progress rating inferred by Codex during review. It is based on the task requirements, `reviewFocus`, and highest-signal findings; the user does not enter it manually.
+
+- `1/5 — Needs another pass`
+- `2/5 — Partially working`
+- `3/5 — Mostly working`
+- `4/5 — Interview-ready`
+- `5/5 — Strong solution`
+
+Mastery replaces the old idea of penalty stars. Do not use penalty scoring.
+
 ## Repetition Guard Rules
 
 - Do not repeat the same `problemShape` too soon unless explicitly requested.

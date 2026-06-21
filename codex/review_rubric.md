@@ -52,9 +52,13 @@ Keep both short and practical.
 - minor markup or readability issue with correct user-visible behavior -> usually still `yes`
 - do not mix `yes` with wording that says an explicit requirement is still missing
 
-## Penalty guide
+## Mastery guide
 
-- `0`: correct solution, or only minor issues remain
-- `1`: mostly correct, but one important requirement or behavior is wrong or missing
-- `2`: multiple important requirements or behaviors are wrong or missing, or the solution is significantly incomplete
-- `3`: core task not solved or core logic is broken
+- `1/5 — Needs another pass`: major requirements are missing or substantial rework is needed
+- `2/5 — Partially working`: some core behavior works, but important requirements remain broken
+- `3/5 — Mostly working`: the main behavior works, but meaningful issues remain
+- `4/5 — Interview-ready`: requirements are met with only minor improvement opportunities
+- `5/5 — Strong solution`: correct, readable, robust, and easy to explain
+
+Infer Mastery from the task requirements, `reviewFocus`, and highest-signal findings.
+Use it as honest positive progress feedback, never as penalty scoring.

@@ -53,8 +53,8 @@ export default async function Home() {
             </div>
           </div>
           <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300">
-            Metadata lives in `task.md` frontmatter. Review penalty is now part of the
-            task model instead of the folder name.
+            Metadata lives in `task.md` frontmatter. Reviewed tasks also expose their
+            Mastery rating from `review.md`.
           </p>
         </div>
       </section>

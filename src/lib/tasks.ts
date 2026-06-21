@@ -1,21 +1,27 @@
 import { promises as fs } from "node:fs";
+import type { Dirent } from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 
 const TASKS_ROOT = path.join(process.cwd(), "tasks");
 
-type TaskCategory = "debugging" | "react" | "typescript" | string;
+type TaskCategory = string;
 type TaskDifficulty = "easy" | "medium" | "hard" | string;
 
 type TaskFrontmatter = {
   title: string;
   slug: string;
   category: TaskCategory;
-  type: string;
+  taskType: string;
   difficulty: TaskDifficulty;
-  penalty: number;
   hasPreview: boolean;
   previewEntry?: string;
+};
+
+export type TaskMastery = {
+  level: 1 | 2 | 3 | 4 | 5;
+  label: string;
+  reason: string;
 };
 
 export type TaskSummary = TaskFrontmatter & {
@@ -25,6 +31,7 @@ export type TaskSummary = TaskFrontmatter & {
   promptFilePath: string | null;
   reviewFilePath: string | null;
   hasReview: boolean;
+  mastery: TaskMastery | null;
 };
 
 export type TaskDocument = TaskSummary & {
@@ -35,7 +42,7 @@ export type TaskDocument = TaskSummary & {
 type TaskFilters = {
   category?: string;
   difficulty?: string;
-  penalty?: string;
+  mastery?: string;
   preview?: string;
   progress?: string;
 };
@@ -136,6 +143,55 @@ async function readOptionalFile(filePath: string): Promise<string | null> {
   }
 }
 
+async function readOptionalDirectory(
+  directoryPath: string,
+): Promise<Dirent[]> {
+  try {
+    return await fs.readdir(directoryPath, { withFileTypes: true });
+  } catch (error) {
+    const typedError = error as NodeJS.ErrnoException;
+
+    if (typedError.code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
+function parseMastery(reviewBody: string): TaskMastery | null {
+  const lines = reviewBody.split(/\r?\n/);
+  const headingIndex = lines.findIndex((line) => line.trim() === "## Mastery");
+
+  if (headingIndex === -1) {
+    return null;
+  }
+
+  const nextHeadingIndex = lines.findIndex(
+    (line, index) => index > headingIndex && line.trim().startsWith("## "),
+  );
+  const sectionLines = lines.slice(
+    headingIndex + 1,
+    nextHeadingIndex === -1 ? undefined : nextHeadingIndex,
+  );
+  const levelLine = sectionLines.find((line) => line.trim().startsWith("Level:"));
+  const reasonLine = sectionLines.find((line) => line.trim().startsWith("Reason:"));
+  const levelMatch = levelLine
+    ?.trim()
+    .match(/^Level:\s*([1-5])\/5\s+—\s+(.+?)\s*$/);
+  const reason = reasonLine?.trim().replace(/^Reason:\s*/, "") ?? "";
+
+  if (!levelMatch || !reason) {
+    return null;
+  }
+
+  return {
+    level: Number(levelMatch[1]) as TaskMastery["level"],
+    label: levelMatch[2],
+    reason,
+  };
+}
+
 function coerceFrontmatter(
   data: Record<string, boolean | number | string | string[]>,
   filePath: string,
@@ -144,9 +200,8 @@ function coerceFrontmatter(
   const title = data.title;
   const slug = data.slug ?? fallbackSlug;
   const category = data.category;
-  const type = data.type ?? data.taskType;
+  const taskType = data.taskType ?? data.type;
   const difficulty = data.difficulty;
-  const penalty = data.penalty ?? 0;
   const hasPreview = data.hasPreview ?? false;
   const previewEntry = data.previewEntry;
 
@@ -154,9 +209,8 @@ function coerceFrontmatter(
     typeof title !== "string" ||
     typeof slug !== "string" ||
     typeof category !== "string" ||
-    typeof type !== "string" ||
+    typeof taskType !== "string" ||
     typeof difficulty !== "string" ||
-    typeof penalty !== "number" ||
     typeof hasPreview !== "boolean"
   ) {
     throw new Error(`Invalid task frontmatter in ${filePath}`);
@@ -170,9 +224,8 @@ function coerceFrontmatter(
     title,
     slug,
     category,
-    type,
+    taskType,
     difficulty,
-    penalty,
     hasPreview,
     previewEntry,
   };
@@ -227,11 +280,12 @@ async function readTaskSummary(
     promptFilePath: promptBody ? promptFilePath : null,
     reviewFilePath: reviewBody ? reviewFilePath : null,
     hasReview: reviewBody !== null,
+    mastery: reviewBody ? parseMastery(reviewBody) : null,
   };
 }
 
 export const getAllTasks = cache(async (): Promise<TaskSummary[]> => {
-  const categoryEntries = await fs.readdir(TASKS_ROOT, { withFileTypes: true });
+  const categoryEntries = await readOptionalDirectory(TASKS_ROOT);
   const tasks: TaskSummary[] = [];
   const seenSlugs = new Set<string>();
 
@@ -241,9 +295,7 @@ export const getAllTasks = cache(async (): Promise<TaskSummary[]> => {
     }
 
     const category = categoryEntry.name;
-    const taskEntries = await fs.readdir(path.join(TASKS_ROOT, category), {
-      withFileTypes: true,
-    });
+    const taskEntries = await readOptionalDirectory(path.join(TASKS_ROOT, category));
 
     for (const taskEntry of taskEntries) {
       if (!taskEntry.isDirectory()) {
@@ -293,7 +345,13 @@ export async function getTaskFilterOptions() {
   return {
     categories: Array.from(new Set(tasks.map((task) => task.category))).sort(),
     difficulties: Array.from(new Set(tasks.map((task) => task.difficulty))).sort(),
-    penalties: Array.from(new Set(tasks.map((task) => String(task.penalty)))).sort(),
+    masteryLevels: Array.from(
+      new Set(
+        tasks.flatMap((task) =>
+          task.mastery ? [String(task.mastery.level)] : [],
+        ),
+      ),
+    ).sort((left, right) => Number(left) - Number(right)),
     progress: ["not-started", "reviewed"],
   };
 }
@@ -308,7 +366,7 @@ export function filterTasks(tasks: TaskSummary[], filters: TaskFilters): TaskSum
       return false;
     }
 
-    if (filters.penalty && String(task.penalty) !== filters.penalty) {
+    if (filters.mastery && String(task.mastery?.level) !== filters.mastery) {
       return false;
     }
 
@@ -332,12 +390,8 @@ export function filterTasks(tasks: TaskSummary[], filters: TaskFilters): TaskSum
   });
 }
 
-export function getPenaltyLabel(penalty: number) {
-  if (penalty <= 0) {
-    return "No penalty";
-  }
-
-  return `${"★".repeat(penalty)}${"☆".repeat(Math.max(0, 3 - penalty))}`;
+export function getMasteryLabel(mastery: TaskMastery) {
+  return `Mastery: ${mastery.level}/5 — ${mastery.label}`;
 }
 
 export function getProgressLabel(hasReview: boolean) {

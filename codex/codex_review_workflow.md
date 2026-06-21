@@ -44,9 +44,10 @@ Complete the workflow end-to-end:
    When the user provides an explicit task path or opens/adds a file from a task folder, treat that folder as the current task. Inspect only that task folder, shared workflow files, and `/gpt/gpt_topics.md`. Do not inspect unrelated task folders unless explicitly asked.
 4. compare the implementation against each explicit requirement
 5. identify the highest-signal findings
-6. create or update `review.md`
-7. update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`
-8. run `npm run finalize:tasks`
+6. infer an evidence-based Mastery level from the requirements, `reviewFocus`, and highest-signal findings
+7. create or update `review.md`
+8. update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`
+9. run `npm run finalize:tasks`
 
 ---
 
@@ -167,6 +168,12 @@ Do not stop at the first symptom if the deeper cause is visible in code.
 - Meets the task requirements: yes / partially / no
 - Most important missing or incorrect behavior: ...
 
+## Mastery
+
+Level: X/5 — Label
+
+Reason: Short explanation.
+
 ## Weaknesses
 
 - ...
@@ -236,6 +243,26 @@ Use this bar for the top-line verdict:
 
 Do not write `yes` if the review still claims an explicit required behavior is missing.
 If the remaining issue is only markup polish, wording preference, or non-blocking clarity, keep `yes`.
+
+---
+
+## Mastery
+
+Infer Mastery during review. The user should not provide it manually.
+Treat it as positive progress feedback, not punishment, while keeping the rating honest and evidence-based.
+Base it on the actual task requirements, `reviewFocus`, and the highest-signal findings.
+
+Use exactly one of these levels and labels:
+
+- `1/5 — Needs another pass`: major requirements are missing, the solution does not run reliably, or substantial rework is needed
+- `2/5 — Partially working`: some core behavior works, but important requirements are still broken
+- `3/5 — Mostly working`: the main behavior works, but meaningful edge cases or quality issues remain
+- `4/5 — Interview-ready`: the solution meets the requirements with only minor improvement opportunities
+- `5/5 — Strong solution`: the solution is correct, readable, robust, and easy to explain
+
+Keep the reason to one short explanation that matches the requirement verdict and findings.
+Do not inflate the level to make the review sound more positive.
+Do not use penalty stars or penalty scoring.
 
 ---
 
@@ -316,33 +343,6 @@ Keep the questions practical and relevant.
 
 ---
 
-## Suggested Git Name
-
-After each review, include a suggested git name the user can use for a commit, branch, or change label.
-
-Use this exact format:
-
-```txt
-tasks/<category>/<task-folder-name>
-```
-
-Rules:
-
-- use `category` from `task.md` frontmatter
-- use the task folder name as the last path segment
-- do not include spaces
-- do not include quotes
-- do not invent a different naming scheme
-- do not run git commands
-
-Example:
-
-```txt
-tasks/react/format-user-display-names
-```
-
----
-
 ## Updating topic tracking
 
 After saving `review.md`, update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`.
@@ -364,10 +364,26 @@ After review-related updates, run:
 When the review is complete, keep the final chat response concise and include:
 
 - the main finding
-- the suggested git name
+- the Mastery level
+- the suggested git name, printed in chat only and not saved to `review.md`
 - whether `review.md` was saved
 - whether `/gpt/gpt_topics.md` was updated
 - which validation commands passed, if any were run
+
+Use this exact format for the suggested git name:
+
+```txt
+tasks/<category>/<task-folder-name>
+```
+
+Rules:
+
+- use `category` from `task.md` frontmatter
+- use the task folder name as the last path segment
+- do not include spaces
+- do not include quotes
+- do not invent a different naming scheme
+- do not run git commands
 
 ---
 

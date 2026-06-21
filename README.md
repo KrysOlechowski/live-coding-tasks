@@ -14,7 +14,7 @@ The focus is realistic, interview-sized frontend practice, with broader coding t
 2. Optional `focus` and `avoid` inputs guide the topic and reduce repetition.
 3. Codex scaffolds the smallest useful task files under `tasks/<category>/<slug>/`.
 4. You solve the task manually.
-5. Codex reviews the solution and saves feedback in `review.md`.
+5. Codex reviews the solution, infers a positive Mastery rating from 1/5 to 5/5, and saves the feedback in `review.md`.
 
 The taxonomy reference is [TASK_TAXONOMY.md](TASK_TAXONOMY.md). It defines allowed categories, task types, difficulty values, problem shapes, and repetition guard rules.
 
@@ -104,7 +104,7 @@ Difficulty, task type, skills, problem shape, and review focus live in `task.md`
 - do not solve the task during setup
 - use `category + taskType` to choose scaffold shape
 - review like a practical interviewer
-- save feedback in `review.md`
+- save feedback and the inferred Mastery rating in `review.md`
 - update `gpt/gpt_topics.md` during scaffolding and review
 - create task folders under the correct category
 - keep task folder names stable

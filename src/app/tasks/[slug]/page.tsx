@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SimpleMarkdown } from "@/components/simple-markdown";
-import { getPenaltyLabel, getTaskBySlug } from "@/lib/tasks";
+import { getMasteryLabel, getTaskBySlug } from "@/lib/tasks";
 
 export default async function TaskDetailPage({
   params,
@@ -34,11 +34,13 @@ export default async function TaskDetailPage({
               {task.difficulty}
             </span>
             <span className="rounded-full bg-zinc-100 px-3 py-1 font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
-              {task.type}
+              {task.taskType}
             </span>
-            <span className="rounded-full bg-zinc-100 px-3 py-1 font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
-              {getPenaltyLabel(task.penalty)}
-            </span>
+            {task.mastery ? (
+              <span className="rounded-full bg-violet-100 px-3 py-1 font-medium text-violet-900 dark:bg-violet-500/20 dark:text-violet-200">
+                {getMasteryLabel(task.mastery)}
+              </span>
+            ) : null}
           </div>
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 dark:text-white">
             {task.title}
@@ -74,12 +76,14 @@ export default async function TaskDetailPage({
               Task meta
             </h2>
             <dl className="mt-4 grid gap-3 text-sm">
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-zinc-500 dark:text-zinc-400">Penalty</dt>
-                <dd className="font-medium text-zinc-950 dark:text-white">
-                  {task.penalty}
-                </dd>
-              </div>
+              {task.mastery ? (
+                <div className="flex items-start justify-between gap-4">
+                  <dt className="text-zinc-500 dark:text-zinc-400">Mastery</dt>
+                  <dd className="text-right font-medium text-zinc-950 dark:text-white">
+                    {task.mastery.level}/5 — {task.mastery.label}
+                  </dd>
+                </div>
+              ) : null}
               <div className="flex items-start justify-between gap-4">
                 <dt className="text-zinc-500 dark:text-zinc-400">Preview</dt>
                 <dd className="font-medium text-zinc-950 dark:text-white">

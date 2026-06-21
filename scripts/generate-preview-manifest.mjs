@@ -68,8 +68,20 @@ function getImportPath(category, slug, previewEntry) {
   return `../../tasks/${category}/${slug}/${withoutExtension}`.replace(/\\/g, "/");
 }
 
+async function readDirectoryOrEmpty(directoryPath) {
+  try {
+    return await fs.readdir(directoryPath, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 async function collectPreviewTasks() {
-  const categories = await fs.readdir(TASKS_ROOT, { withFileTypes: true });
+  const categories = await readDirectoryOrEmpty(TASKS_ROOT);
   const tasks = [];
 
   for (const categoryEntry of categories) {
@@ -79,7 +91,7 @@ async function collectPreviewTasks() {
 
     const category = categoryEntry.name;
     const categoryPath = path.join(TASKS_ROOT, category);
-    const entries = await fs.readdir(categoryPath, { withFileTypes: true });
+    const entries = await readDirectoryOrEmpty(categoryPath);
 
     for (const entry of entries) {
       if (!entry.isDirectory()) {

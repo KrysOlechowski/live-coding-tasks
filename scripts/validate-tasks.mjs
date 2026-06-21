@@ -40,6 +40,7 @@ const ALLOWED_TASK_TYPES = new Set([
 const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
 const REQUIRED_REVIEW_SECTIONS = [
   "Requirement check",
+  "Mastery",
   "Strengths",
   "Weaknesses",
   "Missed edge cases",
@@ -49,6 +50,13 @@ const REQUIRED_REVIEW_SECTIONS = [
   "Follow-up questions",
   "Final verdict",
 ];
+const MASTERY_LABELS = {
+  1: "Needs another pass",
+  2: "Partially working",
+  3: "Mostly working",
+  4: "Interview-ready",
+  5: "Strong solution",
+};
 
 function stripQuotes(value) {
   if (
@@ -123,6 +131,24 @@ function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function getMarkdownSection(content, heading) {
+  const lines = content.split(/\r?\n/);
+  const headingIndex = lines.findIndex((line) => line.trim() === `## ${heading}`);
+
+  if (headingIndex === -1) {
+    return [];
+  }
+
+  const nextHeadingIndex = lines.findIndex(
+    (line, index) => index > headingIndex && line.trim().startsWith("## "),
+  );
+
+  return lines.slice(
+    headingIndex + 1,
+    nextHeadingIndex === -1 ? undefined : nextHeadingIndex,
+  );
+}
+
 async function fileExists(filePath) {
   try {
     await fs.access(filePath);
@@ -132,8 +158,20 @@ async function fileExists(filePath) {
   }
 }
 
+async function readDirectoryOrEmpty(directoryPath) {
+  try {
+    return await fs.readdir(directoryPath, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 async function collectTaskDirs() {
-  const categoryEntries = await fs.readdir(TASKS_ROOT, { withFileTypes: true });
+  const categoryEntries = await readDirectoryOrEmpty(TASKS_ROOT);
   const taskDirs = [];
 
   for (const categoryEntry of categoryEntries) {
@@ -143,7 +181,7 @@ async function collectTaskDirs() {
 
     const category = categoryEntry.name;
     const categoryPath = path.join(TASKS_ROOT, category);
-    const taskEntries = await fs.readdir(categoryPath, { withFileTypes: true });
+    const taskEntries = await readDirectoryOrEmpty(categoryPath);
 
     for (const taskEntry of taskEntries) {
       if (!taskEntry.isDirectory()) {
@@ -262,6 +300,32 @@ async function validateTaskDir(task) {
       if (!sectionPattern.test(reviewMd)) {
         errors.push(`review.md missing required section: ${section}`);
       }
+    }
+
+    const masteryLines = getMarkdownSection(reviewMd, "Mastery");
+    const levelLine = masteryLines.find((line) => line.trim().startsWith("Level:"));
+    const reasonLine = masteryLines.find((line) => line.trim().startsWith("Reason:"));
+    const levelMatch = levelLine
+      ?.trim()
+      .match(/^Level:\s*([1-5])\/5\s+—\s+(.+?)\s*$/);
+
+    if (!levelMatch) {
+      errors.push(
+        "review.md Mastery must include: Level: X/5 — Label",
+      );
+    } else {
+      const level = Number(levelMatch[1]);
+      const label = levelMatch[2];
+
+      if (label !== MASTERY_LABELS[level]) {
+        errors.push(
+          `review.md Mastery label for ${level}/5 must be "${MASTERY_LABELS[level]}"`,
+        );
+      }
+    }
+
+    if (!reasonLine?.trim().match(/^Reason:\s*\S/)) {
+      errors.push("review.md Mastery must include a non-empty Reason");
     }
   }
 
