@@ -115,7 +115,7 @@ function getReceiptLink(payment: Payment): string | undefined {
   switch (payment.status) {
     case "paid":
     case "refunded":
-      return payment.status;
+      return payment.receiptUrl;
     case "failed":
     case "pending":
     case "draft":

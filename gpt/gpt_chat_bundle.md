@@ -279,4 +279,4 @@ Codex should update this file during task scaffolding and review. The user shoul
 | slug | category | taskType | difficulty | primarySkill | problemShape | status | notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | fix-stale-account-lookup-results | async | fix-bug | medium | Preventing stale async responses from overwriting newer UI state | stale-async-response | generated | - |
-| model-payment-status-safely | typescript | model-types | medium | Modeling impossible states with discriminated unions | discriminated-union-state | reviewed | Mostly correct union and exhaustive narrowing; receipt helper returns status instead of URL. |
+| model-payment-status-safely | typescript | model-types | medium | Modeling impossible states with discriminated unions | discriminated-union-state | reviewed | Helpers are correct and exhaustive; forbidden metadata still needs optional never fields for strict enforcement. |
