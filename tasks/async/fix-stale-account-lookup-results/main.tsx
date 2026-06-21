@@ -11,7 +11,7 @@ type Account = {
 
 function fakeLookupAccount(email: string): Promise<Account> {
   const normalizedEmail = email.toLowerCase();
-  const delay = normalizedEmail.includes("slow") ? 6000 : 600;
+  const delay = normalizedEmail.includes("slow") ? 1800 : 600;
 
   return new Promise((resolve, reject) => {
     window.setTimeout(() => {
@@ -66,8 +66,6 @@ export default function AccountLookup() {
 
     const normalizedEmail = email.trim();
 
-    // Krystian's note: this part meets the requirement: "Submitting an empty email should show a validation error without starting a lookup."
-    // The real gremlin is lower in the async flow, where an older request can still update the UI after a newer request.
     if (!normalizedEmail) {
       setValidationError("Enter an email address.");
       return;
@@ -97,9 +95,6 @@ export default function AccountLookup() {
       <p className="mt-2 text-sm text-slate-600">
         Try emails containing <code>slow</code>, <code>pro</code>,{" "}
         <code>error</code>, or <code>fail</code> to exercise different states.
-        To expose the stale response bug, submit{" "}
-        <code>slow-pro@example.com</code>, then quickly submit{" "}
-        <code>customer@example.com</code> before the first request finishes.
       </p>
 
       <form className="mt-6 space-y-3" onSubmit={handleSubmit}>
@@ -144,9 +139,7 @@ export default function AccountLookup() {
 
         {account ? (
           <article className="rounded border border-slate-300 p-4">
-            <h2 className="font-semibold">
-              {account.name || "Unnamed account"}
-            </h2>
+            <h2 className="font-semibold">{account.name || "Unnamed account"}</h2>
             <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
               <dt className="text-slate-500">Email</dt>
               <dd>{account.email}</dd>

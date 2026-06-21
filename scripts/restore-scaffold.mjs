@@ -1,16 +1,31 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+const ROOT = process.cwd();
+const TASKS_ROOT = path.join(ROOT, "tasks");
+const TOPICS_FILE = path.join(ROOT, "gpt", "gpt_topics.md");
+
 function getTargetTaskDir() {
   const input = process.argv[2];
 
   if (!input) {
     throw new Error(
-      "Missing task directory argument. Usage: npm run restore:scaffold -- tasks/<category>/<slug>",
+      "Missing task directory argument. Usage: npm run restore:scaffold -- tasks/<category>/<slug>\nRestores the working file, removes review.md, resets topic status to generated, then requires npm run finalize:tasks.",
     );
   }
 
-  return path.resolve(process.cwd(), input);
+  const taskDir = path.resolve(ROOT, input);
+  const relativeTaskDir = path.relative(TASKS_ROOT, taskDir);
+
+  if (
+    relativeTaskDir.startsWith("..") ||
+    path.isAbsolute(relativeTaskDir) ||
+    relativeTaskDir.split(path.sep).length !== 2
+  ) {
+    throw new Error("Task directory must match tasks/<category>/<slug>.");
+  }
+
+  return taskDir;
 }
 
 async function exists(filePath) {
@@ -22,28 +37,83 @@ async function exists(filePath) {
   }
 }
 
+async function removeReview(taskDir) {
+  const reviewFile = path.join(taskDir, "review.md");
+
+  try {
+    await fs.unlink(reviewFile);
+    console.log(`Removed ${path.relative(ROOT, reviewFile)}.`);
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      console.log(`No review found at ${path.relative(ROOT, reviewFile)}.`);
+      return;
+    }
+
+    throw error;
+  }
+}
+
+async function resetTopicStatus(taskDir) {
+  const slug = path.basename(taskDir);
+  const topics = await fs.readFile(TOPICS_FILE, "utf8");
+  let updated = false;
+
+  const nextTopics = topics
+    .split("\n")
+    .map((line) => {
+      if (!line.startsWith("|")) {
+        return line;
+      }
+
+      const cells = line
+        .split("|")
+        .slice(1, -1)
+        .map((cell) => cell.trim());
+
+      if (cells.length !== 8 || cells[0] !== slug) {
+        return line;
+      }
+
+      cells[6] = "generated";
+      cells[7] = "-";
+      updated = true;
+      return `| ${cells.join(" | ")} |`;
+    })
+    .join("\n");
+
+  if (!updated) {
+    console.log(`No topic history row found for ${slug}.`);
+    return;
+  }
+
+  await fs.writeFile(TOPICS_FILE, nextTopics, "utf8");
+  console.log(`Reset ${slug} topic status to generated.`);
+}
+
 async function main() {
   const taskDir = getTargetTaskDir();
   const scaffoldTsx = path.join(taskDir, "main.scaffold.tsx");
   const scaffoldTs = path.join(taskDir, "main.scaffold.ts");
   const mainTsx = path.join(taskDir, "main.tsx");
   const mainTs = path.join(taskDir, "main.ts");
+  let restoredFile;
 
   if (await exists(scaffoldTsx)) {
     await fs.copyFile(scaffoldTsx, mainTsx);
-    console.log(`Restored ${path.relative(process.cwd(), mainTsx)} from scaffold snapshot.`);
-    return;
-  }
-
-  if (await exists(scaffoldTs)) {
+    restoredFile = mainTsx;
+  } else if (await exists(scaffoldTs)) {
     await fs.copyFile(scaffoldTs, mainTs);
-    console.log(`Restored ${path.relative(process.cwd(), mainTs)} from scaffold snapshot.`);
-    return;
+    restoredFile = mainTs;
+  } else {
+    throw new Error(
+      `No scaffold snapshot found in ${path.relative(ROOT, taskDir)}. Expected main.scaffold.tsx or main.scaffold.ts.`,
+    );
   }
 
-  throw new Error(
-    `No scaffold snapshot found in ${path.relative(process.cwd(), taskDir)}. Expected main.scaffold.tsx or main.scaffold.ts.`,
-  );
+  console.log(`Restored ${path.relative(ROOT, restoredFile)} from scaffold snapshot.`);
+  await removeReview(taskDir);
+  await resetTopicStatus(taskDir);
+  console.log("Run npm run finalize:tasks to refresh generated metadata.");
 }
 
 void main();
