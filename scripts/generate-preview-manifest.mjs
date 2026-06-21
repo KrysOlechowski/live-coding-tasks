@@ -7,6 +7,17 @@ const OUTPUT_FILE = path.join(
   "src/lib/generated-task-preview-manifest.tsx",
 );
 
+function stripQuotes(value) {
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    return value.slice(1, -1);
+  }
+
+  return value;
+}
+
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
 
@@ -26,7 +37,7 @@ function parseFrontmatter(content) {
 
     if (trimmedLine.startsWith("- ")) {
       if (currentArrayKey && Array.isArray(data[currentArrayKey])) {
-        data[currentArrayKey].push(trimmedLine.slice(2).trim());
+        data[currentArrayKey].push(stripQuotes(trimmedLine.slice(2).trim()));
         continue;
       }
 
@@ -48,7 +59,7 @@ function parseFrontmatter(content) {
       continue;
     }
 
-    data[key] = value;
+    data[key] = stripQuotes(value);
     currentArrayKey = null;
   }
 

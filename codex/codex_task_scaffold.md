@@ -77,6 +77,9 @@ If the React scaffold is intended to be rendered by the Next.js task preview app
 
 Treat this as the default for React preview entries, even for small scaffolds. This avoids Next.js Server Component errors when the scaffold uses hooks or event handlers.
 
+If a task involves visible UI behavior, user interactions, component state, loading/error/success states, or a widget-style interface, scaffold it as a React/TSX task and add preview metadata, even when its category is `async`, `api-integration`, `performance`, or another non-React category.
+Do not add preview metadata for pure utility, algorithm, TypeScript-only, or other non-UI tasks.
+
 ### For non-React coding tasks
 
 Create:
@@ -116,6 +119,7 @@ Examples:
   - category
   - taskType
   - difficulty
+  - hasPreview and previewEntry when the task has a runtime UI preview
   - primarySkill
   - secondarySkill
   - problemShape

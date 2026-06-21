@@ -15,6 +15,7 @@ const REQUIRED_FRONTMATTER_KEYS = [
   "reviewFocus",
   "tags",
 ];
+const OPTIONAL_FRONTMATTER_KEYS = ["hasPreview", "previewEntry"];
 
 const ALLOWED_CATEGORIES = new Set([
   "react",
@@ -252,9 +253,27 @@ async function validateTaskDir(task) {
   }
 
   for (const key of Object.keys(frontmatter)) {
-    if (!REQUIRED_FRONTMATTER_KEYS.includes(key)) {
+    if (
+      !REQUIRED_FRONTMATTER_KEYS.includes(key) &&
+      !OPTIONAL_FRONTMATTER_KEYS.includes(key)
+    ) {
       errors.push(`frontmatter includes unsupported workflow key: ${key}`);
     }
+  }
+
+  if (
+    frontmatter.hasPreview !== undefined &&
+    !["true", "false"].includes(frontmatter.hasPreview)
+  ) {
+    errors.push('frontmatter hasPreview must be "true" or "false"');
+  }
+
+  if (frontmatter.hasPreview === "true" && !frontmatter.previewEntry) {
+    errors.push("frontmatter previewEntry is required when hasPreview is true");
+  }
+
+  if (frontmatter.previewEntry && frontmatter.hasPreview !== "true") {
+    errors.push("frontmatter previewEntry requires hasPreview to be true");
   }
 
   if (frontmatter.category && frontmatter.category !== task.category) {

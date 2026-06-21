@@ -202,7 +202,7 @@ function coerceFrontmatter(
   const category = data.category;
   const taskType = data.taskType ?? data.type;
   const difficulty = data.difficulty;
-  const hasPreview = data.hasPreview ?? false;
+  const hasPreview = data.hasPreview === true || data.hasPreview === "true";
   const previewEntry = data.previewEntry;
 
   if (
