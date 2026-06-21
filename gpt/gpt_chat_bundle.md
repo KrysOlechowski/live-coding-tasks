@@ -278,4 +278,4 @@ Codex should update this file during task scaffolding and review. The user shoul
 
 | slug | category | taskType | difficulty | primarySkill | problemShape | status | notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| fix-stale-account-lookup-results | async | fix-bug | medium | Preventing stale async responses from overwriting newer UI state | stale-async-response | generated | Overlapping account lookups with loading, error, retry, and clear-state behavior. |
+| fix-stale-account-lookup-results | async | fix-bug | medium | Preventing stale async responses from overwriting newer UI state | stale-async-response | reviewed | Core stale-response guard was not implemented; retry, editing, and clear-state transitions also need another pass. |
