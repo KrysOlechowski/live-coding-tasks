@@ -265,6 +265,27 @@ The `gpt_topics.md` row should use:
 `npm run finalize:tasks` is mandatory.  
 Do not ask the user to run validation or metadata commands manually.
 
+## Final response after scaffolding
+
+After scaffolding a new task, include a local run or debug command that points to the working file, not the scaffold snapshot.
+
+For non-UI tasks, include this as the primary local run command:
+
+`npx tsx --watch tasks/<category>/<slug>/main.ts`
+
+If the working file is TSX, use `main.tsx` instead of `main.ts`.
+
+For UI / preview tasks, include the preview app command first when applicable. You may also include an `npx tsx --watch ...` command only if the task file contains useful top-level examples, helper calls, or console-based checks.
+
+Examples:
+
+- `npx tsx --watch tasks/typescript/model-payment-status-safely/main.ts`
+- `npx tsx --watch tasks/data-transformation/normalize-orders/main.ts`
+- `npx tsx --watch tasks/async/fix-stale-account-lookup-results/main.tsx`
+
+Do not point the run command to `main.scaffold.ts` or `main.scaffold.tsx`.
+Do not invent a run command for files that are not directly useful to execute.
+
 ---
 
 ## Folder naming summary
