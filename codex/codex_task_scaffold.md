@@ -219,6 +219,14 @@ For React tasks:
 - do not introduce extra libraries unless explicitly requested
 - if the task has a runtime preview, default the preview entry to a Client Component with `"use client"` at the top of the file
 
+### UI scaffold styling
+
+- Prefer standard Tailwind utilities when a close built-in token exists.
+- Avoid unnecessary arbitrary utilities such as `rounded-[2rem]`, `p-[16px]`, `mt-[24px]`, `text-[14px]`, and `bg-[#ffffff]`.
+- Prefer built-in equivalents such as `rounded-4xl`, `p-4`, `mt-6`, `text-sm`, and `bg-white`.
+- Use arbitrary values only when the exact custom value matters to the task, layout, or visual behavior.
+- Before finishing a UI scaffold, scan changed UI files and replace obvious arbitrary utilities with built-in Tailwind utilities.
+
 ---
 
 ## Non-React task guidance
