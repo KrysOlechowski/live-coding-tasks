@@ -1,3 +1,5 @@
+// @ts-nocheck -- scaffold-only snapshot suppression
+
 type Payment = {
   id: string;
   amount: number;

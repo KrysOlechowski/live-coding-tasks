@@ -37,6 +37,51 @@ async function exists(filePath) {
   }
 }
 
+function stripLeadingScaffoldSuppressions(content, workingFile) {
+  const hasByteOrderMark = content.startsWith("\uFEFF");
+  let nextContent = hasByteOrderMark ? content.slice(1) : content;
+  const isTypeScript = [".ts", ".tsx"].includes(path.extname(workingFile));
+  let removedSuppression = false;
+
+  while (true) {
+    const leadingComment = nextContent.match(
+      /^([ \t\r\n]*)(\/\/[^\r\n]*(?:\r?\n|$)|\/\*[\s\S]*?\*\/(?:[ \t]*(?:\r?\n|$))?)/,
+    );
+
+    if (!leadingComment) {
+      break;
+    }
+
+    const comment = leadingComment[2];
+    const isTypeScriptNoCheck =
+      isTypeScript && /^\/\/\s*@ts-nocheck(?:\s|$)/.test(comment.trimEnd());
+    const isScaffoldOnly = /scaffold-only/i.test(comment);
+
+    if (!isTypeScriptNoCheck && !isScaffoldOnly) {
+      break;
+    }
+
+    nextContent = nextContent.slice(leadingComment[0].length);
+    removedSuppression = true;
+  }
+
+  if (removedSuppression) {
+    nextContent = nextContent.replace(/^(?:[ \t]*\r?\n)+/, "");
+  }
+
+  return `${hasByteOrderMark ? "\uFEFF" : ""}${nextContent}`;
+}
+
+async function restoreWorkingFile(scaffoldFile, workingFile) {
+  const scaffoldContent = await fs.readFile(scaffoldFile, "utf8");
+  const restoredContent = stripLeadingScaffoldSuppressions(
+    scaffoldContent,
+    workingFile,
+  );
+
+  await fs.writeFile(workingFile, restoredContent, "utf8");
+}
+
 async function removeReview(taskDir) {
   const reviewFile = path.join(taskDir, "review.md");
 
@@ -99,10 +144,10 @@ async function main() {
   let restoredFile;
 
   if (await exists(scaffoldTsx)) {
-    await fs.copyFile(scaffoldTsx, mainTsx);
+    await restoreWorkingFile(scaffoldTsx, mainTsx);
     restoredFile = mainTsx;
   } else if (await exists(scaffoldTs)) {
-    await fs.copyFile(scaffoldTs, mainTs);
+    await restoreWorkingFile(scaffoldTs, mainTs);
     restoredFile = mainTs;
   } else {
     throw new Error(

@@ -1,46 +1,18 @@
-type BasePayment = {
+type Payment = {
   id: string;
+  amount: number;
   currency: string;
   createdAt: string;
-  amount: number;
-};
-
-type PaymentDraft = BasePayment & {
-  status: "draft";
-};
-
-type PaymentPending = BasePayment & {
-  status: "pending";
-  submittedAt: string;
-};
-
-type PaymentPaid = BasePayment & {
-  status: "paid";
-  paidAt: string;
+  status: "draft" | "pending" | "paid" | "failed" | "refunded";
+  submittedAt?: string;
+  paidAt?: string;
+  failedAt?: string;
+  failedReason?: string;
   receiptUrl?: string;
-};
-
-type PaymentFailed = BasePayment & {
-  status: "failed";
-  failedAt: string;
-  failedReason: string;
-};
-
-type PaymentRefunded = BasePayment & {
-  status: "refunded";
-  paidAt: string;
-  refundId: string;
-  refundedAt: string;
+  refundId?: string;
+  refundedAt?: string;
   refundReason?: string;
-  receiptUrl?: string;
 };
-
-type Payment =
-  | PaymentDraft
-  | PaymentPending
-  | PaymentPaid
-  | PaymentFailed
-  | PaymentRefunded;
 
 const payments: Payment[] = [
   {
@@ -66,6 +38,7 @@ const payments: Payment[] = [
     status: "paid",
     paidAt: "2026-06-03T11:02:00Z",
     receiptUrl: "https://example.com/receipts/pay_paid_with_failure",
+    failedReason: "Card was declined",
   },
   {
     id: "pay_refunded_without_metadata",
@@ -74,8 +47,6 @@ const payments: Payment[] = [
     createdAt: "2026-06-04T12:00:00Z",
     status: "refunded",
     paidAt: "2026-06-04T12:03:00Z",
-    refundId: "ref_123",
-    refundedAt: "2026-06-04T12:10:00Z",
   },
 ];
 
@@ -86,24 +57,22 @@ function getPaymentStatusLabel(payment: Payment): string {
   return payment.status.charAt(0).toUpperCase() + payment.status.slice(1);
 }
 
-function assertNever(value: never): never {
-  throw new Error(`Unhandled payment status: ${JSON.stringify(value)}`);
-}
-
 function getPaymentTimelineLabel(payment: Payment): string {
   switch (payment.status) {
     case "draft":
       return `Created at ${payment.createdAt}`;
     case "pending":
-      return `Submitted at ${payment.submittedAt}`;
+      return `Submitted at ${payment.submittedAt ?? "unknown"}`;
     case "paid":
-      return `Paid at ${payment.paidAt}`;
+      return `Paid at ${payment.paidAt ?? "unknown"}`;
     case "failed":
-      return `Failed at ${payment.failedAt}: ${payment.failedReason}`;
+      return `Failed at ${payment.failedAt ?? "unknown"}: ${
+        payment.failedReason ?? "Unknown reason"
+      }`;
     case "refunded":
-      return `Refunded at ${payment.refundedAt}`;
+      return `Refunded at ${payment.refundedAt ?? "unknown"}`;
     default:
-      return assertNever(payment);
+      return "Unknown payment status";
   }
 }
 
@@ -112,17 +81,7 @@ function canRefund(payment: Payment): boolean {
 }
 
 function getReceiptLink(payment: Payment): string | undefined {
-  switch (payment.status) {
-    case "paid":
-    case "refunded":
-      return payment.receiptUrl;
-    case "failed":
-    case "pending":
-    case "draft":
-      return undefined;
-    default:
-      return assertNever(payment);
-  }
+  return payment.receiptUrl;
 }
 
 // TODO: Update the helpers to rely on status narrowing and use exhaustive

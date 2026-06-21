@@ -67,7 +67,7 @@ Create:
 
 - `task.md`
 - `main.tsx`
-- `main.scaffold.tsx` (exact snapshot of the initial `main.tsx` scaffold)
+- `main.scaffold.tsx` (restorable snapshot of the initial `main.tsx` scaffold)
 
 If the React scaffold is intended to be rendered by the Next.js task preview app, start the preview entry file with:
 
@@ -86,7 +86,7 @@ Create:
 
 - `task.md`
 - `main.ts`
-- `main.scaffold.ts` (exact snapshot of the initial `main.ts` scaffold)
+- `main.scaffold.ts` (restorable snapshot of the initial `main.ts` scaffold)
 
 ---
 
@@ -163,8 +163,17 @@ Create only a minimal starter.
 - full polished UI
 - solving the interview problem
 
-After creating `main.tsx` or `main.ts`, create an exact snapshot copy as `main.scaffold.tsx` or `main.scaffold.ts`.
+After creating `main.tsx` or `main.ts`, create a snapshot copy as `main.scaffold.tsx` or `main.scaffold.ts`.
 This snapshot is used to restore the original scaffold later.
+
+## Scaffold snapshot diagnostics
+
+- Keep scaffold snapshots as real, readable code. Do not comment out their contents just to silence diagnostics.
+- Preserve the initial scaffold code unchanged, except for leading scaffold-only diagnostic suppressions when intentional task errors would otherwise create editor, lint, or build noise.
+- Add suppressions only when needed and keep them as narrow as practical. Examples include `// @ts-nocheck` for intentional TypeScript errors in `.ts` or `.tsx` snapshots and narrowly scoped ESLint comments explicitly marked `scaffold-only`.
+- Scaffold snapshots should not participate in normal task validation or project type-checking. If they currently do, fix the shared config or validation workflow instead of changing individual task logic.
+- Do not add scaffold-only suppressions to working files by default.
+- The restore workflow strips leading `// @ts-nocheck` directives and leading comments marked `scaffold-only`, so restored working files retain normal TypeScript and ESLint feedback. Normal comments, task hints, and TODOs remain intact.
 
 ## taskType Guidance
 
