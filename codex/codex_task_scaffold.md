@@ -253,7 +253,7 @@ When given a task brief:
 3. choose the smallest useful scaffold
 4. create `task.md` with frontmatter metadata and the structured task brief body
 5. create only the necessary starter code files
-6. add TODO comments where the main logic belongs
+6. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
 7. preserve the distinction between `main.scaffold.*` and `main.*`
 8. update `/gpt/gpt_topics.md` by adding one row to the Task History table
 9. run `npm run finalize:tasks` and fix any reported task-structure or metadata issues
