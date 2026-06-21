@@ -66,12 +66,12 @@ export default async function TaskDetailPage({
       </div>
 
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <article className="rounded-[2rem] border border-zinc-200 bg-white/80 p-7 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
+        <article className="rounded-4xl border border-zinc-200 bg-white/80 p-7 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
           <SimpleMarkdown content={task.taskBody} />
         </article>
 
         <aside className="grid gap-4 self-start">
-          <section className="rounded-[2rem] border border-zinc-200 bg-white/80 p-5 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
+          <section className="rounded-4xl border border-zinc-200 bg-white/80 p-5 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
             <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
               Task meta
             </h2>
@@ -93,11 +93,15 @@ export default async function TaskDetailPage({
               <div className="flex items-start justify-between gap-4">
                 <dt className="text-zinc-500 dark:text-zinc-400">Review</dt>
                 <dd className="font-medium text-zinc-950 dark:text-white">
-                  {task.reviewBody ? "Latest review available" : "No review yet"}
+                  {task.reviewBody
+                    ? "Latest review available"
+                    : "No review yet"}
                 </dd>
               </div>
               <div className="flex items-start justify-between gap-4">
-                <dt className="text-zinc-500 dark:text-zinc-400">Prompt brief</dt>
+                <dt className="text-zinc-500 dark:text-zinc-400">
+                  Prompt brief
+                </dt>
                 <dd className="font-medium text-zinc-950 dark:text-white">
                   {task.promptBody ? "Available" : "Missing"}
                 </dd>
@@ -106,7 +110,7 @@ export default async function TaskDetailPage({
           </section>
 
           {task.reviewBody ? (
-            <section className="rounded-[2rem] border border-zinc-200 bg-white/80 p-5 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
+            <section className="rounded-4xl border border-zinc-200 bg-white/80 p-5 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
               <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
                 Latest review
               </h2>
@@ -119,7 +123,7 @@ export default async function TaskDetailPage({
       </section>
 
       {task.promptBody ? (
-        <details className="rounded-[2rem] border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
+        <details className="rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
           <summary className="cursor-pointer text-lg font-semibold text-zinc-950 marker:text-zinc-400 dark:text-white">
             Original prompt
           </summary>

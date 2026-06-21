@@ -18,9 +18,9 @@ export default async function Home() {
               Browse interview tasks as real routes instead of loose folders.
             </h1>
             <p className="max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300">
-              Tasks are now indexed from filesystem metadata, so each exercise has a
-              stable slug, a readable detail page, and optional preview route when the
-              brief needs UI context.
+              Tasks are now indexed from filesystem metadata, so each exercise
+              has a stable slug, a readable detail page, and optional preview
+              route when the brief needs UI context.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -33,7 +33,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid gap-4 rounded-[2rem] border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
+        <div className="grid gap-4 rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl bg-zinc-50 p-4 dark:bg-zinc-900">
               <div className="text-3xl font-semibold text-zinc-950 dark:text-white">
@@ -53,8 +53,8 @@ export default async function Home() {
             </div>
           </div>
           <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300">
-            Metadata lives in `task.md` frontmatter. Reviewed tasks also expose their
-            Mastery rating from `review.md`.
+            Metadata lives in `task.md` frontmatter. Reviewed tasks also expose
+            their Mastery rating from `review.md`.
           </p>
         </div>
       </section>

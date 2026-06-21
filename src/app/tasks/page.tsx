@@ -41,11 +41,13 @@ export default async function TasksPage({
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl space-y-3">
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 dark:text-white">
-              Every task gets its own page, metadata, and optional preview route.
+              Every task gets its own page, metadata, and optional preview
+              route.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-600 dark:text-zinc-300">
-              The list below is generated from `tasks/*/*/task.md` frontmatter. Filters
-              use task metadata and review status, while routing stays tied to stable slugs.
+              The list below is generated from `tasks/*/*/task.md` frontmatter.
+              Filters use task metadata and review status, while routing stays
+              tied to stable slugs.
             </p>
           </div>
           <div className="grid gap-3 rounded-3xl border border-zinc-200 bg-white/75 p-5 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
@@ -53,7 +55,9 @@ export default async function TasksPage({
               <div className="text-3xl font-semibold text-zinc-950 dark:text-white">
                 {tasks.length}
               </div>
-              <div className="text-sm text-zinc-500 dark:text-zinc-400">All tasks</div>
+              <div className="text-sm text-zinc-500 dark:text-zinc-400">
+                All tasks
+              </div>
             </div>
             <div>
               <div className="text-3xl font-semibold text-zinc-950 dark:text-white">
@@ -67,7 +71,7 @@ export default async function TasksPage({
         </div>
       </section>
 
-      <section className="rounded-[2rem] border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
+      <section className="rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
         <form className="grid gap-4 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto]">
           <label className="grid gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
             Category
@@ -168,7 +172,7 @@ export default async function TasksPage({
           <Link
             key={task.slug}
             href={`/tasks/${task.slug}`}
-            className="grid gap-4 rounded-[2rem] border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-950/10 dark:border-zinc-800 dark:bg-zinc-950/70 dark:hover:border-amber-600"
+            className="grid gap-4 rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-950/10 dark:border-zinc-800 dark:bg-zinc-950/70 dark:hover:border-amber-600"
           >
             <div className="flex flex-wrap items-center gap-2 text-sm">
               <span className="rounded-full bg-amber-100 px-3 py-1 font-medium text-amber-900 dark:bg-amber-500/20 dark:text-amber-200">
@@ -205,14 +209,16 @@ export default async function TasksPage({
             </div>
 
             <p className="line-clamp-2 text-zinc-600 dark:text-zinc-300">
-              {task.taskBody.split("\n").find((line) => line.trim() && !line.startsWith("#")) ??
+              {task.taskBody
+                .split("\n")
+                .find((line) => line.trim() && !line.startsWith("#")) ??
                 "Open the task to read the full brief."}
             </p>
           </Link>
         ))}
 
         {filteredTasks.length === 0 ? (
-          <div className="rounded-[2rem] border border-dashed border-zinc-300 bg-white/60 p-10 text-center text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950/60 dark:text-zinc-300">
+          <div className="rounded-4xl border border-dashed border-zinc-300 bg-white/60 p-10 text-center text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950/60 dark:text-zinc-300">
             No tasks match the current filter set.
           </div>
         ) : null}
