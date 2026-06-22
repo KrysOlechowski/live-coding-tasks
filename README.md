@@ -11,6 +11,13 @@ The repository is frontend-oriented by default, while also supporting TypeScript
 
 > The goal is deliberate practice, not a showcase application: **brief → scaffold → solve → review → learn**.
 
+## 🖼️ Application preview
+
+<p align="center">
+  <img src="./public/coding-task.png" alt="Task details view" width="49%" />
+  <img src="./public/coding-task-preview.png" alt="Interactive coding task preview" width="49%" />
+</p>
+
 ## 🚀 Quick start
 
 ```bash
