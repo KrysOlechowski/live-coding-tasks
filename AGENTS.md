@@ -14,6 +14,15 @@ This repository is used for live-coding interview practice.
 - Use `category` for technical domain and `taskType` for candidate activity or interview mode.
 - Do not use `debugging` or `refactor` as categories; use taskType values such as `fix-bug`, `refactor-existing-code`, or `review-and-improve`.
 
+## Agent skills
+
+- Use `/agent-skills/scaffold-task.md` automatically when the user asks to scaffold, create, set up, or generate files for a new task from a provided `task.md` or task brief. The user does not need to name this skill.
+- Use `/agent-skills/review-task.md` automatically when the user asks to review, check, or evaluate a completed solution. The user does not need to name this skill.
+- Use `/agent-skills/interview-coach.md` when a request starts with `$coach` or `$interview-coach`, or clearly asks for coaching or hints during active solving.
+- Do not use a skill file unless the request matches one of these three workflows.
+- Task ideas are designed outside Codex before scaffolding.
+- Task reset uses the existing scripts: `npm run restore:scaffold -- tasks/<category>/<slug>` and `npm run finalize:tasks`.
+
 ## Workspace boundaries
 
 ### `/tasks`
@@ -40,6 +49,7 @@ This repository is used for live-coding interview practice.
 
 ## Task scaffolding
 
+- For new task scaffolding requests, use `/agent-skills/scaffold-task.md` first, then follow `/codex/codex_task_scaffold.md`.
 - When given a task brief, create the smallest useful scaffold.
 - Create only the files that are clearly needed for the task.
 - Default files:
@@ -67,6 +77,7 @@ This repository is used for live-coding interview practice.
 
 ## Task review
 
+- For full review requests, use `/agent-skills/review-task.md` first, then follow `/codex/codex_review_workflow.md`.
 - When asked to review a finished task, behave like a realistic technical interviewer.
 - Read `/codex/codex_review_workflow.md` when reviewing tasks. Calibrate review severity using the task requirements, `reviewFocus`, and the rules in that workflow.
 - Treat messages like `review my solution`, `review this task`, `do a review`, or `zrób review` as a request for a full repository review workflow.
