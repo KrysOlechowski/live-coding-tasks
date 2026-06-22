@@ -281,3 +281,4 @@ Codex should update this file during task scaffolding and review. The user shoul
 | fix-stale-account-lookup-results | async | fix-bug | medium | Preventing stale async responses from overwriting newer UI state | stale-async-response | generated | - |
 | model-payment-status-safely | typescript | model-types | medium | Modeling impossible states with discriminated unions | discriminated-union-state | generated | - |
 | merge-customer-activity-events | data-transformation | complete-partial-implementation | medium | Normalizing and merging data from multiple event sources | event-normalization-and-deduplication | generated | Multi-source normalization with duplicate selection and stable sorting |
+| build-feature-flag-resolver | typescript | complete-partial-implementation | medium | Resolving priority-based configuration rules | priority-resolution-rules | generated | Layered boolean overrides with explicit decision provenance |
