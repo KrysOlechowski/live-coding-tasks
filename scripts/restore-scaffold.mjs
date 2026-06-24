@@ -101,35 +101,85 @@ async function removeReview(taskDir) {
 async function resetTopicStatus(taskDir) {
   const slug = path.basename(taskDir);
   const topics = await fs.readFile(TOPICS_FILE, "utf8");
-  let updated = false;
+  const lines = topics.split("\n");
+  const historyIndex = lines.findIndex((line) => line.trim() === "## Task History");
+  const entryStart = lines.findIndex((line) => line.trim() === `#### ${slug}`);
 
-  const nextTopics = topics
-    .split("\n")
-    .map((line) => {
-      if (!line.startsWith("|")) {
-        return line;
-      }
-
-      const cells = line
-        .split("|")
-        .slice(1, -1)
-        .map((cell) => cell.trim());
-
-      if (cells.length !== 8 || cells[0] !== slug) {
-        return line;
-      }
-
-      cells[6] = "generated";
-      cells[7] = "-";
-      updated = true;
-      return `| ${cells.join(" | ")} |`;
-    })
-    .join("\n");
-
-  if (!updated) {
-    console.log(`No topic history row found for ${slug}.`);
+  if (historyIndex === -1 || entryStart === -1 || entryStart < historyIndex) {
+    console.log(`No topic history entry found for ${slug}.`);
     return;
   }
+
+  let entryEnd = lines.length;
+
+  for (let index = entryStart + 1; index < lines.length; index += 1) {
+    const line = lines[index].trim();
+
+    if (line.startsWith("#### ") || line.startsWith("### ") || line.startsWith("## ")) {
+      entryEnd = index;
+      break;
+    }
+  }
+
+  const entryLines = lines.slice(entryStart, entryEnd);
+  let hasNotes = false;
+  const resetEntryLines = entryLines.map((line) => {
+    if (!line.trim().startsWith("- Notes:")) {
+      return line;
+    }
+
+    hasNotes = true;
+    return "- Notes: -";
+  });
+
+  if (!hasNotes) {
+    resetEntryLines.push("- Notes: -");
+  }
+
+  while (resetEntryLines.at(-1) === "") {
+    resetEntryLines.pop();
+  }
+
+  const nextLines = [
+    ...lines.slice(0, entryStart),
+    ...lines.slice(entryEnd),
+  ];
+  const generatedIndex = nextLines.findIndex(
+    (line, index) => index > historyIndex && line.trim() === "### Generated",
+  );
+
+  if (generatedIndex === -1) {
+    throw new Error("Missing ### Generated section in gpt/gpt_topics.md.");
+  }
+
+  let insertIndex = nextLines.length;
+
+  for (let index = generatedIndex + 1; index < nextLines.length; index += 1) {
+    const line = nextLines[index].trim();
+
+    if (line.startsWith("### ") || line.startsWith("## ")) {
+      insertIndex = index;
+      break;
+    }
+  }
+
+  const beforeInsert = nextLines.slice(0, insertIndex);
+  const afterInsert = nextLines.slice(insertIndex);
+
+  while (beforeInsert.at(-1) === "") {
+    beforeInsert.pop();
+  }
+
+  while (afterInsert[0] === "") {
+    afterInsert.shift();
+  }
+
+  const nextTopics = [
+    ...beforeInsert,
+    "",
+    ...resetEntryLines,
+    ...(afterInsert.length > 0 ? ["", ...afterInsert] : []),
+  ].join("\n");
 
   await fs.writeFile(TOPICS_FILE, nextTopics, "utf8");
   console.log(`Reset ${slug} topic status to generated.`);

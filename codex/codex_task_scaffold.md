@@ -264,11 +264,11 @@ When given a task brief:
 5. create only the necessary starter code files
 6. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
 7. preserve the distinction between `main.scaffold.*` and `main.*`
-8. update `/gpt/gpt_topics.md` by adding one row to the Task History table
+8. update `/gpt/gpt_topics.md` by adding one task entry under `### Generated` in Task History
 9. run `npm run finalize:tasks` and fix any reported task-structure or metadata issues
 10. stop before solving the task
 
-The `gpt_topics.md` row should use:
+The `gpt_topics.md` task entry should use:
 
 - `slug`: task folder name
 - `category`: from task frontmatter
@@ -276,7 +276,6 @@ The `gpt_topics.md` row should use:
 - `difficulty`: from task frontmatter
 - `primarySkill`: from task frontmatter
 - `problemShape`: from task frontmatter
-- `status`: `generated`
 - `notes`: short useful note for repetition avoidance, or `-` if none
 
 `npm run finalize:tasks` is mandatory.  

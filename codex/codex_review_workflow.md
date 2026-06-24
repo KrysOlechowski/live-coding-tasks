@@ -46,7 +46,7 @@ Complete the workflow end-to-end:
 5. identify the highest-signal findings
 6. infer an evidence-based Mastery level from the requirements, `reviewFocus`, and highest-signal findings
 7. create or update `review.md`
-8. update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`
+8. move or update the matching task entry under `### Reviewed` in `/gpt/gpt_topics.md`
 9. run `npm run finalize:tasks`
 
 ---
@@ -345,7 +345,7 @@ Keep the questions practical and relevant.
 
 ## Updating topic tracking
 
-After saving `review.md`, update the matching row in `/gpt/gpt_topics.md` and set status to `reviewed`.
+After saving `review.md`, move or update the matching task entry under `### Reviewed` in `/gpt/gpt_topics.md`.
 
 Track generated task history and coverage, not raw topic lists.
 

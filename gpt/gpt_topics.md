@@ -20,10 +20,46 @@ Codex should update this file during task scaffolding and review. The user shoul
 
 ## Task History
 
-| slug | category | taskType | difficulty | primarySkill | problemShape | status | notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| fix-stale-account-lookup-results | async | fix-bug | medium | Preventing stale async responses from overwriting newer UI state | stale-async-response | generated | - |
-| model-payment-status-safely | typescript | model-types | medium | Modeling impossible states with discriminated unions | discriminated-union-state | generated | - |
-| merge-customer-activity-events | data-transformation | complete-partial-implementation | medium | Normalizing and merging data from multiple event sources | event-normalization-and-deduplication | generated | Multi-source normalization with duplicate selection and stable sorting |
-| build-feature-flag-resolver | typescript | complete-partial-implementation | medium | Resolving priority-based configuration rules | priority-resolution-rules | generated | Layered boolean overrides with explicit decision provenance |
-| optimize-searchable-selection-list-rendering | performance | optimize-performance | medium | Reducing unnecessary React rerenders in interactive lists | unnecessary-rerender-isolation | reviewed | Searchable selection list with derived filtering and row render isolation |
+### Generated
+
+#### fix-stale-account-lookup-results
+- Category: async
+- Task type: fix-bug
+- Difficulty: medium
+- Primary skill: Preventing stale async responses from overwriting newer UI state
+- Problem shape: stale-async-response
+- Notes: -
+
+#### model-payment-status-safely
+- Category: typescript
+- Task type: model-types
+- Difficulty: medium
+- Primary skill: Modeling impossible states with discriminated unions
+- Problem shape: discriminated-union-state
+- Notes: -
+
+#### merge-customer-activity-events
+- Category: data-transformation
+- Task type: complete-partial-implementation
+- Difficulty: medium
+- Primary skill: Normalizing and merging data from multiple event sources
+- Problem shape: event-normalization-and-deduplication
+- Notes: Multi-source normalization with duplicate selection and stable sorting
+
+#### build-feature-flag-resolver
+- Category: typescript
+- Task type: complete-partial-implementation
+- Difficulty: medium
+- Primary skill: Resolving priority-based configuration rules
+- Problem shape: priority-resolution-rules
+- Notes: Layered boolean overrides with explicit decision provenance
+
+### Reviewed
+
+#### optimize-searchable-selection-list-rendering
+- Category: performance
+- Task type: optimize-performance
+- Difficulty: medium
+- Primary skill: Reducing unnecessary React rerenders in interactive lists
+- Problem shape: unnecessary-rerender-isolation
+- Notes: Searchable selection list with derived filtering and row render isolation

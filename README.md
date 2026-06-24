@@ -134,6 +134,12 @@ A full review:
 
 Mastery is progress feedback, not penalty scoring.
 
+## 🧾 Topic history
+
+[`gpt/gpt_topics.md`](gpt/gpt_topics.md) tracks generated task history so future briefs can avoid repetition. The file is grouped by task status, with one readable task block per slug instead of a wide Markdown table.
+
+Codex updates this file during scaffolding and review. `npm run finalize:tasks` regenerates [`gpt/gpt_chat_bundle.md`](gpt/gpt_chat_bundle.md), which includes the latest topic history for ChatGPT-side task generation.
+
 ## ♻️ Restore a task
 
 Reset a working solution from its scaffold snapshot:
