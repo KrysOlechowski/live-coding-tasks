@@ -63,3 +63,11 @@ Codex should update this file during task scaffolding and review. The user shoul
 - Primary skill: Reducing unnecessary React rerenders in interactive lists
 - Problem shape: unnecessary-rerender-isolation
 - Notes: Searchable selection list with derived filtering and row render isolation
+
+#### complete-order-request-state-handling
+- Category: api-integration
+- Task type: complete-partial-implementation
+- Difficulty: medium
+- Primary skill: Handling request lifecycle states in a React UI
+- Problem shape: request-state-lifecycle
+- Notes: API-driven order list with loading, empty, error, success, and retry states
