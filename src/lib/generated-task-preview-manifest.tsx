@@ -2,11 +2,13 @@
 import PreviewCompleteOrderRequestStateHandling from "../../tasks/api-integration/complete-order-request-state-handling/main";
 import PreviewFixStaleAccountLookupResults from "../../tasks/async/fix-stale-account-lookup-results/main";
 import PreviewOptimizeSearchableSelectionListRendering from "../../tasks/performance/optimize-searchable-selection-list-rendering/main";
+import PreviewRefactorUserPreferencesPanel from "../../tasks/react/refactor-user-preferences-panel/main";
 
 export const previewTaskSlugs = [
   "complete-order-request-state-handling",
   "fix-stale-account-lookup-results",
-  "optimize-searchable-selection-list-rendering"
+  "optimize-searchable-selection-list-rendering",
+  "refactor-user-preferences-panel"
 ] as const;
 
 export function renderTaskPreviewFromManifest(slug: string) {
@@ -17,6 +19,8 @@ export function renderTaskPreviewFromManifest(slug: string) {
       return <PreviewFixStaleAccountLookupResults />;
     case "optimize-searchable-selection-list-rendering":
       return <PreviewOptimizeSearchableSelectionListRendering />;
+    case "refactor-user-preferences-panel":
+      return <PreviewRefactorUserPreferencesPanel />;
     default:
       return null;
   }
