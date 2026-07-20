@@ -54,6 +54,14 @@ Codex should update this file during task scaffolding and review. The user shoul
 - Problem shape: priority-resolution-rules
 - Notes: Layered boolean overrides with explicit decision provenance
 
+#### complete-safe-settings-parser
+- Category: typescript
+- Task type: complete-partial-implementation
+- Difficulty: medium
+- Primary skill: Safely parsing unknown external data
+- Problem shape: unsafe-external-data-parsing
+- Notes: Runtime narrowing of unreliable API settings with nested defaults and enum-like fallbacks
+
 ### Reviewed
 
 #### refactor-user-preferences-panel
