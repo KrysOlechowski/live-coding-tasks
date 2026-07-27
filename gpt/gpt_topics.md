@@ -62,6 +62,14 @@ Codex should update this file during task scaffolding and review. The user shoul
 - Problem shape: unsafe-external-data-parsing
 - Notes: Runtime narrowing of unreliable API settings with nested defaults and enum-like fallbacks
 
+#### handle-breadcrumb-edge-cases
+- Category: algorithms
+- Task type: handle-edge-cases
+- Difficulty: medium
+- Primary skill: Handling edge cases in hierarchical data
+- Problem shape: hierarchy-reconstruction-edge-cases
+- Notes: Breadcrumb reconstruction from flat categories with missing parents, inactive nodes, cycles, and duplicate ids
+
 ### Reviewed
 
 #### refactor-user-preferences-panel
