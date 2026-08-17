@@ -19,3 +19,13 @@ Codex should update this file during task scaffolding and review. The user shoul
 - `solved`: optional/manual status if the user wants to mark a solved task before review.
 
 ## Task History
+
+### Reviewed
+
+#### fix-cart-summary-state
+- Category: react
+- Task type: fix-bug
+- Difficulty: medium
+- Primary skill: Keep derived cart summary data consistent with React state
+- Problem shape: Repair duplicated derived state that falls behind its source state
+- Notes: Reviewed solution derives the order summary from cartItems and completes the Add two follow-up; next improvement is making mutation helpers robust to composed previous-state updates.

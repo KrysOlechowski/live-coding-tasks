@@ -67,11 +67,6 @@
       "category": "react"
     },
     {
-      "topicId": "derived-ui-state",
-      "label": "Derived UI state",
-      "category": "react"
-    },
-    {
       "topicId": "edge-case-coverage",
       "label": "Edge-case coverage",
       "category": "testing"
@@ -150,11 +145,6 @@
       "topicId": "promise-ordering",
       "label": "Promise ordering",
       "category": "async"
-    },
-    {
-      "topicId": "react-state-updates",
-      "label": "React state updates",
-      "category": "react"
     },
     {
       "topicId": "render-cost",
@@ -317,11 +307,11 @@
       "topicId": "derived-ui-state",
       "label": "Derived UI state",
       "category": "react",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
-      "demonstratedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 1,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-17T14:11:25Z"
     },
     {
       "topicId": "discriminated-unions",
@@ -507,11 +497,11 @@
       "topicId": "react-state-updates",
       "label": "React state updates",
       "category": "react",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
-      "demonstratedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 1,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-17T14:11:25Z"
     },
     {
       "topicId": "render-cost",
@@ -636,6 +626,18 @@
   ],
   "recentTasks": [
     {
+      "slug": "fix-cart-summary-state",
+      "category": "react",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "problemShape": "Repair duplicated derived state that falls behind its source state",
+      "primaryTopics": [
+        "derived-ui-state"
+      ],
+      "status": "reviewed",
+      "mastery": 4
+    },
+    {
       "slug": "model-process-state-with-discriminated-union",
       "category": "typescript",
       "taskType": "model-types",
@@ -654,11 +656,12 @@
     "async": 0,
     "data-transformation": 0,
     "performance": 0,
-    "react": 0,
+    "react": 1,
     "testing": 0,
     "typescript": 1
   },
   "taskTypeCoverage": {
+    "fix-bug": 1,
     "model-types": 1
   }
 }

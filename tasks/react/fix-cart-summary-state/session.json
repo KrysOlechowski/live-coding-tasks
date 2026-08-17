@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "taskSlug": "fix-cart-summary-state",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-08-17T13:35:36Z",
+      "startedAt": "2026-08-17T13:51:42Z",
+      "endedAt": "2026-08-17T14:11:25Z",
+      "activeStageId": null,
+      "activeQuestion": null,
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T14:03:32Z",
+            "outcome": "passed",
+            "observations": [
+              "The order summary is now derived from cartItems, so add, quantity, remove, and empty-cart transitions share one source of truth.",
+              "The candidate correctly explained before coding why duplicated summary state could drift from the cart."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "derived-ui-state",
+                "signal": "demonstrated",
+                "evidence": "Removed independent summary state and calculated the visible item count and total from cartItems."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T14:09:49Z",
+            "outcome": "passed",
+            "observations": [
+              "The Add two action adds exactly two units for both existing and new products while preserving the derived summary.",
+              "The implementation represents the action as one explicit cart transition instead of stacking multiple updates."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "react-state-updates",
+                "signal": "demonstrated",
+                "evidence": "Parameterized the cart transition by amount so one user action produces one consistent immutable update."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [],
+      "review": {
+        "reviewedAt": "2026-08-17T14:11:25Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 4,
+          "label": "Interview-ready",
+          "reason": "All core and follow-up behaviors are correct and the summary has one source of truth; only the render-captured update helpers leave a minor robustness improvement."
+        },
+        "needsRepetition": false,
+        "topicSignals": [
+          {
+            "topicId": "derived-ui-state",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "independent",
+            "evidence": "The candidate identified cartItems as the source of truth and removed independently synchronized summary state.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "react-state-updates",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "independent",
+            "evidence": "The Add two action updates both new and existing products by the requested amount in one immutable transition.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

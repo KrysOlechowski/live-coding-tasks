@@ -33,18 +33,19 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - component-composition — Component composition (react)
 - concurrency-control — Concurrency control (async)
 - controlled-inputs — Controlled inputs (react)
-- derived-ui-state — Derived UI state (react)
 - edge-case-coverage — Edge-case coverage (testing)
+- effect-lifecycle — Effect lifecycle (react)
 
 ## Recent tasks
 
+- fix-cart-summary-state: react / fix-bug / medium; shape=Repair duplicated derived state that falls behind its source state; status=reviewed; mastery=4
 - model-process-state-with-discriminated-union: typescript / model-types / medium; shape=Replace loosely modeled optional fields with explicit process states; status=reviewed; mastery=3
 
 ## Coverage
 
-- Total tasks: 1
-- Categories: algorithms=0, api-integration=0, async=0, data-transformation=0, performance=0, react=0, testing=0, typescript=1
-- Task types: model-types=1
+- Total tasks: 2
+- Categories: algorithms=0, api-integration=0, async=0, data-transformation=0, performance=0, react=1, testing=0, typescript=1
+- Task types: fix-bug=1, model-types=1
 
 ## Allowed taxonomy
 

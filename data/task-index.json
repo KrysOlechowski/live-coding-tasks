@@ -2,6 +2,43 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "fix-cart-summary-state",
+      "title": "Fix the cart summary",
+      "category": "react",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "primarySkill": "Keep derived cart summary data consistent with React state",
+      "secondarySkill": "Apply state updates safely when actions depend on the current cart",
+      "problemShape": "Repair duplicated derived state that falls behind its source state",
+      "reviewFocus": [
+        "correctness",
+        "ui-behavior",
+        "maintainability"
+      ],
+      "tags": [
+        "react",
+        "derived-ui-state",
+        "react-state-updates"
+      ],
+      "primaryTopics": [
+        "derived-ui-state"
+      ],
+      "secondaryTopics": [
+        "react-state-updates"
+      ],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "status": "reviewed",
+      "createdAt": "2026-08-17T13:35:36Z",
+      "mastery": {
+        "level": 4,
+        "label": "Interview-ready",
+        "reason": "All core and follow-up behaviors are correct and the summary has one source of truth; only the render-captured update helpers leave a minor robustness improvement."
+      },
+      "needsRepetition": false,
+      "reviewedAt": "2026-08-17T14:11:25Z"
+    },
+    {
       "slug": "model-process-state-with-discriminated-union",
       "title": "Model process state with a discriminated union",
       "category": "typescript",
