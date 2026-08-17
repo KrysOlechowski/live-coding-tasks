@@ -1,6 +1,20 @@
 {
   "schemaVersion": 1,
-  "topicsToRevisit": [],
+  "topicsToRevisit": [
+    {
+      "topicId": "type-narrowing",
+      "label": "Type narrowing",
+      "category": "typescript",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 0,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-08-17T12:04:15Z",
+      "relatedTasks": [
+        "model-process-state-with-discriminated-union"
+      ]
+    }
+  ],
   "underPracticedTopics": [
     {
       "topicId": "accessibility-interactions",
@@ -58,11 +72,6 @@
       "category": "react"
     },
     {
-      "topicId": "discriminated-unions",
-      "label": "Discriminated unions",
-      "category": "typescript"
-    },
-    {
       "topicId": "edge-case-coverage",
       "label": "Edge-case coverage",
       "category": "testing"
@@ -71,11 +80,6 @@
       "topicId": "effect-lifecycle",
       "label": "Effect lifecycle",
       "category": "react"
-    },
-    {
-      "topicId": "exhaustive-checking",
-      "label": "Exhaustive checking",
-      "category": "typescript"
     },
     {
       "topicId": "graph-and-tree-traversal",
@@ -191,11 +195,6 @@
       "topicId": "test-isolation",
       "label": "Test isolation",
       "category": "testing"
-    },
-    {
-      "topicId": "type-narrowing",
-      "label": "Type narrowing",
-      "category": "typescript"
     },
     {
       "topicId": "type-safe-api-modeling",
@@ -328,11 +327,11 @@
       "topicId": "discriminated-unions",
       "label": "Discriminated unions",
       "category": "typescript",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
-      "demonstratedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 1,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-17T12:04:15Z"
     },
     {
       "topicId": "edge-case-coverage",
@@ -358,11 +357,11 @@
       "topicId": "exhaustive-checking",
       "label": "Exhaustive checking",
       "category": "typescript",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-17T12:04:15Z"
     },
     {
       "topicId": "graph-and-tree-traversal",
@@ -598,11 +597,11 @@
       "topicId": "type-narrowing",
       "label": "Type narrowing",
       "category": "typescript",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-17T12:04:15Z"
     },
     {
       "topicId": "type-safe-api-modeling",
@@ -635,7 +634,20 @@
       "lastReviewedAt": null
     }
   ],
-  "recentTasks": [],
+  "recentTasks": [
+    {
+      "slug": "model-process-state-with-discriminated-union",
+      "category": "typescript",
+      "taskType": "model-types",
+      "difficulty": "medium",
+      "problemShape": "Replace loosely modeled optional fields with explicit process states",
+      "primaryTopics": [
+        "discriminated-unions"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    }
+  ],
   "categoryCoverage": {
     "algorithms": 0,
     "api-integration": 0,
@@ -644,7 +656,9 @@
     "performance": 0,
     "react": 0,
     "testing": 0,
-    "typescript": 0
+    "typescript": 1
   },
-  "taskTypeCoverage": {}
+  "taskTypeCoverage": {
+    "model-types": 1
+  }
 }

@@ -19,7 +19,7 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Current topics to revisit
 
-- none
+- type-narrowing (medium): 1 unresolved signal(s), 0 coach event(s), tasks: model-process-state-with-discriminated-union
 
 ## Under-practiced topics (bounded view)
 
@@ -34,17 +34,17 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - concurrency-control — Concurrency control (async)
 - controlled-inputs — Controlled inputs (react)
 - derived-ui-state — Derived UI state (react)
-- discriminated-unions — Discriminated unions (typescript)
+- edge-case-coverage — Edge-case coverage (testing)
 
 ## Recent tasks
 
-- none
+- model-process-state-with-discriminated-union: typescript / model-types / medium; shape=Replace loosely modeled optional fields with explicit process states; status=reviewed; mastery=3
 
 ## Coverage
 
-- Total tasks: 0
-- Categories: algorithms=0, api-integration=0, async=0, data-transformation=0, performance=0, react=0, testing=0, typescript=0
-- Task types: none
+- Total tasks: 1
+- Categories: algorithms=0, api-integration=0, async=0, data-transformation=0, performance=0, react=0, testing=0, typescript=1
+- Task types: model-types=1
 
 ## Allowed taxonomy
 

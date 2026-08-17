@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "taskSlug": "model-process-state-with-discriminated-union",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-08-17T10:24:04Z",
+      "startedAt": "2026-08-17T10:32:56Z",
+      "endedAt": "2026-08-17T12:04:15Z",
+      "activeStageId": null,
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T11:06:18Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "All four process states are modeled as explicit variants and existing runtime output is preserved.",
+              "The implementation demonstrates the type model, but the candidate explicitly declined to explain the original optional-property ambiguity."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "discriminated-unions",
+                "signal": "demonstrated",
+                "evidence": "Distinct status variants make state-specific fields required and mutually exclusive."
+              },
+              {
+                "topicId": "type-narrowing",
+                "signal": "demonstrated",
+                "evidence": "Consumers narrow on status before accessing variant-specific data and compile without assertions."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T11:15:38Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The cancelled variant now contains required cancellation data and all state consumers handle it consistently.",
+              "The first submission returned zero progress for cancellation until an explicit reminder to update every affected consumer."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "discriminated-unions",
+                "signal": "demonstrated",
+                "evidence": "The new state remains a precise union variant with cancellation-specific fields."
+              },
+              {
+                "topicId": "type-narrowing",
+                "signal": "uncertain",
+                "evidence": "Correct narrowing was added across consumers after a direct reminder exposed the missing cancelled-progress branch."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-2",
+          "kind": "follow-up",
+          "title": "Follow-up 2",
+          "status": "completed",
+          "adaptation": "Explain how the current describeProcess function detects an unhandled future variant and compare it with an explicit never-based exhaustiveness check.",
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T11:54:38Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The candidate correctly explained the implicit missing-return signal, the weakness of a broad fallback, and the benefit of an explicit never-based check.",
+              "The initial assertNever call passed the discriminant property instead of the narrowed union value and was corrected after a direct implementation reminder."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "exhaustive-checking",
+                "signal": "demonstrated",
+                "evidence": "The final switch passes the fully narrowed state to assertNever and fails compilation when a future variant remains unhandled."
+              },
+              {
+                "topicId": "discriminated-unions",
+                "signal": "demonstrated",
+                "evidence": "The explanation connected control-flow narrowing of the union with explicit exhaustiveness enforcement."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [],
+      "review": {
+        "reviewedAt": "2026-08-17T12:04:15Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "Final code is correct, but the session exposed gaps in independently updating every union consumer and explaining the original modeling problem."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "discriminated-unions",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "The final model uses precise variants, preserves state-specific fields, and remains extensible through the cancellation follow-up.",
+            "stageIds": [
+              "core",
+              "follow-up-1",
+              "follow-up-2"
+            ]
+          },
+          {
+            "topicId": "type-narrowing",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The initial cancellation change left one state consumer returning the fallback value until a direct reminder identified the missing branch.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "exhaustive-checking",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The candidate explained the exhaustiveness trade-off and completed a correct assertNever guard after one implementation correction.",
+            "stageIds": [
+              "follow-up-2"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

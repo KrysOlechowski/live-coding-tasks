@@ -1,4 +1,42 @@
 {
   "schemaVersion": 1,
-  "tasks": []
+  "tasks": [
+    {
+      "slug": "model-process-state-with-discriminated-union",
+      "title": "Model process state with a discriminated union",
+      "category": "typescript",
+      "taskType": "model-types",
+      "difficulty": "medium",
+      "primarySkill": "Model mutually exclusive states with TypeScript discriminated unions",
+      "secondarySkill": "Narrow types safely when processing state",
+      "problemShape": "Replace loosely modeled optional fields with explicit process states",
+      "reviewFocus": [
+        "correctness",
+        "type-safety"
+      ],
+      "tags": [
+        "typescript",
+        "discriminated-unions",
+        "type-narrowing"
+      ],
+      "primaryTopics": [
+        "discriminated-unions"
+      ],
+      "secondaryTopics": [
+        "type-narrowing",
+        "exhaustive-checking"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-08-17T10:24:04Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "Final code is correct, but the session exposed gaps in independently updating every union consumer and explaining the original modeling problem."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-08-17T12:04:15Z"
+    }
+  ]
 }
