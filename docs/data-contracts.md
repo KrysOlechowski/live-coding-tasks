@@ -116,6 +116,18 @@ The body uses this structure:
 ```markdown
 # Interviewer Plan
 
+## Difficulty calibration
+
+- Diagnosis: 1
+- Interactions: 1
+- Edge cases: 0
+- Conceptual depth: 1
+- Change surface: 1
+- Follow-up escalation: 0
+- Total: 4
+- Rating: medium
+- Rationale: One non-obvious diagnosis affects several state transitions.
+
 ## Core Task
 
 ### Purpose
@@ -126,9 +138,25 @@ Why this task is useful now.
 
 - Observable evidence of understanding.
 
-### Checkpoint focus
+### Start questions
 
-- Evidence to capture without spoiling a later stage.
+#### core-start-1
+
+- Kind: prediction
+- Topic: canonical-topic-id
+- Prompt: One candidate-safe question that does not name the intended solution.
+- Purpose: The educational or diagnostic value of asking it.
+- Expected evidence: What a useful answer demonstrates.
+
+### Checkpoint questions
+
+#### core-checkpoint-1
+
+- Kind: counterexample
+- Topic: canonical-topic-id
+- Prompt: One question about the completed behavior, trade-off, or boundary.
+- Purpose: The educational or diagnostic value of asking it.
+- Expected evidence: What a useful answer demonstrates.
 
 ### Review focus
 
@@ -152,12 +180,37 @@ Why this follow-up adds learning value.
 
 - Observable evidence of understanding.
 
+### Start questions
+
+- None: This follow-up has no candidate-safe start question with additional value.
+
+### Checkpoint questions
+
+- None: The Core checkpoint already captures the only relevant explanation.
+
 ### Review focus
 
 - The highest-signal review concerns for this stage.
 ```
 
 Each follow-up must introduce meaningful learning value. The interviewer plan may state expected concepts and evidence, but it must not contain a complete solution, code, pseudocode, or a replacement implementation.
+
+Difficulty calibration follows the six scored dimensions and guardrails in
+`TASK_TAXONOMY.md`. Its rating must match `task.md`.
+
+Each stage contains both question sections. A section defines zero to two
+questions; zero questions requires a short `None` reason. Two is a design target,
+not a quota. Every question declares:
+
+- a stable ID using `<stage-id>-<start|checkpoint>-<number>`;
+- one kind: `diagnostic`, `prediction`, `counterexample`, `tradeoff`, `transfer`, or `teaching`;
+- one declared canonical topic;
+- a prompt, purpose, and expected evidence.
+
+Start questions must diagnose reasoning without naming the intended technique,
+root cause, or hidden follow-up. Checkpoint questions may be educational or
+tricky, but a concept outside the declared learning topics cannot lower the task
+verdict or Mastery.
 
 ## Materialized task directory
 
@@ -168,15 +221,35 @@ tasks/<category>/<slug>/
 ├── task.md
 ├── interviewer.md
 ├── session.json
+├── scaffold.json
 ├── main.scaffold.ts     # or main.scaffold.tsx
 └── main.ts              # or main.tsx
 ```
 
 `review.md` is added only after a full review. Optional support files remain task-dependent.
 
+`scaffold.json` is the reset manifest. It uses schema version 1 and lists every
+candidate-editable starter as a `working` / `snapshot` pair plus the lowercase
+SHA-256 of the snapshot. Paths are relative to the task directory and may not
+escape it. Validation detects missing files, duplicate entries, and changed
+snapshot contents. A one-file TypeScript task uses:
+
+```json
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "working": "main.ts",
+      "snapshot": "main.scaffold.ts",
+      "sha256": "<64-character lowercase SHA-256>"
+    }
+  ]
+}
+```
+
 The package's `task.md` and `interviewer.md` contents are materialized without changing their meaning. `session.json` and code scaffolds are created by Codex, never by ChatGPT.
 
-## `session.json` v1
+## `session.json` v2
 
 `session.json` stores one or more attempts for the same stable task. Keeping attempts in one compact file preserves useful learning evidence when a task is reset without turning `review.md` into an append-only log.
 
@@ -184,7 +257,7 @@ Top-level shape:
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskSlug": "fix-stale-customer-search",
   "activeAttemptId": "attempt-1",
   "attempts": []
@@ -212,7 +285,8 @@ Each attempt contains:
   "startedAt": null,
   "endedAt": null,
   "activeStageId": "core",
-  "activeQuestion": null,
+  "activeQuestionId": null,
+  "questions": [],
   "stages": [],
   "coachEvents": [],
   "review": null
@@ -232,16 +306,24 @@ Allowed attempt statuses:
 
 `activeStageId` is a stage ID while work can continue and `null` after the attempt becomes `ready-for-review`, `reviewed`, `abandoned`, or `reset`.
 
-`activeQuestion` stores at most one explicit question that must be resolved before the active stage can close. It starts as `null` and must also be `null` for every terminal or `ready-for-review` attempt.
+`questions` stores compact question evidence across the attempt. Full answers and
+chat transcripts do not belong there. `activeQuestionId` references the one
+pending question and is otherwise `null`; terminal and `ready-for-review`
+attempts require it to be `null`.
 
-### Active question
+### Questions
 
-When the interviewer asks a required checkpoint, explanation, or trade-off question, store:
+Append a question only when it is shown to the candidate:
 
 ```json
 {
+  "id": "core-start-1",
   "stageId": "core",
-  "prompt": "Why does the original optional-property model permit invalid states?",
+  "timing": "start",
+  "kind": "prediction",
+  "topicId": "derived-ui-state",
+  "prompt": "Which values are read and displayed after this interaction?",
+  "source": "planned",
   "askedAt": "2026-08-17T14:32:00Z",
   "status": "pending",
   "resolvedAt": null,
@@ -257,13 +339,21 @@ Allowed statuses:
 
 Rules:
 
-- `stageId` must match `activeStageId` and reference an `available` or `in-progress` stage.
-- `prompt` is the exact short question shown to the candidate; it is not a transcript.
+- `timing` is `start` or `checkpoint` and `kind` uses the interviewer-plan values.
+- `source` is `planned`, `adapted`, or `legacy`; planned questions must match
+  `interviewer.md`, adapted prompts must match the stage adaptation, and legacy
+  is migration-only historical evidence.
+- The one pending question must belong to `activeStageId` and be referenced by
+  `activeQuestionId`.
+- `prompt` is the exact question shown to the candidate; it is not a transcript.
 - `pending` requires `resolvedAt` and `evidence` to remain `null`.
 - `answered` and `declined` require a UTC `resolvedAt` timestamp and concise non-empty `evidence`.
-- A stage must not be completed while its active question is `pending`.
-- When the stage checkpoint consumes an answered or declined question, copy only the useful evidence into the checkpoint and clear `activeQuestion`.
-- Silence is not a decline and must not be converted into negative review evidence. The interviewer repeats the pending question and keeps the stage active.
+- After resolution, keep the compact question record and clear
+  `activeQuestionId`; the next valuable question may then be asked.
+- A stage must not be completed while one of its questions is pending.
+- Silence is not a decline and must not be converted into negative review
+  evidence. The interviewer repeats the pending question and keeps the stage
+  active.
 
 ### Stage
 
@@ -288,10 +378,12 @@ Allowed stage statuses:
 - `locked` — the requirement has not been revealed;
 - `available` — it may be started or has just been revealed;
 - `in-progress` — the candidate is working on it;
+- `checkpoint` — implementation work was declared complete and checkpoint
+  questions are being resolved;
 - `completed` — the stage ended and has a checkpoint;
 - `skipped` — the stage was not attempted and has a non-empty `skipReason`.
 
-Core starts as `available`; follow-ups start as `locked`. `adaptation` remains `null` unless a follow-up is converted into an explanation or trade-off question because the candidate already implemented the intended behavior. The adapted prompt is recorded as one short sentence.
+Core starts as `available`; follow-ups start as `locked`. `adaptation` remains `null` unless a follow-up is converted into an explanation or trade-off question because the candidate already implemented the intended behavior. The adapted prompt is recorded as one short sentence. A stage enters `checkpoint` when the candidate declares the implementation complete; after its final checkpoint question is resolved, the workflow evaluates and either completes the stage or returns it to `in-progress` with a non-spoiling requirement reminder.
 
 ### Checkpoint
 
@@ -401,11 +493,12 @@ For `needs-practice`, `priority` is `low`, `medium`, or `high`. For `improved` a
 
 Reset restores the code snapshot and begins a fresh attempt:
 
-1. restore `main.*` from `main.scaffold.*`;
+1. verify snapshot hashes and restore every working file declared in `scaffold.json`;
 2. remove the current `review.md`;
 3. preserve the existing attempt in `session.json` when it contains a checkpoint, coach event, or review;
 4. change that attempt's status to `reset`, set `endedAt`, and keep its structured evidence;
-5. clear any active question, append a new initialized attempt, and point `activeAttemptId` to it;
+5. clear `activeQuestionId`, append a new initialized attempt with an empty
+   question history, and point `activeAttemptId` to it;
 6. regenerate all derived data.
 
 If the active attempt contains no checkpoint, coach event, or review, reset may reinitialize it in place instead of creating empty history.
@@ -452,6 +545,7 @@ Canonical authored or workflow-written files:
 - each task's `task.md`
 - each task's `interviewer.md`
 - each task's `session.json`
+- each task's `scaffold.json`
 - each task's implementation, scaffold snapshot, optional support files, and `review.md`
 
 Generated files:
@@ -518,7 +612,7 @@ The 2.0 finalization workflow:
 1. validate every canonical task artifact;
 2. verify that all topic IDs exist in the catalog;
 3. verify that interviewer follow-up counts match headings and session stages;
-4. verify attempt, stage, active-question, checkpoint, and coach references;
+4. verify attempt, stage, question-history, checkpoint, and coach references;
 5. verify `review.md` Mastery and verdict against the active attempt's structured review;
 6. verify the `needsRepetition` invariant;
 7. regenerate the task index, learning summary, ChatGPT context, and preview manifest;

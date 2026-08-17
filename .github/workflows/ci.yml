@@ -1,0 +1,22 @@
+name: Repository checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run finalize:tasks
+      - name: Verify generated files are committed
+        run: git diff --exit-code
+      - run: npm run test:workflow
+      - run: npm run lint
+      - run: npm run build

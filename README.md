@@ -30,10 +30,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-The repository includes one initial task for exercising the complete 2.0 flow:
+The repository currently includes two completed examples:
 
-- task: [http://localhost:3000/tasks/fix-stale-customer-search](http://localhost:3000/tasks/fix-stale-customer-search)
-- interactive preview: [http://localhost:3000/tasks/fix-stale-customer-search/preview](http://localhost:3000/tasks/fix-stale-customer-search/preview)
+- React/UI task: [http://localhost:3000/tasks/fix-cart-summary-state](http://localhost:3000/tasks/fix-cart-summary-state)
+- interactive preview: [http://localhost:3000/tasks/fix-cart-summary-state/preview](http://localhost:3000/tasks/fix-cart-summary-state/preview)
+- TypeScript task: [http://localhost:3000/tasks/model-process-state-with-discriminated-union](http://localhost:3000/tasks/model-process-state-with-discriminated-union)
 
 ## 🔄 Practice workflow
 
@@ -55,7 +56,7 @@ Both creation paths produce the same repository files and use the same validatio
 
 ### 3. Solve the Core Task
 
-Work only in the task's `main.ts` or `main.tsx`. The matching `main.scaffold.*` file is the original restorable snapshot.
+Work only in the task's candidate files, normally `main.ts` or `main.tsx`. `scaffold.json` identifies their original restorable snapshots.
 
 For the included UI task, use its preview route. A directly executable TypeScript task can use:
 
@@ -65,14 +66,14 @@ npx tsx --watch tasks/<category>/<slug>/main.ts
 
 ### 4. Use the interview session
 
-Codex keeps future follow-ups in `interviewer.md` and reveals them one at a time.
+Codex keeps future follow-ups in `interviewer.md` and reveals them one at a time. Enter these messages in the Codex chat, not in the VS Code terminal or source file:
 
 ```text
-$session start Task: tasks/<category>/<slug>
-$session complete-stage Task: tasks/<category>/<slug>
+$session
+$session — skończyłem obecny etap
 ```
 
-Required interviewer questions are stored in `session.json`. A stage cannot close while a question is merely unanswered: answer it or explicitly decline. Completing a resolved stage records a concise, normally silent checkpoint. After the final active stage, the attempt becomes ready for one full review.
+Codex normally asks up to two valuable questions at the start of a stage and up to two at its checkpoint. They diagnose or extend reasoning without revealing the solution. Shown questions and concise answer evidence are stored in `session.json`; unanswered questions are never treated as wrong automatically. After the last checkpoint answer, Codex evaluates the stage without requiring another completion message.
 
 ### 5. Ask for coaching when needed
 
@@ -114,7 +115,8 @@ The skill files are routing checklists. Detailed behavior lives under `codex/`.
 tasks/<category>/<slug>/
 ├── task.md                 # candidate-safe brief and metadata
 ├── interviewer.md          # Core intent and hidden staged follow-ups
-├── session.json            # attempts, active question, stages, checkpoints, coach, review signals
+├── session.json            # attempts, questions, stages, checkpoints, coach, review signals
+├── scaffold.json           # reset file pairs and protected snapshot hashes
 ├── main.scaffold.ts        # or main.scaffold.tsx
 ├── main.ts                 # or main.tsx; one evolving implementation
 └── review.md               # latest full review, present after review
@@ -175,7 +177,7 @@ npm run restore:scaffold -- tasks/<category>/<slug>
 
 The command:
 
-- restores the candidate implementation from its scaffold snapshot;
+- verifies snapshot hashes and restores every candidate file declared in `scaffold.json`;
 - removes the current `review.md`;
 - preserves a compact previous attempt when it contains useful evidence;
 - starts a fresh active attempt;
@@ -193,6 +195,8 @@ The command:
 | `npm run generate:chatgpt-context` | Generate bounded optional ChatGPT context |
 | `npm run finalize:tasks` | Run validation and all current generators |
 | `npm run restore:scaffold -- tasks/<category>/<slug>` | Restore a task, start a fresh attempt, and finalize data |
+| `npm run test:workflow` | Test validation and reset behavior in isolated copies |
+| `npm run check` | Run finalization, workflow tests, lint, and production build |
 
 ## 🏗️ Repository map
 

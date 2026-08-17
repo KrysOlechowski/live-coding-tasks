@@ -70,6 +70,7 @@ Create:
 - `task.md`
 - `interviewer.md`
 - `session.json`
+- `scaffold.json`
 - `main.tsx`
 - `main.scaffold.tsx` (restorable snapshot of the initial `main.tsx` scaffold)
 
@@ -91,6 +92,7 @@ Create:
 - `task.md`
 - `interviewer.md`
 - `session.json`
+- `scaffold.json`
 - `main.ts`
 - `main.scaffold.ts` (restorable snapshot of the initial `main.ts` scaffold)
 
@@ -148,7 +150,7 @@ Do not duplicate `category`, `taskType`, or `difficulty` in the markdown body wh
 
 ## interviewer.md
 
-Materialize the validated interviewer artifact from the Task Package. Keep it out of candidate-facing task pages and final scaffold summaries. Verify that `plannedFollowUps`, topic IDs, follow-up headings, and declared follow-up topics match `docs/data-contracts.md`.
+Materialize the validated interviewer artifact from the Task Package. Keep it out of candidate-facing task pages and final scaffold summaries. Verify that difficulty calibration, `plannedFollowUps`, topic IDs, follow-up headings, start/checkpoint questions, and declared follow-up topics match `docs/data-contracts.md`.
 
 Do not add a solution, code, or pseudocode to the interviewer plan.
 
@@ -156,13 +158,13 @@ Do not add a solution, code, or pseudocode to the interviewer plan.
 
 ## session.json
 
-Create schema version 1 session state using `docs/data-contracts.md`:
+Create schema version 2 session state using `docs/data-contracts.md`:
 
 - create `attempt-1` with status `ready`;
 - set `createdAt` to the current ISO 8601 UTC time;
 - leave `startedAt`, `endedAt`, and `review` as `null`;
 - set `activeStageId` to `core`;
-- set `activeQuestion` to `null`;
+- set `activeQuestionId` to `null` and start with an empty `questions` array;
 - create an `available` Core stage;
 - create one `locked` stage for every planned follow-up;
 - start with an empty `coachEvents` array.
@@ -195,7 +197,24 @@ Create only a minimal starter.
 - solving the interview problem
 
 After creating `main.tsx` or `main.ts`, create a snapshot copy as `main.scaffold.tsx` or `main.scaffold.ts`.
-This snapshot is used to restore the original scaffold later.
+For every candidate-editable starter file, create an equivalent snapshot and list the pair in `scaffold.json` together with the lowercase SHA-256 of the snapshot. The reset command restores exactly the listed files and refuses to proceed if a snapshot hash changed unexpectedly.
+
+Default manifest:
+
+```json
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "working": "main.ts",
+      "snapshot": "main.scaffold.ts",
+      "sha256": "<64-character lowercase SHA-256>"
+    }
+  ]
+}
+```
+
+Do not list generated files, `task.md`, `interviewer.md`, `session.json`, or `review.md` in this manifest.
 
 ## Scaffold snapshot diagnostics
 
@@ -294,10 +313,11 @@ When given a validated Task Package:
 4. initialize `session.json`
 5. choose the smallest useful code scaffold
 6. create only the necessary starter code files
-7. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
-8. preserve the distinction between `main.scaffold.*` and `main.*`
-9. run `npm run finalize:tasks` and fix task, session, learning-data, and preview failures
-10. stop before solving the task
+7. create `scaffold.json` from all candidate-editable starter/snapshot pairs
+8. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
+9. preserve the distinction between `main.scaffold.*` and `main.*`
+10. run `npm run finalize:tasks` and fix task, session, learning-data, and preview failures
+11. stop before solving the task
 
 `npm run finalize:tasks` is mandatory.
 Do not ask the user to run validation or metadata commands manually.

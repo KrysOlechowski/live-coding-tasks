@@ -50,7 +50,7 @@ Complete the workflow end-to-end:
 7. infer an evidence-based Mastery level from the complete session
 8. create or update `review.md`
 9. write the matching structured review and topic signals to the active attempt in `session.json`
-10. set the attempt status to `reviewed`, set `endedAt`, clear `activeStageId`, and verify `activeQuestion` is null
+10. set the attempt status to `reviewed`, set `endedAt`, clear `activeStageId`, and verify `activeQuestionId` is null
 11. run `npm run finalize:tasks`
 
 ---
@@ -254,7 +254,7 @@ If the remaining issue is only markup polish, wording preference, or non-blockin
 
 Infer Mastery during review. The user should not provide it manually.
 Treat it as positive progress feedback, not punishment, while keeping the rating honest and evidence-based.
-Base it on the actual task requirements, active follow-ups, `reviewFocus`, checkpoint evidence, assistance context, and the highest-signal findings. A hint is evidence, not an automatic point deduction; consider whether the candidate later demonstrated the topic independently.
+Base it on the actual task requirements, active follow-ups, `reviewFocus`, start/checkpoint question evidence, assistance context, and the highest-signal findings. A hint is evidence, not an automatic point deduction; consider whether the candidate later demonstrated the topic independently. A teaching question outside the declared topics is not negative evidence.
 
 Use exactly one of these levels and labels:
 

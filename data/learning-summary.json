@@ -629,7 +629,7 @@
       "slug": "fix-cart-summary-state",
       "category": "react",
       "taskType": "fix-bug",
-      "difficulty": "medium",
+      "difficulty": "easy",
       "problemShape": "Repair duplicated derived state that falls behind its source state",
       "primaryTopics": [
         "derived-ui-state"

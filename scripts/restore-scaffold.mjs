@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { spawn } from "node:child_process";
@@ -26,15 +27,6 @@ function getTargetTaskDir() {
   }
 
   return taskDir;
-}
-
-async function exists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 function stripLeadingScaffoldSuppressions(content, workingFile) {
@@ -79,7 +71,95 @@ async function restoreWorkingFile(scaffoldFile, workingFile) {
     workingFile,
   );
 
+  await fs.mkdir(path.dirname(workingFile), { recursive: true });
   await fs.writeFile(workingFile, restoredContent, "utf8");
+}
+
+function resolveTaskFile(taskDir, relativePath, label) {
+  if (typeof relativePath !== "string" || relativePath.trim().length === 0) {
+    throw new Error(`${label} must be a non-empty task-relative path.`);
+  }
+
+  const resolvedPath = path.resolve(taskDir, relativePath);
+  const taskRelativePath = path.relative(taskDir, resolvedPath);
+
+  if (
+    taskRelativePath === "" ||
+    taskRelativePath.startsWith("..") ||
+    path.isAbsolute(taskRelativePath)
+  ) {
+    throw new Error(`${label} must stay inside the task directory.`);
+  }
+
+  return resolvedPath;
+}
+
+async function readScaffoldFiles(taskDir) {
+  const manifestPath = path.join(taskDir, "scaffold.json");
+  const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
+
+  if (manifest?.schemaVersion !== 1) {
+    throw new Error("scaffold.json schemaVersion must be 1.");
+  }
+
+  if (!Array.isArray(manifest.files) || manifest.files.length === 0) {
+    throw new Error("scaffold.json files must be a non-empty array.");
+  }
+
+  const manifestPaths = new Set();
+  const files = [];
+
+  for (const [index, entry] of manifest.files.entries()) {
+    const label = `scaffold.json files[${index}]`;
+
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new Error(`${label} must be an object.`);
+    }
+
+    const workingFile = resolveTaskFile(taskDir, entry.working, `${label} working`);
+    const snapshotFile = resolveTaskFile(
+      taskDir,
+      entry.snapshot,
+      `${label} snapshot`,
+    );
+
+    if (workingFile === snapshotFile) {
+      throw new Error(`${label} working and snapshot paths must differ.`);
+    }
+
+    if (manifestPaths.has(workingFile) || manifestPaths.has(snapshotFile)) {
+      throw new Error(`${label} reuses a working or snapshot file path.`);
+    }
+    manifestPaths.add(workingFile);
+    manifestPaths.add(snapshotFile);
+
+    if (!/^[a-f0-9]{64}$/.test(entry.sha256 ?? "")) {
+      throw new Error(`${label} sha256 must be a lowercase 64-character hash.`);
+    }
+
+    const snapshotContent = await fs.readFile(snapshotFile);
+    const actualHash = createHash("sha256").update(snapshotContent).digest("hex");
+
+    if (actualHash !== entry.sha256) {
+      throw new Error(
+        `${label} snapshot hash mismatch for ${entry.snapshot}; reset stopped before changing working files.`,
+      );
+    }
+
+    files.push({ workingFile, snapshotFile });
+  }
+
+  const mainEntries = manifest.files.filter((entry) =>
+    ["main.ts", "main.tsx"].includes(entry.working),
+  );
+
+  if (mainEntries.length !== 1) {
+    throw new Error(
+      "scaffold.json must contain exactly one main.ts or main.tsx working entry.",
+    );
+  }
+
+  return files;
 }
 
 async function removeReview(taskDir) {
@@ -111,7 +191,8 @@ function createFreshAttempt(id, number, createdAt, previousStages) {
     startedAt: null,
     endedAt: null,
     activeStageId: "core",
-    activeQuestion: null,
+    activeQuestionId: null,
+    questions: [],
     stages: previousStages.map((stage) => ({
       id: stage.id,
       kind: stage.kind,
@@ -130,13 +211,33 @@ function hasMeaningfulEvidence(attempt) {
   return (
     attempt.review !== null ||
     attempt.coachEvents.length > 0 ||
+    attempt.questions.length > 0 ||
     attempt.stages.some((stage) => stage.checkpoint !== null)
   );
+}
+
+function closePendingQuestionForReset(attempt, timestamp) {
+  const pendingQuestion = attempt.questions.find(
+    (question) => question.status === "pending",
+  );
+
+  if (pendingQuestion) {
+    pendingQuestion.status = "declined";
+    pendingQuestion.resolvedAt = timestamp;
+    pendingQuestion.evidence =
+      "The attempt was reset before the question was answered.";
+  }
+
+  attempt.activeQuestionId = null;
 }
 
 async function resetSession(taskDir) {
   const sessionFile = path.join(taskDir, "session.json");
   const session = JSON.parse(await fs.readFile(sessionFile, "utf8"));
+
+  if (session.schemaVersion !== 2) {
+    throw new Error("session.json schemaVersion must be 2 before reset.");
+  }
   const activeIndex = session.attempts.findIndex(
     (attempt) => attempt.id === session.activeAttemptId,
   );
@@ -152,7 +253,7 @@ async function resetSession(taskDir) {
     activeAttempt.status = "reset";
     activeAttempt.endedAt = timestamp;
     activeAttempt.activeStageId = null;
-    activeAttempt.activeQuestion = null;
+    closePendingQuestionForReset(activeAttempt, timestamp);
 
     const number = session.attempts.length + 1;
     const nextAttempt = createFreshAttempt(
@@ -200,25 +301,15 @@ async function finalizeTasks() {
 
 async function main() {
   const taskDir = getTargetTaskDir();
-  const scaffoldTsx = path.join(taskDir, "main.scaffold.tsx");
-  const scaffoldTs = path.join(taskDir, "main.scaffold.ts");
-  const mainTsx = path.join(taskDir, "main.tsx");
-  const mainTs = path.join(taskDir, "main.ts");
-  let restoredFile;
+  const scaffoldFiles = await readScaffoldFiles(taskDir);
 
-  if (await exists(scaffoldTsx)) {
-    await restoreWorkingFile(scaffoldTsx, mainTsx);
-    restoredFile = mainTsx;
-  } else if (await exists(scaffoldTs)) {
-    await restoreWorkingFile(scaffoldTs, mainTs);
-    restoredFile = mainTs;
-  } else {
-    throw new Error(
-      `No scaffold snapshot found in ${path.relative(ROOT, taskDir)}. Expected main.scaffold.tsx or main.scaffold.ts.`,
+  for (const { snapshotFile, workingFile } of scaffoldFiles) {
+    await restoreWorkingFile(snapshotFile, workingFile);
+    console.log(
+      `Restored ${path.relative(ROOT, workingFile)} from ${path.relative(ROOT, snapshotFile)}.`,
     );
   }
 
-  console.log(`Restored ${path.relative(ROOT, restoredFile)} from scaffold snapshot.`);
   await removeReview(taskDir);
   await resetSession(taskDir);
   await finalizeTasks();

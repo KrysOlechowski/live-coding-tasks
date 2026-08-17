@@ -19,10 +19,12 @@ Design and scaffold one new Live Coding 2.0 task using repository learning data.
 2. Read current topics to revisit, assigned coverage, reviewed coverage, and recent problem shapes.
 3. Apply optional user constraints such as difficulty, category, focus, or exclusions.
 4. Choose one interview-sized learning target. Do not treat an assigned or in-progress topic as mastered.
-5. Create a valid Task Package v1 with a candidate-safe `task.md` and a separate `interviewer.md`.
-6. Use only canonical topic IDs from `data/topic-catalog.json`.
-7. Check that the brief does not reveal hidden follow-ups or a solution strategy.
-8. Continue directly into the scaffold workflow; do not require the user to copy the package back to Codex.
+5. Score all six difficulty dimensions from `TASK_TAXONOMY.md`, classify the complete standard session, and record the compact calibration in `interviewer.md`.
+6. Create a valid Task Package v1 with a candidate-safe `task.md` and a separate `interviewer.md`.
+7. Design only valuable start/checkpoint questions using the question rules in `docs/data-contracts.md`.
+8. Use only canonical topic IDs from `data/topic-catalog.json`.
+9. Check that the brief and start questions do not reveal hidden follow-ups or a solution strategy.
+10. Continue directly into the scaffold workflow; do not require the user to copy the package back to Codex.
 
 ## Selection rules
 
@@ -30,6 +32,7 @@ Design and scaffold one new Live Coding 2.0 task using repository learning data.
 - Otherwise prefer under-practiced categories, task types, problem shapes, and topics.
 - Avoid repeating only the surface story while testing the same mental pattern.
 - Keep one or two primary skills and zero to three useful follow-ups.
+- Treat two questions at each timing as a target, not a quota; omit low-value or leading questions.
 - Follow explicit user constraints over automatic selection preferences.
 
 ## Hard rules

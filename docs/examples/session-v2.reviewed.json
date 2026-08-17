@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskSlug": "fix-stale-customer-search",
   "activeAttemptId": "attempt-1",
   "attempts": [
@@ -11,7 +11,35 @@
       "startedAt": "2026-08-17T14:30:00Z",
       "endedAt": "2026-08-17T15:30:00Z",
       "activeStageId": null,
-      "activeQuestion": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "stale-async-responses",
+          "prompt": "If two searches start in one order but finish in the opposite order, which result will the current component display?",
+          "source": "planned",
+          "askedAt": "2026-08-17T14:31:00Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T14:33:00Z",
+          "evidence": "The candidate correctly predicted that the older completion could overwrite the latest result."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "stale-async-responses",
+          "prompt": "What happens if an older request fails after the newest request has already succeeded?",
+          "source": "planned",
+          "askedAt": "2026-08-17T14:52:00Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T14:54:00Z",
+          "evidence": "The candidate explained that the same latest-request guard must reject the older error."
+        }
+      ],
       "stages": [
         {
           "id": "core",

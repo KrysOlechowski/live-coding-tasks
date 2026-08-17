@@ -6,7 +6,7 @@
       "title": "Fix the cart summary",
       "category": "react",
       "taskType": "fix-bug",
-      "difficulty": "medium",
+      "difficulty": "easy",
       "primarySkill": "Keep derived cart summary data consistent with React state",
       "secondarySkill": "Apply state updates safely when actions depend on the current cart",
       "problemShape": "Repair duplicated derived state that falls behind its source state",

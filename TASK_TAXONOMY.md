@@ -116,6 +116,40 @@ Mastery is the positive, evidence-based progress rating inferred by Codex during
 
 Mastery replaces the old idea of penalty stars. Do not use penalty scoring.
 
+## Difficulty Calibration
+
+`difficulty` describes the complete standard session: the Core Task plus planned
+follow-ups, completed without coaching. It describes the task, not the speed of
+one particular candidate.
+
+Score each dimension from `0` to `2` while designing the task:
+
+| Dimension | 0 | 1 | 2 |
+| --- | --- | --- | --- |
+| Diagnosis | The implementation move is obvious. | One non-obvious cause or modeling decision must be found. | Several plausible causes must be distinguished. |
+| Interactions | One local operation or state transition. | Several consumers or transitions must stay consistent. | Timing, concurrency, or multiple sources of data interact. |
+| Edge cases | No meaningful boundary beyond the happy path. | Several independent boundaries matter. | Boundaries interact or create conflicting outcomes. |
+| Conceptual depth | A routine language or framework pattern is enough. | The candidate must explain one important guarantee or trade-off. | A subtle guarantee, algorithmic insight, or architectural trade-off is central. |
+| Change surface | One function or small component changes. | Several handlers, consumers, components, or one supporting file change. | Several files, an integration boundary, or a meaningful test surface changes. |
+| Follow-up escalation | Follow-ups are direct extensions. | A follow-up introduces a distinct variation of the same skill. | A follow-up forces the candidate to revise the original design. |
+
+Map the total score to difficulty:
+
+- `0–3`: `easy`
+- `4–7`: `medium`
+- `8–12`: `hard`
+
+Calibration guardrails:
+
+- A score of `2` in Interactions or Conceptual depth prevents an `easy` rating.
+- A `hard` task requires at least two dimensions scored at `2`.
+- Expected full-session time is a sanity check, not the score: roughly 15–30
+  minutes for `easy`, 30–50 for `medium`, and 50–75 for `hard`.
+- Questions do not raise difficulty unless their concepts are declared learning
+  topics and their answers are relevant to review evidence.
+- Record a compact score and rationale in the interviewer plan's Difficulty
+  calibration section so later feedback can improve the rubric.
+
 ## Repetition Guard Rules
 
 - Do not repeat the same `problemShape` too soon unless explicitly requested.

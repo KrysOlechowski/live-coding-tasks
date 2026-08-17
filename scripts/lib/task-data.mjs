@@ -189,13 +189,15 @@ export async function readTaskRecord(task) {
   const taskPath = path.join(task.dir, "task.md");
   const interviewerPath = path.join(task.dir, "interviewer.md");
   const sessionPath = path.join(task.dir, "session.json");
+  const scaffoldPath = path.join(task.dir, "scaffold.json");
   const reviewPath = path.join(task.dir, "review.md");
 
-  const [taskSource, interviewerSource, sessionSource, reviewSource] =
+  const [taskSource, interviewerSource, sessionSource, scaffoldSource, reviewSource] =
     await Promise.all([
       fs.readFile(taskPath, "utf8"),
       fs.readFile(interviewerPath, "utf8"),
       fs.readFile(sessionPath, "utf8"),
+      fs.readFile(scaffoldPath, "utf8"),
       readOptionalFile(reviewPath),
     ]);
 
@@ -218,6 +220,8 @@ export async function readTaskRecord(task) {
     interviewerFrontmatter: interviewerDocument.data,
     interviewerBody: interviewerDocument.body,
     session: JSON.parse(sessionSource),
+    scaffoldPath,
+    scaffold: JSON.parse(scaffoldSource),
     reviewSource,
   };
 }

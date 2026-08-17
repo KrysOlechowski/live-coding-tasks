@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskSlug": "model-process-state-with-discriminated-union",
   "activeAttemptId": "attempt-1",
   "attempts": [
@@ -11,7 +11,8 @@
       "startedAt": "2026-08-17T10:32:56Z",
       "endedAt": "2026-08-17T12:04:15Z",
       "activeStageId": null,
-      "activeQuestion": null,
+      "activeQuestionId": null,
+      "questions": [],
       "stages": [
         {
           "id": "core",

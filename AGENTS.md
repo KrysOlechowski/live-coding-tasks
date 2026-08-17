@@ -34,7 +34,7 @@ This repository is used for live-coding interview practice.
 - Create new task folders inside `/tasks/<category>/<slug>/`.
 - Use the category from the task brief when creating the task folder.
 - Use a stable slug for the folder name.
-- Keep all task-related files there, including `task.md`, `interviewer.md`, `session.json`, `main.tsx` or `main.ts`, and `review.md`.
+- Keep all task-related files there, including `task.md`, `interviewer.md`, `session.json`, `scaffold.json`, `main.tsx` or `main.ts`, and `review.md`.
 
 ### `/codex`
 
@@ -47,8 +47,7 @@ This repository is used for live-coding interview practice.
 - `/data/topic-catalog.json` is authored canonical topic data.
 - `/data/task-index.json` and `/data/learning-summary.json` are generated; never edit them manually.
 - `/chatgpt/task-designer-context.md` is generated and may be attached to ChatGPT for optional task design.
-- Do not create task scaffolds, solutions, or reviews in `/data`, `/chatgpt`, or legacy `/gpt`.
-- Treat `/gpt` as migration-only compatibility data until it is removed deliberately.
+- Do not create task scaffolds, solutions, or reviews in `/data` or `/chatgpt`.
 
 ## Task scaffolding
 
@@ -59,12 +58,14 @@ This repository is used for live-coding interview practice.
   - `task.md`
   - `interviewer.md`
   - `session.json`
+  - `scaffold.json`
   - `main.tsx` for React tasks
   - `main.ts` for non-React tasks
 - Always keep a scaffold snapshot copy:
   - `main.scaffold.tsx` for React tasks
   - `main.scaffold.ts` for non-React tasks
 - `main.scaffold.*` must be an exact copy of the initial scaffolded `main.*` file.
+- List every candidate-editable starter file and its snapshot in `scaffold.json`, including the snapshot SHA-256. The reset command restores exactly this manifest.
 - Only create extra files like `types.ts`, `mockData.ts`, or `api.ts` when they are clearly necessary.
 - Add TODO comments where the core interview logic should be implemented.
 - For `fix-bug`, `refactor-existing-code`, `optimize-performance`, and `review-and-improve`, do not add TODO comments that reveal the exact issue.
@@ -122,6 +123,6 @@ This repository is used for live-coding interview practice.
 ## Learning tracking
 
 - `interviewer.md` declares the canonical topics planned for the task.
-- `session.json` stores the active required question, checkpoints, material coaching events, attempts, and final topic signals.
+- `session.json` stores the compact question history and active question ID, checkpoints, material coaching events, attempts, and final topic signals.
 - `npm run finalize:tasks` regenerates cross-task learning data and the optional ChatGPT context.
 - Do not manually edit generated learning summaries.

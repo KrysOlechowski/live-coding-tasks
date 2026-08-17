@@ -17,7 +17,7 @@ Use this skill automatically when the user asks to review a solution, check an i
 - Inspect only the current task and shared workflow/tracking files.
 - Require the active attempt to be `ready-for-review`; route unfinished stages through `interview-session` first.
 - Do not modify, solve, or patch solution files.
-- Compare the implementation with the Core requirements, all completed/adapted follow-ups, checkpoints, and frontmatter review focus.
+- Compare the implementation with the Core requirements, all completed/adapted follow-ups, question evidence, checkpoints, and frontmatter review focus.
 - Create or replace `review.md` using `codex/codex_review_workflow.md`.
 - Write the matching compact structured review and topic signals to the active attempt in `session.json`.
 - Include the required evidence-based Mastery section and concrete `path:line` references.

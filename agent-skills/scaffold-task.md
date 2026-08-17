@@ -15,9 +15,11 @@ Use this skill automatically after `create-task` or `import-task`, or when the u
 - Do not solve the task.
 - Create `tasks/<category>/<slug>/`; avoid unrelated task folders.
 - Materialize candidate-safe `task.md` and interviewer-only `interviewer.md`.
+- Verify difficulty calibration and valuable start/checkpoint question definitions.
 - Initialize `session.json` with one Core stage and the planned locked follow-ups.
 - Use `.tsx` for React/UI tasks and `.ts` for non-UI tasks.
 - Create `main.scaffold.*` as real starting code, then copy it exactly to `main.*`.
+- Create `scaffold.json` with every candidate-editable working/snapshot pair and the snapshot SHA-256.
 - Add preview metadata only for UI/preview tasks, following `codex/codex_task_scaffold.md`.
 - Use scaffold-only suppressions only when that workflow permits and requires them.
 - Include a useful local run/debug command in the final response when applicable.

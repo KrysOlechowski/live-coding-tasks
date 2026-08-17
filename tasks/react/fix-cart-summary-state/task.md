@@ -2,7 +2,7 @@
 title: "Fix the cart summary"
 category: "react"
 taskType: "fix-bug"
-difficulty: "medium"
+difficulty: "easy"
 hasPreview: true
 previewEntry: "main.tsx"
 primarySkill: "Keep derived cart summary data consistent with React state"

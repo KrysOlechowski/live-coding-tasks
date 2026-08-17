@@ -13,6 +13,7 @@ Use this skill when the user provides a complete Task Package created in ChatGPT
 ## Checklist
 
 - Validate the whole package before writing anything.
+- Validate difficulty calibration and question quality as well as structure.
 - Stop with concrete errors instead of creating a partial task.
 - Do not silently change candidate requirements or follow-ups.
 - Continue into `agent-skills/scaffold-task.md` when valid.

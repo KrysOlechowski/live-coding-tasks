@@ -12,9 +12,10 @@ Use this skill for `$session`, `$interview-session`, starting or resuming an att
 
 - Resolve only the current task and active attempt.
 - Start or resume the active stage without revealing locked follow-ups.
-- Persist every required interviewer question in `activeQuestion` before asking it.
-- Never close a stage while `activeQuestion.status` is `pending`; silence is not a decline.
-- Accept an explicit answer or explicit decline, record concise evidence, and clear the question only when its checkpoint is written.
+- Ask only planned start/checkpoint questions, one at a time.
+- Persist each shown question in `questions` and point `activeQuestionId` to the pending one.
+- Never close a stage while a question is pending; silence is not a decline.
+- Accept an explicit answer or decline, retain concise evidence, and continue automatically to the next question or checkpoint action.
 - On stage completion, record one concise checkpoint.
 - Reveal at most one applicable follow-up.
 - Never edit candidate code, assign Mastery, or write `review.md`.

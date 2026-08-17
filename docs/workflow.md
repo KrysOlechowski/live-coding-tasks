@@ -73,7 +73,7 @@ Both creation paths must converge before scaffolding. There must not be separate
 
 ### Repository: source of truth
 
-**Target; partially implemented.** The repository owns:
+**Implemented.** The repository owns:
 
 - task metadata and candidate briefs;
 - interviewer plans and staged follow-ups;
@@ -88,9 +88,7 @@ Generated artifacts must never become independently edited sources of truth. The
 
 ### Codex: default workflow engine
 
-**Partially implemented.** Codex currently supports scaffolding, progressive read-only coaching, and final review through the existing agent workflow files.
-
-**Target.** Codex supports separate, narrowly scoped workflows:
+**Implemented.** Codex supports separate, narrowly scoped workflows:
 
 - `create-task` — designs a new task using taxonomy and current learning data;
 - `import-task` — validates and normalizes a Task Package created in ChatGPT;
@@ -103,7 +101,7 @@ These are separate instruction contracts, not separate products or necessarily s
 
 ### ChatGPT: optional task designer
 
-**Target.** ChatGPT is not required for normal operation. It is an optional conversational environment for exploring or refining a task idea.
+**Implemented and optional.** ChatGPT is not required for normal operation. It is an optional conversational environment for exploring or refining a task idea.
 
 ChatGPT does not automatically receive current repository history. The user provides a compact generated context file that contains the Task Package format, taxonomy, topic roadmap, recent coverage, and the highest-priority learning signals. ChatGPT returns a Task Package; it does not scaffold repository files or update learning history.
 
@@ -119,7 +117,7 @@ Codex then imports the package, validates it against repository contracts, and r
 - access to the latest `review.md` for reviewed tasks;
 - an interactive preview route when a task requires visible UI work.
 
-**Target extension.** The home page also presents a small “Topics to revisit” list generated from current learning history. Each useful entry should show the topic, its priority, relevant evidence or summary counts, and links to related tasks without exposing full session logs.
+**Implemented extension.** The home page also presents a small “Topics to revisit” list generated from current learning history. Each useful entry shows the topic, its priority, relevant evidence or summary counts, and links to related tasks without exposing full session logs.
 
 ## Canonical Task Package
 
@@ -144,6 +142,7 @@ tasks/<category>/<slug>/
 ├── task.md                 # metadata and candidate-safe brief
 ├── interviewer.md          # staged interviewer plan and follow-ups
 ├── session.json            # stage state, checkpoints, help, learning signals
+├── scaffold.json           # reset pairs and protected snapshot hashes
 ├── main.scaffold.ts        # or main.scaffold.tsx
 ├── main.ts                 # or main.tsx; the one evolving implementation
 └── review.md               # latest full review; present after review
@@ -155,7 +154,7 @@ Optional files such as `api.ts`, `mockData.ts`, `types.ts`, tests, or preview he
 
 ### `task.md`
 
-**Implemented in its current single-stage form.** `task.md` contains frontmatter plus a self-contained candidate brief. It normally includes:
+**Implemented.** `task.md` contains frontmatter plus a self-contained candidate brief. It normally includes:
 
 - Context
 - Goal
@@ -164,11 +163,11 @@ Optional files such as `api.ts`, `mockData.ts`, `types.ts`, tests, or preview he
 - Non-goals, when useful
 - Acceptance Criteria
 
-Task artifacts are normally written in English even when the conversation with the candidate uses another language. The current frontmatter model remains authoritative until the 2.0 schema is deliberately implemented.
+Task artifacts are normally written in English even when the conversation with the candidate uses another language. The current frontmatter model is authoritative.
 
 ### `interviewer.md`
 
-**Target.** This file stores the interviewer plan created with the task. Each follow-up should describe:
+**Implemented.** This file stores difficulty calibration, educational stage questions, and the follow-up plan created with the task. Each follow-up describes:
 
 - the requirement to reveal;
 - why it adds learning value;
@@ -176,16 +175,18 @@ Task artifacts are normally written in English even when the conversation with t
 - any checkpoint evidence it expects;
 - relevant final-review focus.
 
+Each stage declares zero to two start questions and zero to two checkpoint questions. Two is a design target, not a quota: a question is omitted when it adds no learning value. Start questions diagnose reasoning without naming the solution; checkpoint questions test explanation, counterexamples, trade-offs, or transfer. A question outside the declared topics cannot lower the verdict or Mastery.
+
 It must not be rendered in the ordinary task details view. A follow-up should add a meaningful constraint, edge case, changed API behavior, bug scenario, testing requirement, accessibility requirement, performance concern, or trade-off.
 
 If the candidate has already implemented the intended behavior, the session workflow should adapt the follow-up into an explanation or trade-off question instead of silently discarding it. A follow-up may also be skipped when the session ends or it is no longer logically applicable; the reason should be recorded.
 
 ### `session.json`
 
-**Implemented in workflow, validation, generation, and reset.** This is compact structured evidence, not a transcript. The field-level contract, allowed states, review signals, and reset behavior are defined in [`docs/data-contracts.md`](./data-contracts.md), with a reviewed example in [`docs/examples/session-v1.reviewed.json`](./examples/session-v1.reviewed.json). It holds:
+**Implemented in workflow, validation, generation, and reset.** This is compact structured evidence, not a transcript. The field-level contract, allowed states, review signals, and reset behavior are defined in [`docs/data-contracts.md`](./data-contracts.md), with a reviewed example in [`docs/examples/session-v2.reviewed.json`](./examples/session-v2.reviewed.json). It holds:
 
 - current stage and stage completion state;
-- at most one active required interviewer question, including whether it was answered or explicitly declined;
+- a compact history of shown start/checkpoint questions and at most one pending question;
 - planned, completed, adapted, or skipped follow-ups;
 - concise checkpoint outcomes;
 - assistance totals grouped by stage and canonical topic;
@@ -196,7 +197,7 @@ The file keeps multiple compact attempts so reset can start fresh without erasin
 
 ### `review.md`
 
-**Implemented for the current workflow; session-aware expansion is a target.** `review.md` remains the latest detailed, human-readable technical assessment. It evaluates the final code against the candidate brief and all active follow-ups, includes high-signal findings with file references, and records Mastery, a learning takeaway, and a concrete next step.
+**Implemented and session-aware.** `review.md` remains the latest detailed, human-readable technical assessment. It evaluates the final code against the candidate brief and all active follow-ups, includes high-signal findings with file references, and records Mastery, a learning takeaway, and a concrete next step.
 
 Historical structured evidence belongs in `session.json`; `review.md` remains the latest review rather than an append-only event log.
 
@@ -204,13 +205,13 @@ Historical structured evidence belongs in `session.json`; `review.md` remains th
 
 ### Canonical topics
 
-**Contract defined; workflow integration is a target.** Learning signals use stable topic IDs so aliases such as “race conditions,” “stale requests,” and “out-of-order responses” do not accidentally become unrelated topics.
+**Implemented.** Learning signals use stable topic IDs so aliases such as “race conditions,” “stale requests,” and “out-of-order responses” do not accidentally become unrelated topics.
 
 The authored [`data/topic-catalog.json`](../data/topic-catalog.json) defines the initial IDs, labels, primary categories, descriptions, and aliases. Taxonomy describes task shape; the topic catalog describes knowledge being practiced. Finalization validates task, checkpoint, coach, and review references against it.
 
 ### Review signals
 
-**Target.** The final review writes compact topic-level signals to `session.json`. At minimum, a topic that still needs practice records:
+**Implemented.** The final review writes compact topic-level signals to `session.json`. At minimum, a topic that still needs practice records:
 
 ```json
 {
@@ -257,7 +258,7 @@ Coach hint count is evidence, not an automatic penalty. Review must consider the
 
 ### Generated repository views
 
-**Target.** The intended derived artifacts are:
+**Implemented.** The derived artifacts are:
 
 - `data/task-index.json` — compact task metadata and progress used by tooling and, where useful, the website;
 - `data/learning-summary.json` — current topic priorities, coverage, recent outcomes, assistance aggregates, and related task references;
@@ -278,7 +279,7 @@ Codex does not need the ChatGPT context file as its primary input. It can read t
 2. `create-task` checks that generated learning data is current.
 3. Codex reads the taxonomy, topic catalog, learning summary, and recent task coverage.
 4. Codex selects a useful, non-repetitive learning target and creates a valid Task Package.
-5. `scaffold-task` writes the candidate brief, interviewer plan, initial session state, implementation scaffold, and exact scaffold snapshot.
+5. `scaffold-task` writes the candidate brief, interviewer plan, initial session state, implementation scaffold, exact scaffold snapshots, and reset manifest.
 6. Repository validation and derived-data generation run automatically.
 
 ### Path B: ChatGPT creates the task
@@ -294,15 +295,16 @@ ChatGPT is therefore optional but fully supported. Its absence does not block ta
 
 ### Interview session
 
-1. The candidate solves the Core Task in the single `main.ts` or `main.tsx` file.
-2. The candidate may request progressive coaching at any stage.
-3. Coaching remains read-only with respect to candidate code, but may append compact telemetry to `session.json`.
-4. A required checkpoint, explanation, or trade-off question is persisted as `activeQuestion` before it is shown. The candidate must answer it or explicitly decline; silence never becomes negative evidence automatically.
-5. When the candidate declares the stage complete, `interview-session` first blocks on any pending question, then records a concise checkpoint after the question is resolved.
-6. The checkpoint normally remains silent when feedback would spoil a later follow-up.
-7. `interview-session` reveals the next applicable follow-up and updates the stage state.
-8. The candidate evolves the same implementation.
-9. Steps 2–8 repeat until all active follow-ups are completed, adapted, skipped with a reason, or the session is ended.
+1. In Codex chat, the candidate enters `$session`; the workflow starts/resumes the attempt and asks the planned start questions one at a time.
+2. The candidate solves the Core Task in the candidate-editable files, normally `main.ts` or `main.tsx`.
+3. The candidate may request progressive coaching at any stage.
+4. Coaching remains read-only with respect to candidate code, but may append compact telemetry to `session.json`.
+5. When the candidate writes `$session — skończyłem obecny etap`, the stage enters checkpoint state and Codex asks its valuable checkpoint questions one at a time.
+6. Before each question is shown, it is appended to `questions` and referenced by `activeQuestionId`. An answer or explicit decline resolves it; silence never becomes negative evidence automatically.
+7. After the final checkpoint answer, the workflow evaluates the stage automatically and records concise evidence. No second completion message is required.
+8. The checkpoint normally remains silent when feedback would spoil a later follow-up.
+9. `interview-session` reveals the next applicable follow-up, asks its start questions, and the candidate evolves the same implementation.
+10. Steps 3–9 repeat until all active follow-ups are completed, adapted, skipped with a reason, or the session is ended.
 
 A checkpoint is evidence capture, not a partial review. It should record an outcome such as `passed`, `passed-with-issues`, or `incomplete`, plus concise observed issues, assistance used, and knowledge signals.
 
@@ -319,7 +321,7 @@ Mastery remains a five-level evidence-based signal. It reflects understanding ac
 
 ### Reset
 
-**Implemented.** Reset restores `main.*` from the exact `main.scaffold.*` snapshot and removes the current review. It closes the current attempt as `reset` when it contains useful evidence, preserves that compact history in `session.json`, starts a fresh active attempt, and regenerates derived data. Current task progress follows only the active attempt.
+**Implemented and tested.** Reset verifies every snapshot hash, restores all working files declared in `scaffold.json`, and removes the current review. It closes the current attempt as `reset` when it contains useful evidence, preserves that compact history in `session.json`, starts a fresh active attempt, and regenerates derived data. Current task progress follows only the active attempt.
 
 ## Current repository behavior
 
@@ -327,28 +329,28 @@ The repository currently implements the following baseline:
 
 | Concern | Current behavior | 2.0 status |
 | --- | --- | --- |
-| Taxonomy | `TASK_TAXONOMY.md` defines eight categories, nine task types, difficulty, skills, problem shape, interview focus, and review focus. | Implemented current contract. |
-| Task generation | Separate Codex create/import skills share Task Package v1; optional ChatGPT receives generated bounded context. | Implemented workflow; both paths still need live end-to-end exercise. |
-| Repetition guard | Generated task and learning data track recent shapes, assigned coverage, reviewed evidence, and current repetition priorities. | Implemented; legacy `gpt/` files are no longer part of normal finalization. |
-| Scaffolding | Codex creates `task.md`, `interviewer.md`, `session.json`, minimal `main.*`, and an exact `main.scaffold.*` snapshot. | Implemented for Task Package v1. |
+| Taxonomy | `TASK_TAXONOMY.md` defines eight categories, nine task types, a six-dimension difficulty rubric, skills, problem shape, interview focus, and review focus. | Implemented current contract. |
+| Task generation | Separate Codex create/import skills share Task Package v1; optional ChatGPT receives generated bounded context. | Implemented and exercised through both paths. |
+| Repetition guard | Generated task and learning data track recent shapes, assigned coverage, reviewed evidence, and current repetition priorities. | Implemented. |
+| Scaffolding | Codex creates task/session artifacts, minimal candidate files, exact snapshots, and a hash-protected reset manifest. | Implemented for Task Package v1. |
 | UI task preview | `hasPreview` and `previewEntry` generate imports and routes through the Next.js app. | Implemented and retained. |
-| Candidate implementation | The candidate edits one working `main.*` file. | Implemented and retained. |
+| Candidate implementation | The candidate evolves one implementation, normally in one working `main.*`; extra candidate files are allowed when the task requires them. | Implemented and retained. |
 | Coaching | `$coach` provides progressive code-read-only assistance and may append one material help event to the active session. | Implemented workflow; telemetry needs live exercise. |
 | Interviewer plan | V1 plans are materialized, kept off candidate pages, and validated against topic/follow-up contracts. | Implemented. |
-| Follow-ups | The interview-session workflow tracks locked stages and reveals one applicable follow-up at a time. | Implemented workflow; needs live exercise. |
-| Session questions and checkpoints | Required questions persist across turns, unanswered questions block stage completion, and completed stages store compact non-spoiling evidence in `session.json`. | Implemented workflow and validation. |
-| Final review | Review is gated by session readiness and writes both `review.md` and matching structured learning signals. | Implemented workflow and validation; needs live exercise. |
+| Follow-ups | The interview-session workflow tracks locked stages and reveals one applicable follow-up at a time. | Implemented and exercised in both completed tasks. |
+| Session questions and checkpoints | Zero to two valuable questions can be planned at stage start and checkpoint; shown questions persist across turns and completed stages store compact non-spoiling evidence. | Schema v2, workflow, and validation implemented; the new multi-question sequence awaits its first live task. |
+| Final review | Review is gated by session readiness and writes both `review.md` and matching structured learning signals. | Implemented and exercised in both completed tasks. |
 | Structured learning history | Session attempts are canonical; generators produce task index, coverage, repetition priorities, and bounded ChatGPT context. | Implemented. |
-| Restore | `restore:scaffold` restores code, preserves meaningful prior attempts, starts a fresh attempt, and finalizes automatically. | Implemented and exercised on the initial task. |
-| Validation/finalization | `finalize:tasks` validates topics, task/interviewer/session/review contracts and regenerates task data, previews, and ChatGPT context. | Implemented. |
+| Restore | `restore:scaffold` verifies hashes, restores all manifest files, preserves meaningful prior attempts, starts a fresh attempt, and finalizes automatically. | Implemented and covered by an isolated multi-file reset test. |
+| Validation/finalization | `finalize:tasks` validates topics, difficulty, questions, task/interviewer/session/review/scaffold contracts and regenerates derived data. | Implemented, with workflow tests and GitHub CI. |
 | Task browser | Next.js indexes frontmatter, filters by category, difficulty, Mastery, preview availability, and review progress, renders details and reviews, and serves optional previews. | Implemented and retained. |
-| Topics-to-revisit view | The home page renders generated current priorities with evidence, coach counts, Mastery, and task links. | Implemented; initially shows an empty state until a review creates signals. |
+| Topics-to-revisit view | The home page renders generated current priorities with evidence, coach counts, Mastery, and task links. | Implemented; it shows an empty state when no current medium/high repetition signal exists. |
 
-The repository now includes one medium async/UI task with a visible preview, interviewer plan, locked follow-up, initial session state, and generated metadata. It is intentionally unsolved so the session and review flow can be exercised with real candidate work.
+The repository now includes two reviewed tasks: an easy React/UI task created through the Codex path and a medium TypeScript task imported from a ChatGPT Task Package. Both exercised staged follow-ups and final review. Their historical sessions were migrated to schema v2 without inventing answers to questions that were not asked. The next new task will be the first live exercise of the new multi-question start/checkpoint sequence.
 
 ## Current executable contracts
 
-Until migration work changes them deliberately, these files remain authoritative for current repository operations:
+These files remain authoritative for repository operations:
 
 - [`AGENTS.md`](../AGENTS.md) controls routing and repository boundaries.
 - [`TASK_TAXONOMY.md`](../TASK_TAXONOMY.md) defines allowed task metadata.
@@ -358,7 +360,7 @@ Until migration work changes them deliberately, these files remain authoritative
 - `npm run finalize:tasks` validates tasks and regenerates current derived metadata.
 - `npm run restore:scaffold -- tasks/<category>/<slug>` resets one task to its original scaffold.
 
-This design document does not silently override those executable contracts. They must be updated as each 2.0 capability is implemented.
+This design document and the executable contracts must be updated together when behavior changes.
 
 ## Data ownership
 
@@ -371,6 +373,7 @@ This design document does not silently override those executable contracts. They
 | Session state and compact evidence | Task directory | `session.json` |
 | Working implementation | Task directory | `main.ts` or `main.tsx` |
 | Original starter snapshot | Task directory | `main.scaffold.ts` or `main.scaffold.tsx` |
+| Reset file set and snapshot hashes | Task directory | `scaffold.json` |
 | Detailed latest review | Task directory | `review.md` |
 | Current cross-task learning summary | Generated repository data | `data/learning-summary.json` |
 | Compact task index | Generated repository data | `data/task-index.json` |
@@ -384,26 +387,23 @@ No external service owns or must synchronize any of this data.
 The safest migration is a vertical slice rather than a simultaneous rewrite:
 
 1. **Document the accepted architecture.** This document completes that step.
-2. **Define and validate contracts.** Implemented for Task Package, topics, interviewer, session, review, and reset v1.
+2. **Define and validate contracts.** Implemented for Task Package v1, session v2, topics, interviewer, review, reset, and scaffold manifests.
 3. **Extend finalization.** Implemented for task index, learning summary, ChatGPT context, and preview manifest.
 4. **Implement the Codex creation path.** Implemented as a routed skill connected to shared scaffolding.
 5. **Implement the ChatGPT import path.** Implemented as a routed skill using the same contract and scaffold path.
 6. **Implement session workflows.** Implemented for stage state, checkpoints, follow-up reveal, and coaching telemetry.
 7. **Make review session-aware.** Implemented in workflow, validation, and generated-data contracts.
 8. **Extend the website.** Implemented while preserving current task browsing, filters, reviews, and previews.
-9. **Migrate legacy instructions.** README, AGENTS, skills, review/scaffold workflows, and reset are migrated; the old `gpt/` directory remains isolated for later cleanup.
-10. **Verify both creation paths.** Exercise one Codex-created and one ChatGPT-imported task through scaffold, session, review, reset, finalization, and website rendering.
+9. **Migrate legacy instructions.** Completed; the disconnected `gpt/` flow and unused starter assets were removed.
+10. **Verify both creation paths.** Completed with one Codex-created and one ChatGPT-imported task. Reset behavior is verified by an isolated automated test.
 
 ## Remaining implementation details
 
-The following details remain after the first implementation slice:
+The remaining verification is deliberately practical:
 
-- exercise Codex creation and ChatGPT import on separate real tasks;
-- exercise checkpoints, coach telemetry, final review, and topic resolution with real candidate behavior;
-- exercise archival of a reviewed attempt during reset;
-- define a future schema migration policy only when version 2 is actually needed;
-- remove or archive individual legacy files under `gpt/` after confirming no compatibility use remains;
-- decide whether `$coach` needs another public alias after normal usage feedback.
+- exercise the schema-v2 multi-question start/checkpoint sequence in the next real task;
+- use `$coach` in a future session when help is genuinely useful, so material coaching telemetry is exercised without manufacturing evidence;
+- perform a real reset only when the user actually wants to repeat a reviewed task; automated coverage already verifies archival and restoration.
 
 The following are no longer open architecture questions: Notion and a remote database are outside the core workflow; Codex can create tasks directly; ChatGPT remains optional; repository files are authoritative; and the existing website features must remain.
 
@@ -413,7 +413,7 @@ The following are no longer open architecture questions: Notion and a remote dat
 - Keep task scaffolds lightweight and do not solve the exercise during creation or import.
 - Keep candidate-facing artifacts free of hidden follow-ups and solution hints.
 - Do not let checkpoint feedback spoil a later stage.
-- Do not treat silence as a declined answer or close a stage while `activeQuestion` is pending.
+- Do not treat silence as a declined answer or close a stage while `activeQuestionId` references a pending question.
 - Keep coaching available throughout the session and evaluate assistance contextually.
 - Treat coach telemetry as evidence, never as automatic punishment.
 - Perform one full review after the active interview flow is complete.
