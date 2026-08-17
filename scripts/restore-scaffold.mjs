@@ -111,6 +111,7 @@ function createFreshAttempt(id, number, createdAt, previousStages) {
     startedAt: null,
     endedAt: null,
     activeStageId: "core",
+    activeQuestion: null,
     stages: previousStages.map((stage) => ({
       id: stage.id,
       kind: stage.kind,
@@ -151,6 +152,7 @@ async function resetSession(taskDir) {
     activeAttempt.status = "reset";
     activeAttempt.endedAt = timestamp;
     activeAttempt.activeStageId = null;
+    activeAttempt.activeQuestion = null;
 
     const number = session.attempts.length + 1;
     const nextAttempt = createFreshAttempt(

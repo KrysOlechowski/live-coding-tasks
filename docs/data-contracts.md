@@ -212,6 +212,7 @@ Each attempt contains:
   "startedAt": null,
   "endedAt": null,
   "activeStageId": "core",
+  "activeQuestion": null,
   "stages": [],
   "coachEvents": [],
   "review": null
@@ -230,6 +231,39 @@ Allowed attempt statuses:
 `createdAt` records when scaffolding created the attempt. `startedAt` remains `null` until solving begins.
 
 `activeStageId` is a stage ID while work can continue and `null` after the attempt becomes `ready-for-review`, `reviewed`, `abandoned`, or `reset`.
+
+`activeQuestion` stores at most one explicit question that must be resolved before the active stage can close. It starts as `null` and must also be `null` for every terminal or `ready-for-review` attempt.
+
+### Active question
+
+When the interviewer asks a required checkpoint, explanation, or trade-off question, store:
+
+```json
+{
+  "stageId": "core",
+  "prompt": "Why does the original optional-property model permit invalid states?",
+  "askedAt": "2026-08-17T14:32:00Z",
+  "status": "pending",
+  "resolvedAt": null,
+  "evidence": null
+}
+```
+
+Allowed statuses:
+
+- `pending` — the candidate has not answered or explicitly declined;
+- `answered` — the response was received and `evidence` stores one concise assessment sentence;
+- `declined` — the candidate explicitly chose not to answer and `evidence` records that choice.
+
+Rules:
+
+- `stageId` must match `activeStageId` and reference an `available` or `in-progress` stage.
+- `prompt` is the exact short question shown to the candidate; it is not a transcript.
+- `pending` requires `resolvedAt` and `evidence` to remain `null`.
+- `answered` and `declined` require a UTC `resolvedAt` timestamp and concise non-empty `evidence`.
+- A stage must not be completed while its active question is `pending`.
+- When the stage checkpoint consumes an answered or declined question, copy only the useful evidence into the checkpoint and clear `activeQuestion`.
+- Silence is not a decline and must not be converted into negative review evidence. The interviewer repeats the pending question and keeps the stage active.
 
 ### Stage
 
@@ -371,7 +405,7 @@ Reset restores the code snapshot and begins a fresh attempt:
 2. remove the current `review.md`;
 3. preserve the existing attempt in `session.json` when it contains a checkpoint, coach event, or review;
 4. change that attempt's status to `reset`, set `endedAt`, and keep its structured evidence;
-5. append a new initialized attempt and point `activeAttemptId` to it;
+5. clear any active question, append a new initialized attempt, and point `activeAttemptId` to it;
 6. regenerate all derived data.
 
 If the active attempt contains no checkpoint, coach event, or review, reset may reinitialize it in place instead of creating empty history.
@@ -484,7 +518,7 @@ The 2.0 finalization workflow:
 1. validate every canonical task artifact;
 2. verify that all topic IDs exist in the catalog;
 3. verify that interviewer follow-up counts match headings and session stages;
-4. verify attempt, stage, checkpoint, and coach references;
+4. verify attempt, stage, active-question, checkpoint, and coach references;
 5. verify `review.md` Mastery and verdict against the active attempt's structured review;
 6. verify the `needsRepetition` invariant;
 7. regenerate the task index, learning summary, ChatGPT context, and preview manifest;

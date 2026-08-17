@@ -162,6 +162,7 @@ Create schema version 1 session state using `docs/data-contracts.md`:
 - set `createdAt` to the current ISO 8601 UTC time;
 - leave `startedAt`, `endedAt`, and `review` as `null`;
 - set `activeStageId` to `core`;
+- set `activeQuestion` to `null`;
 - create an `available` Core stage;
 - create one `locked` stage for every planned follow-up;
 - start with an empty `coachEvents` array.

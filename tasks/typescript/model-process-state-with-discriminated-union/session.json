@@ -11,6 +11,7 @@
       "startedAt": "2026-08-17T10:32:56Z",
       "endedAt": "2026-08-17T12:04:15Z",
       "activeStageId": null,
+      "activeQuestion": null,
       "stages": [
         {
           "id": "core",

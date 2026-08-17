@@ -72,7 +72,7 @@ $session start Task: tasks/<category>/<slug>
 $session complete-stage Task: tasks/<category>/<slug>
 ```
 
-Completing a stage records a concise, normally silent checkpoint. After the final active stage, the attempt becomes ready for one full review.
+Required interviewer questions are stored in `session.json`. A stage cannot close while a question is merely unanswered: answer it or explicitly decline. Completing a resolved stage records a concise, normally silent checkpoint. After the final active stage, the attempt becomes ready for one full review.
 
 ### 5. Ask for coaching when needed
 
@@ -102,7 +102,7 @@ Ask Codex to review the task after all active stages are resolved. Codex:
 | [`create-task.md`](agent-skills/create-task.md) | Ask Codex to invent/design a task | Selects a useful target and creates Task Package v1 |
 | [`import-task.md`](agent-skills/import-task.md) | Provide a ChatGPT Task Package | Validates it without silently changing requirements |
 | [`scaffold-task.md`](agent-skills/scaffold-task.md) | Follows creation/import | Creates minimal candidate files and initial session state |
-| [`interview-session.md`](agent-skills/interview-session.md) | `$session`, stage completion, follow-up requests | Records checkpoints and reveals one follow-up at a time |
+| [`interview-session.md`](agent-skills/interview-session.md) | `$session`, stage completion, follow-up requests | Persists required questions, records checkpoints, and reveals one follow-up at a time |
 | [`interview-coach.md`](agent-skills/interview-coach.md) | `$coach` or a clear hint request | Gives progressive help and records compact telemetry |
 | [`review-task.md`](agent-skills/review-task.md) | Ask for a full review | Writes technical feedback and structured learning signals |
 
@@ -114,7 +114,7 @@ The skill files are routing checklists. Detailed behavior lives under `codex/`.
 tasks/<category>/<slug>/
 ├── task.md                 # candidate-safe brief and metadata
 ├── interviewer.md          # Core intent and hidden staged follow-ups
-├── session.json            # attempts, stages, checkpoints, coach, review signals
+├── session.json            # attempts, active question, stages, checkpoints, coach, review signals
 ├── main.scaffold.ts        # or main.scaffold.tsx
 ├── main.ts                 # or main.tsx; one evolving implementation
 └── review.md               # latest full review, present after review

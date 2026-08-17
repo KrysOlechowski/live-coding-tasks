@@ -122,6 +122,6 @@ This repository is used for live-coding interview practice.
 ## Learning tracking
 
 - `interviewer.md` declares the canonical topics planned for the task.
-- `session.json` stores checkpoints, material coaching events, attempts, and final topic signals.
+- `session.json` stores the active required question, checkpoints, material coaching events, attempts, and final topic signals.
 - `npm run finalize:tasks` regenerates cross-task learning data and the optional ChatGPT context.
 - Do not manually edit generated learning summaries.

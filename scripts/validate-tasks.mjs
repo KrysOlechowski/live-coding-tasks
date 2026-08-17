@@ -67,6 +67,7 @@ const CHECKPOINT_OUTCOMES = new Set([
   "incomplete",
 ]);
 const CHECKPOINT_SIGNALS = new Set(["demonstrated", "uncertain", "gap"]);
+const QUESTION_STATUSES = new Set(["pending", "answered", "declined"]);
 const COACH_MODES = new Set([
   "hint",
   "concept-explanation",
@@ -474,6 +475,70 @@ function validateCheckpoint(checkpoint, stageId, topicIds, errors) {
   }
 }
 
+function validateActiveQuestion(question, attempt, stageIds, errors, label) {
+  if (question === undefined) {
+    errors.push(`${label} activeQuestion is required`);
+    return;
+  }
+
+  if (question === null) {
+    return;
+  }
+
+  if (!isRecord(question)) {
+    errors.push(`${label} activeQuestion must be null or an object`);
+    return;
+  }
+
+  if (attempt.status !== "in-progress") {
+    errors.push(`${label} activeQuestion requires in-progress status`);
+  }
+
+  if (!stageIds.has(question.stageId)) {
+    errors.push(`${label} activeQuestion references an unknown stage`);
+  }
+
+  if (attempt.activeStageId !== question.stageId) {
+    errors.push(`${label} activeQuestion must belong to activeStageId`);
+  }
+
+  const questionStage = attempt.stages.find((stage) => stage?.id === question.stageId);
+  if (questionStage && !["available", "in-progress"].includes(questionStage.status)) {
+    errors.push(`${label} activeQuestion requires an available or in-progress stage`);
+  }
+
+  if (!isNonEmptyString(question.prompt)) {
+    errors.push(`${label} activeQuestion prompt must be non-empty`);
+  }
+
+  if (!isTimestamp(question.askedAt)) {
+    errors.push(`${label} activeQuestion askedAt is invalid`);
+  }
+
+  if (!QUESTION_STATUSES.has(question.status)) {
+    errors.push(`${label} activeQuestion status is invalid`);
+    return;
+  }
+
+  if (question.status === "pending") {
+    if (question.resolvedAt !== null) {
+      errors.push(`${label} pending activeQuestion requires resolvedAt null`);
+    }
+    if (question.evidence !== null) {
+      errors.push(`${label} pending activeQuestion requires evidence null`);
+    }
+    return;
+  }
+
+  if (!isTimestamp(question.resolvedAt)) {
+    errors.push(`${label} resolved activeQuestion requires resolvedAt`);
+  }
+
+  if (!isNonEmptyString(question.evidence)) {
+    errors.push(`${label} resolved activeQuestion requires concise evidence`);
+  }
+}
+
 function validateStructuredReview(review, stageIds, topicIds, errors, label) {
   if (!isRecord(review)) {
     errors.push(`${label} review must be an object`);
@@ -700,6 +765,8 @@ function validateSession(record, topicIds, errors) {
     ) {
       errors.push(`${label} activeStageId references an unknown stage`);
     }
+
+    validateActiveQuestion(attempt.activeQuestion, attempt, stageIds, errors, label);
 
     if (!Array.isArray(attempt.coachEvents)) {
       errors.push(`${label} coachEvents must be an array`);

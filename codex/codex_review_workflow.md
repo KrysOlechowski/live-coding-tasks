@@ -50,7 +50,7 @@ Complete the workflow end-to-end:
 7. infer an evidence-based Mastery level from the complete session
 8. create or update `review.md`
 9. write the matching structured review and topic signals to the active attempt in `session.json`
-10. set the attempt status to `reviewed`, set `endedAt`, and clear `activeStageId`
+10. set the attempt status to `reviewed`, set `endedAt`, clear `activeStageId`, and verify `activeQuestion` is null
 11. run `npm run finalize:tasks`
 
 ---

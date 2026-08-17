@@ -185,6 +185,7 @@ If the candidate has already implemented the intended behavior, the session work
 **Implemented in workflow, validation, generation, and reset.** This is compact structured evidence, not a transcript. The field-level contract, allowed states, review signals, and reset behavior are defined in [`docs/data-contracts.md`](./data-contracts.md), with a reviewed example in [`docs/examples/session-v1.reviewed.json`](./examples/session-v1.reviewed.json). It holds:
 
 - current stage and stage completion state;
+- at most one active required interviewer question, including whether it was answered or explicitly declined;
 - planned, completed, adapted, or skipped follow-ups;
 - concise checkpoint outcomes;
 - assistance totals grouped by stage and canonical topic;
@@ -296,11 +297,12 @@ ChatGPT is therefore optional but fully supported. Its absence does not block ta
 1. The candidate solves the Core Task in the single `main.ts` or `main.tsx` file.
 2. The candidate may request progressive coaching at any stage.
 3. Coaching remains read-only with respect to candidate code, but may append compact telemetry to `session.json`.
-4. When the candidate declares the stage complete, `interview-session` records a concise checkpoint.
-5. The checkpoint normally remains silent when feedback would spoil a later follow-up.
-6. `interview-session` reveals the next applicable follow-up and updates the stage state.
-7. The candidate evolves the same implementation.
-8. Steps 2–7 repeat until all active follow-ups are completed, adapted, skipped with a reason, or the session is ended.
+4. A required checkpoint, explanation, or trade-off question is persisted as `activeQuestion` before it is shown. The candidate must answer it or explicitly decline; silence never becomes negative evidence automatically.
+5. When the candidate declares the stage complete, `interview-session` first blocks on any pending question, then records a concise checkpoint after the question is resolved.
+6. The checkpoint normally remains silent when feedback would spoil a later follow-up.
+7. `interview-session` reveals the next applicable follow-up and updates the stage state.
+8. The candidate evolves the same implementation.
+9. Steps 2–8 repeat until all active follow-ups are completed, adapted, skipped with a reason, or the session is ended.
 
 A checkpoint is evidence capture, not a partial review. It should record an outcome such as `passed`, `passed-with-issues`, or `incomplete`, plus concise observed issues, assistance used, and knowledge signals.
 
@@ -334,7 +336,7 @@ The repository currently implements the following baseline:
 | Coaching | `$coach` provides progressive code-read-only assistance and may append one material help event to the active session. | Implemented workflow; telemetry needs live exercise. |
 | Interviewer plan | V1 plans are materialized, kept off candidate pages, and validated against topic/follow-up contracts. | Implemented. |
 | Follow-ups | The interview-session workflow tracks locked stages and reveals one applicable follow-up at a time. | Implemented workflow; needs live exercise. |
-| Checkpoints | Completed stages store compact non-spoiling checkpoint evidence in `session.json`. | Implemented workflow and validation; needs live exercise. |
+| Session questions and checkpoints | Required questions persist across turns, unanswered questions block stage completion, and completed stages store compact non-spoiling evidence in `session.json`. | Implemented workflow and validation. |
 | Final review | Review is gated by session readiness and writes both `review.md` and matching structured learning signals. | Implemented workflow and validation; needs live exercise. |
 | Structured learning history | Session attempts are canonical; generators produce task index, coverage, repetition priorities, and bounded ChatGPT context. | Implemented. |
 | Restore | `restore:scaffold` restores code, preserves meaningful prior attempts, starts a fresh attempt, and finalizes automatically. | Implemented and exercised on the initial task. |
@@ -411,6 +413,7 @@ The following are no longer open architecture questions: Notion and a remote dat
 - Keep task scaffolds lightweight and do not solve the exercise during creation or import.
 - Keep candidate-facing artifacts free of hidden follow-ups and solution hints.
 - Do not let checkpoint feedback spoil a later stage.
+- Do not treat silence as a declined answer or close a stage while `activeQuestion` is pending.
 - Keep coaching available throughout the session and evaluate assistance contextually.
 - Treat coach telemetry as evidence, never as automatic punishment.
 - Perform one full review after the active interview flow is complete.
