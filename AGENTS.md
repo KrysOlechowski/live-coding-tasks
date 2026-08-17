@@ -16,12 +16,15 @@ This repository is used for live-coding interview practice.
 
 ## Agent skills
 
-- Use `/agent-skills/scaffold-task.md` automatically when the user asks to scaffold, create, set up, or generate files for a new task from a provided `task.md` or task brief. The user does not need to name this skill.
+- Use `/agent-skills/create-task.md` when the user asks Codex to invent or design a new task without providing a complete Task Package.
+- Use `/agent-skills/import-task.md` when the user provides a Task Package created in ChatGPT or explicitly asks to import one.
+- Use `/agent-skills/scaffold-task.md` after task creation/import or when the user asks to scaffold a complete Task Package.
+- Use `/agent-skills/interview-session.md` for `$session`, `$interview-session`, starting/resuming an attempt, completing a stage, revealing a follow-up, or ending a session.
 - Use `/agent-skills/review-task.md` automatically when the user asks to review, check, or evaluate a completed solution. The user does not need to name this skill.
 - Use `/agent-skills/interview-coach.md` when a request starts with `$coach` or `$interview-coach`, or clearly asks for coaching or hints during active solving.
-- Do not use a skill file unless the request matches one of these three workflows.
-- Task ideas are designed outside Codex before scaffolding.
-- Task reset uses the existing scripts: `npm run restore:scaffold -- tasks/<category>/<slug>` and `npm run finalize:tasks`.
+- Do not use a skill file unless the request matches one of these workflows.
+- Task ideas may be designed by Codex directly or imported from ChatGPT. Both paths use Task Package v1 and the same scaffold/session/review flow.
+- Task reset uses `npm run restore:scaffold -- tasks/<category>/<slug>` and regenerates derived data automatically.
 
 ## Workspace boundaries
 
@@ -31,7 +34,7 @@ This repository is used for live-coding interview practice.
 - Create new task folders inside `/tasks/<category>/<slug>/`.
 - Use the category from the task brief when creating the task folder.
 - Use a stable slug for the folder name.
-- Keep all task-related files there, such as `task.md`, `main.tsx` or `main.ts`, and `review.md`.
+- Keep all task-related files there, including `task.md`, `interviewer.md`, `session.json`, `main.tsx` or `main.ts`, and `review.md`.
 
 ### `/codex`
 
@@ -39,21 +42,23 @@ This repository is used for live-coding interview practice.
 - Read these files when scaffolding or reviewing tasks.
 - Do not create task solutions inside `/codex`.
 
-### `/gpt`
+### `/data` and `/chatgpt`
 
-- The `/gpt` folder is used for ChatGPT-side workflow and topic tracking.
-- Do not use `/gpt` as a task workspace.
-- Do not create task scaffolds, solution files, or review files inside `/gpt`.
-- Only read or update `/gpt/gpt_topics.md` when topic tracking is needed.
-- Treat `/gpt` as supporting context, not as the place where implementation work happens.
+- `/data/topic-catalog.json` is authored canonical topic data.
+- `/data/task-index.json` and `/data/learning-summary.json` are generated; never edit them manually.
+- `/chatgpt/task-designer-context.md` is generated and may be attached to ChatGPT for optional task design.
+- Do not create task scaffolds, solutions, or reviews in `/data`, `/chatgpt`, or legacy `/gpt`.
+- Treat `/gpt` as migration-only compatibility data until it is removed deliberately.
 
 ## Task scaffolding
 
-- For new task scaffolding requests, use `/agent-skills/scaffold-task.md` first, then follow `/codex/codex_task_scaffold.md`.
-- When given a task brief, create the smallest useful scaffold.
+- Once a Task Package is created or imported, use `/agent-skills/scaffold-task.md`, then follow `/codex/codex_task_scaffold.md`.
+- When given a validated Task Package, create the smallest useful scaffold.
 - Create only the files that are clearly needed for the task.
 - Default files:
   - `task.md`
+  - `interviewer.md`
+  - `session.json`
   - `main.tsx` for React tasks
   - `main.ts` for non-React tasks
 - Always keep a scaffold snapshot copy:
@@ -101,7 +106,9 @@ This repository is used for live-coding interview practice.
 - Treat Mastery as honest positive progress feedback. Do not use penalty stars or penalty scoring.
 - Keep the top-line verdict in `Requirement check` consistent with the actual findings; do not mark the task as solved if the review still says an explicit requirement is unmet.
 - `review.md` should represent only the latest review for the task.
-- After review updates (including `gpt_topics.md`), Codex must run `npm run finalize:tasks` automatically before finishing the response.
+- A full final review requires the active session attempt to be `ready-for-review`. If a stage is unfinished, use the interview-session workflow first.
+- Save compact structured review and topic signals in the active attempt in `session.json`.
+- After review updates, Codex must run `npm run finalize:tasks` automatically before finishing the response.
 - For each important issue in review findings, include a concrete file reference in `path:line` form.
 - In `Missed edge cases`, list only true edge cases beyond baseline requirements. Do not repeat the main missing requirement from `Requirement check`.
 
@@ -112,6 +119,9 @@ This repository is used for live-coding interview practice.
 - There must be only one task folder for a given task at a time.
 - If a task folder ever needs to be renamed, move/rename the current folder instead of copying or recreating it.
 
-## Topic tracking
+## Learning tracking
 
-- When Codex scaffolds or reviews a task, update `/gpt/gpt_topics.md` task history.
+- `interviewer.md` declares the canonical topics planned for the task.
+- `session.json` stores checkpoints, material coaching events, attempts, and final topic signals.
+- `npm run finalize:tasks` regenerates cross-task learning data and the optional ChatGPT context.
+- Do not manually edit generated learning summaries.

@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "generate:preview-manifest": "node scripts/generate-preview-manifest.mjs",
+    "generate:task-data": "node scripts/generate-task-data.mjs",
+    "generate:chatgpt-context": "node scripts/generate-chatgpt-context.mjs",
     "generate:gpt-bundle": "node scripts/generate-gpt-chat-bundle.mjs",
     "validate:tasks": "node scripts/validate-tasks.mjs",
-    "sync:metadata": "npm run validate:tasks && npm run generate:preview-manifest && npm run generate:gpt-bundle",
+    "sync:metadata": "npm run validate:tasks && npm run generate:task-data && npm run generate:preview-manifest && npm run generate:chatgpt-context",
     "finalize:tasks": "npm run sync:metadata",
     "restore:scaffold": "node scripts/restore-scaffold.mjs",
     "predev": "npm run sync:metadata",

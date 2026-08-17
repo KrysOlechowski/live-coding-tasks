@@ -1,15 +1,18 @@
 # 🧪 Live Coding Interview Lab
 
-A lightweight workspace for practicing realistic, interview-sized coding tasks with:
+A repository-first system for practicing realistic live-coding interviews.
 
-- 💡 **ChatGPT** for designing self-contained task briefs
-- 🧭 **Codex agent skills** for routing scaffolding, review, and coaching workflows
-- 🧑‍💻 **Manual implementation** in a real editor
-- 🌐 **Next.js task browser** for task details, metadata, reviews, and optional UI previews
+- 🧭 **Codex** designs tasks by default and runs repeatable creation, scaffold, session, coaching, and review workflows.
+- 💬 **ChatGPT** remains an optional place to brainstorm a task before importing one common Task Package.
+- 🧑‍💻 **The candidate** evolves one real TypeScript or React implementation through Core Task and staged follow-ups.
+- 🌐 **The Next.js website** keeps the task library, filters, reviews, UI previews, and current topics worth revisiting.
+- 📚 **Repository data** is the only source of truth; no Notion or remote database is required.
 
-The repository is frontend-oriented by default, while also supporting TypeScript, algorithms, async flows, API integration, testing, performance, and data transformation.
+The intended loop is:
 
-> The goal is deliberate practice, not a showcase application: **brief → scaffold → solve → review → learn**.
+```text
+create or import → scaffold → solve → checkpoint/follow-up → review → learn
+```
 
 ## 🖼️ Application preview
 
@@ -25,104 +28,132 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to browse the task library. Tasks with preview metadata also expose an interactive preview route.
+Open [http://localhost:3000](http://localhost:3000).
 
-For a directly executable TypeScript task:
+The repository includes one initial task for exercising the complete 2.0 flow:
+
+- task: [http://localhost:3000/tasks/fix-stale-customer-search](http://localhost:3000/tasks/fix-stale-customer-search)
+- interactive preview: [http://localhost:3000/tasks/fix-stale-customer-search/preview](http://localhost:3000/tasks/fix-stale-customer-search/preview)
+
+## 🔄 Practice workflow
+
+### 1. Create a task with Codex
+
+Ask Codex for a new live-coding task. Category, difficulty, focus, and exclusions are optional. Codex reads current coverage and learning signals, creates a Task Package v1, and scaffolds it without exposing hidden follow-ups.
+
+Example:
+
+```text
+Create a medium React live-coding task. Focus on state modeling and avoid forms.
+```
+
+### 2. Or design it in ChatGPT
+
+Attach [`chatgpt/task-designer-context.md`](chatgpt/task-designer-context.md) to a ChatGPT conversation. After brainstorming, ask for the final Task Package v1 and pass it to Codex for import.
+
+Both creation paths produce the same repository files and use the same validation, session, and review workflow.
+
+### 3. Solve the Core Task
+
+Work only in the task's `main.ts` or `main.tsx`. The matching `main.scaffold.*` file is the original restorable snapshot.
+
+For the included UI task, use its preview route. A directly executable TypeScript task can use:
 
 ```bash
 npx tsx --watch tasks/<category>/<slug>/main.ts
 ```
 
-This reruns the working file after each save and displays its console output. React/UI tasks should normally be exercised through the Next.js preview app.
+### 4. Use the interview session
 
-## 🔄 Practice workflow
+Codex keeps future follow-ups in `interviewer.md` and reveals them one at a time.
 
-1. **Design a brief:** ChatGPT creates a task using `category`, `taskType`, and `difficulty`. Optional `focus` and `avoid` inputs guide the topic and reduce repetition.
+```text
+$session start Task: tasks/<category>/<slug>
+$session complete-stage Task: tasks/<category>/<slug>
+```
 
-2. **Scaffold the task:** Ask Codex to scaffold, create, set up, or generate the task files. Codex automatically routes through [`agent-skills/scaffold-task.md`](agent-skills/scaffold-task.md), then follows the detailed scaffold workflow.
+Completing a stage records a concise, normally silent checkpoint. After the final active stage, the attempt becomes ready for one full review.
 
-3. **Solve it manually:** Work in `main.ts` or `main.tsx`. The matching `main.scaffold.*` file remains the original restorable snapshot.
+### 5. Ask for coaching when needed
 
-4. **Ask for coaching when needed:** Start a message with `$coach` or `$interview-coach` for read-only hints, checkpoints, debugging nudges, concept explanations, or interview questions.
+```text
+$coach tiny hint Task: tasks/<category>/<slug>
+$coach explain concept: ... Task: tasks/<category>/<slug>
+$coach debug nudge Task: tasks/<category>/<slug>
+```
 
-5. **Request a full review:** Ask Codex to review, check, or evaluate the completed solution. Codex routes through [`agent-skills/review-task.md`](agent-skills/review-task.md), writes `review.md`, assigns an evidence-based Mastery level, and updates task tracking.
+Coaching never edits candidate code. Material help appends one compact event to `session.json` so the final review can consider the topic, stage, and disclosure strength. Help is evidence, not an automatic Mastery penalty.
 
-## 🧭 Agent skills
+### 6. Request the final review
 
-The files in `agent-skills/` are concise routing checklists. Detailed behavior remains in the workflow documents under `codex/`.
+Ask Codex to review the task after all active stages are resolved. Codex:
+
+- compares code with the Core Task and active follow-ups;
+- uses checkpoint and coaching context;
+- writes the latest detailed `review.md`;
+- writes compact topic signals to `session.json`;
+- assigns evidence-based Mastery;
+- regenerates task and learning data automatically.
+
+## 🧭 Codex workflows
 
 | Skill | Activation | Purpose |
 | --- | --- | --- |
-| [`scaffold-task.md`](agent-skills/scaffold-task.md) | Automatic for new task scaffolding requests | Creates the smallest useful task scaffold without solving it |
-| [`review-task.md`](agent-skills/review-task.md) | Automatic for completed-solution review requests | Runs the full interviewer-style review workflow |
-| [`interview-coach.md`](agent-skills/interview-coach.md) | `$coach`, `$interview-coach`, or a clear active-solving coaching request | Provides progressive, read-only help without taking over |
+| [`create-task.md`](agent-skills/create-task.md) | Ask Codex to invent/design a task | Selects a useful target and creates Task Package v1 |
+| [`import-task.md`](agent-skills/import-task.md) | Provide a ChatGPT Task Package | Validates it without silently changing requirements |
+| [`scaffold-task.md`](agent-skills/scaffold-task.md) | Follows creation/import | Creates minimal candidate files and initial session state |
+| [`interview-session.md`](agent-skills/interview-session.md) | `$session`, stage completion, follow-up requests | Records checkpoints and reveals one follow-up at a time |
+| [`interview-coach.md`](agent-skills/interview-coach.md) | `$coach` or a clear hint request | Gives progressive help and records compact telemetry |
+| [`review-task.md`](agent-skills/review-task.md) | Ask for a full review | Writes technical feedback and structured learning signals |
 
-Example coaching prompts:
-
-```text
-$coach tiny hint
-$coach explain concept: stable sort
-$coach debug nudge
-$coach checkpoint
-$coach interviewer question
-```
-
-Coaching starts with the least revealing useful help and escalates gradually from a hint to a solution outline. It does not edit files, write reviews, or assign Mastery.
+The skill files are routing checklists. Detailed behavior lives under `codex/`.
 
 ## 🗂️ Task structure
 
-Tasks live under a category and stable slug:
-
 ```text
 tasks/<category>/<slug>/
-├── task.md
-├── main.scaffold.ts     # or main.scaffold.tsx
-├── main.ts              # or main.tsx
-└── review.md            # created after a full review
+├── task.md                 # candidate-safe brief and metadata
+├── interviewer.md          # Core intent and hidden staged follow-ups
+├── session.json            # attempts, stages, checkpoints, coach, review signals
+├── main.scaffold.ts        # or main.scaffold.tsx
+├── main.ts                 # or main.tsx; one evolving implementation
+└── review.md               # latest full review, present after review
 ```
 
-- `task.md` contains the brief and workflow metadata.
-- `main.scaffold.*` is the original scaffold snapshot.
-- `main.*` is the candidate’s working solution.
-- `review.md` contains only the latest full review.
+Optional support files exist only when the task needs them.
 
-Difficulty, task type, skills, problem shape, and review focus belong in `task.md` frontmatter—not in the folder name.
+`interviewer.md` is hidden from the normal website and solving flow, but it is not a security boundary in a public repository.
 
-Example paths:
+## 🧩 Taxonomy and topics
 
-- `tasks/react/search-filter-users/`
-- `tasks/data-transformation/normalize-orders/`
-- `tasks/async/fix-stale-search-results/`
+[`TASK_TAXONOMY.md`](TASK_TAXONOMY.md) defines:
 
-## 🧩 Task metadata
+- `category` — technical domain;
+- `taskType` — candidate activity;
+- `difficulty` — `easy`, `medium`, or `hard`;
+- `problemShape` — mental pattern used to avoid repetitive tasks;
+- interview and review focus.
 
-The source of truth is [`TASK_TAXONOMY.md`](TASK_TAXONOMY.md).
+[`data/topic-catalog.json`](data/topic-catalog.json) provides stable topic IDs shared by task plans, checkpoints, coach events, and review signals. Generated files track separately what was assigned, reviewed, demonstrated, and marked for repetition.
 
-Required request fields:
+## 📚 Canonical and generated data
 
-| Field | Meaning |
-| --- | --- |
-| `category` | Technical domain, such as `react`, `typescript`, `async`, or `api-integration` |
-| `taskType` | Candidate activity, such as `fix-bug`, `refactor-existing-code`, or `write-tests` |
-| `difficulty` | `easy`, `medium`, or `hard` |
+Canonical data:
 
-Optional request inputs:
+- task files under `tasks/`;
+- [`data/topic-catalog.json`](data/topic-catalog.json);
+- taxonomy and workflow contracts.
 
-- `focus` softly guides the topic or skill.
-- `avoid` prevents repetition.
+Generated data:
 
-Supporting metadata such as `primarySkill`, `secondarySkill`, `problemShape`, `interviewFocus`, `reviewFocus`, and `tags` is inferred for the task brief.
+- [`data/task-index.json`](data/task-index.json) — compact task metadata and current progress;
+- [`data/learning-summary.json`](data/learning-summary.json) — coverage and current topics to revisit;
+- [`chatgpt/task-designer-context.md`](chatgpt/task-designer-context.md) — bounded context for optional ChatGPT task design;
+- `src/lib/generated-task-preview-manifest.tsx` — preview routing.
+
+Do not edit generated files manually. `npm run finalize:tasks` recreates them deterministically.
 
 ## 🏅 Reviews and Mastery
-
-A full review:
-
-- compares the implementation with the explicit task requirements
-- prioritizes correctness and high-signal findings
-- saves feedback in `review.md`
-- includes concrete `path:line` references
-- updates `gpt/gpt_topics.md`
-- assigns one evidence-based Mastery level
 
 | Level | Label |
 | --- | --- |
@@ -132,92 +163,59 @@ A full review:
 | 4/5 | Interview-ready |
 | 5/5 | Strong solution |
 
-Mastery is progress feedback, not penalty scoring.
+Mastery reflects the complete session. A topic becomes a current repetition priority through structured review evidence, not by mechanically subtracting points for coach events.
 
-## 🧾 Topic history
+The website's “Topics to revisit” section is generated from unresolved medium/high topic signals. Later independent demonstration can resolve a topic without rewriting older review history.
 
-[`gpt/gpt_topics.md`](gpt/gpt_topics.md) tracks generated task history so future briefs can avoid repetition. The file is grouped by task status, with one readable task block per slug instead of a wide Markdown table.
-
-Codex updates this file during scaffolding and review. `npm run finalize:tasks` regenerates [`gpt/gpt_chat_bundle.md`](gpt/gpt_chat_bundle.md), which includes the latest topic history for ChatGPT-side task generation.
-
-## ♻️ Restore a task
-
-Reset a working solution from its scaffold snapshot:
+## ♻️ Restore or repeat a task
 
 ```bash
 npm run restore:scaffold -- tasks/<category>/<slug>
-npm run finalize:tasks
 ```
 
-The restore command replaces the working `main.*`, removes `review.md` when present, and resets the task’s topic-tracking status to `generated`. Run finalization afterward to refresh generated metadata.
+The command:
+
+- restores the candidate implementation from its scaffold snapshot;
+- removes the current `review.md`;
+- preserves a compact previous attempt when it contains useful evidence;
+- starts a fresh active attempt;
+- regenerates all derived data.
 
 ## 🛠️ Commands
 
 | Command | Purpose |
 | --- | --- |
-| `npm run dev` | Validate/sync metadata, then start the Next.js development server |
-| `npm run build` | Validate/sync metadata, then create a production build |
-| `npm run start` | Start the production server after a build |
-| `npm run lint` | Validate/sync metadata, then run ESLint |
-| `npm run validate:tasks` | Validate task folders and metadata |
-| `npm run finalize:tasks` | Validate tasks and regenerate preview/GPT metadata |
-| `npm run restore:scaffold -- tasks/<category>/<slug>` | Restore one task to its initial scaffold |
-
-Codex runs `npm run finalize:tasks` automatically after scaffolding or reviewing a task.
+| `npm run dev` | Validate/regenerate data and start the website |
+| `npm run build` | Validate/regenerate data and create a production build |
+| `npm run lint` | Validate/regenerate data and run ESLint |
+| `npm run validate:tasks` | Validate topic, task, interviewer, session, review, and file contracts |
+| `npm run generate:task-data` | Generate task index and learning summary |
+| `npm run generate:chatgpt-context` | Generate bounded optional ChatGPT context |
+| `npm run finalize:tasks` | Run validation and all current generators |
+| `npm run restore:scaffold -- tasks/<category>/<slug>` | Restore a task, start a fresh attempt, and finalize data |
 
 ## 🏗️ Repository map
 
 ```text
 .
-├── AGENTS.md                       # Repository-wide Codex rules and routing
-├── TASK_TAXONOMY.md                # Taxonomy source of truth
-├── agent-skills/
-│   ├── scaffold-task.md            # Scaffolding router/checklist
-│   ├── review-task.md              # Review router/checklist
-│   └── interview-coach.md          # Read-only coaching modes
-├── codex/
-│   ├── codex_task_scaffold.md      # Detailed scaffolding workflow
-│   ├── codex_review_workflow.md    # Detailed review workflow
-│   └── review_rubric.md            # Review severity and quality rubric
-├── gpt/
-│   ├── gpt_chat_starter.md         # Starter context for task-generation chats
-│   ├── gpt_new_task_template.md    # Task brief template
-│   ├── gpt_topics.md               # Task history and repetition tracking
-│   └── gpt_chat_bundle.md          # Generated ChatGPT context bundle
-├── scripts/                        # Validation, generation, and restore scripts
-├── src/                            # Next.js task browser and preview app
-└── tasks/
-    └── <category>/<slug>/          # Individual practice tasks
+├── AGENTS.md
+├── TASK_TAXONOMY.md
+├── agent-skills/                  # Codex routing checklists
+├── codex/                         # Detailed Codex workflows
+├── chatgpt/                       # Generated optional ChatGPT context
+├── data/                          # Canonical topics and generated learning data
+├── docs/                          # Architecture, contracts, and examples
+├── scripts/                       # Validation, generation, and restore
+├── src/                           # Next.js task and learning browser
+└── tasks/<category>/<slug>/       # Practice tasks
 ```
 
 ## 📚 Source-of-truth documents
 
-- [`AGENTS.md`](AGENTS.md) — repository rules and skill routing
-- [`TASK_TAXONOMY.md`](TASK_TAXONOMY.md) — categories, task types, and metadata
-- [`codex/codex_task_scaffold.md`](codex/codex_task_scaffold.md) — full scaffold workflow
-- [`codex/codex_review_workflow.md`](codex/codex_review_workflow.md) — full review workflow
-- [`codex/review_rubric.md`](codex/review_rubric.md) — review calibration
-- [`gpt/gpt_topics.md`](gpt/gpt_topics.md) — task history and repetition guard
-
-## ✅ Working principles
-
-### ChatGPT
-
-- Generate one realistic, self-contained brief at a time.
-- Avoid repeated topics and problem shapes.
-- Do not reveal starter code, pseudocode, hints, or solutions unless asked.
-
-### Codex
-
-- Route matching requests through the relevant agent skill first.
-- Keep scaffolds minimal and interview-appropriate.
-- Do not solve tasks during scaffolding.
-- Review completed work like a practical interviewer.
-- Avoid inspecting unrelated task folders.
-
-### Candidate
-
-- Solve the task manually.
-- Start with the simplest correct approach.
-- Explain tradeoffs and test important edge cases.
-- Use coaching for progressive help and full review only when ready.
+- [`AGENTS.md`](AGENTS.md) — repository rules and workflow routing
+- [`docs/workflow.md`](docs/workflow.md) — intended 2.0 architecture and implementation status
+- [`docs/data-contracts.md`](docs/data-contracts.md) — Task Package, interviewer, session, learning, and reset contracts
+- [`TASK_TAXONOMY.md`](TASK_TAXONOMY.md) — task taxonomy
+- [`codex/codex_task_scaffold.md`](codex/codex_task_scaffold.md) — scaffold behavior
+- [`codex/codex_interview_session.md`](codex/codex_interview_session.md) — staged session behavior
+- [`codex/codex_review_workflow.md`](codex/codex_review_workflow.md) — final review behavior

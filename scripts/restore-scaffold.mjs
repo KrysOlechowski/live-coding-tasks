@@ -1,16 +1,16 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { spawn } from "node:child_process";
 
 const ROOT = process.cwd();
 const TASKS_ROOT = path.join(ROOT, "tasks");
-const TOPICS_FILE = path.join(ROOT, "gpt", "gpt_topics.md");
 
 function getTargetTaskDir() {
   const input = process.argv[2];
 
   if (!input) {
     throw new Error(
-      "Missing task directory argument. Usage: npm run restore:scaffold -- tasks/<category>/<slug>\nRestores the working file, removes review.md, resets topic status to generated, then requires npm run finalize:tasks.",
+      "Missing task directory argument. Usage: npm run restore:scaffold -- tasks/<category>/<slug>",
     );
   }
 
@@ -98,91 +98,102 @@ async function removeReview(taskDir) {
   }
 }
 
-async function resetTopicStatus(taskDir) {
-  const slug = path.basename(taskDir);
-  const topics = await fs.readFile(TOPICS_FILE, "utf8");
-  const lines = topics.split("\n");
-  const historyIndex = lines.findIndex((line) => line.trim() === "## Task History");
-  const entryStart = lines.findIndex((line) => line.trim() === `#### ${slug}`);
+function nowUtc() {
+  return new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+}
 
-  if (historyIndex === -1 || entryStart === -1 || entryStart < historyIndex) {
-    console.log(`No topic history entry found for ${slug}.`);
-    return;
-  }
+function createFreshAttempt(id, number, createdAt, previousStages) {
+  return {
+    id,
+    number,
+    status: "ready",
+    createdAt,
+    startedAt: null,
+    endedAt: null,
+    activeStageId: "core",
+    stages: previousStages.map((stage) => ({
+      id: stage.id,
+      kind: stage.kind,
+      title: stage.title,
+      status: stage.id === "core" ? "available" : "locked",
+      adaptation: null,
+      skipReason: null,
+      checkpoint: null,
+    })),
+    coachEvents: [],
+    review: null,
+  };
+}
 
-  let entryEnd = lines.length;
+function hasMeaningfulEvidence(attempt) {
+  return (
+    attempt.review !== null ||
+    attempt.coachEvents.length > 0 ||
+    attempt.stages.some((stage) => stage.checkpoint !== null)
+  );
+}
 
-  for (let index = entryStart + 1; index < lines.length; index += 1) {
-    const line = lines[index].trim();
-
-    if (line.startsWith("#### ") || line.startsWith("### ") || line.startsWith("## ")) {
-      entryEnd = index;
-      break;
-    }
-  }
-
-  const entryLines = lines.slice(entryStart, entryEnd);
-  let hasNotes = false;
-  const resetEntryLines = entryLines.map((line) => {
-    if (!line.trim().startsWith("- Notes:")) {
-      return line;
-    }
-
-    hasNotes = true;
-    return "- Notes: -";
-  });
-
-  if (!hasNotes) {
-    resetEntryLines.push("- Notes: -");
-  }
-
-  while (resetEntryLines.at(-1) === "") {
-    resetEntryLines.pop();
-  }
-
-  const nextLines = [
-    ...lines.slice(0, entryStart),
-    ...lines.slice(entryEnd),
-  ];
-  const generatedIndex = nextLines.findIndex(
-    (line, index) => index > historyIndex && line.trim() === "### Generated",
+async function resetSession(taskDir) {
+  const sessionFile = path.join(taskDir, "session.json");
+  const session = JSON.parse(await fs.readFile(sessionFile, "utf8"));
+  const activeIndex = session.attempts.findIndex(
+    (attempt) => attempt.id === session.activeAttemptId,
   );
 
-  if (generatedIndex === -1) {
-    throw new Error("Missing ### Generated section in gpt/gpt_topics.md.");
+  if (activeIndex === -1) {
+    throw new Error("session.json activeAttemptId does not reference an attempt.");
   }
 
-  let insertIndex = nextLines.length;
+  const activeAttempt = session.attempts[activeIndex];
+  const timestamp = nowUtc();
 
-  for (let index = generatedIndex + 1; index < nextLines.length; index += 1) {
-    const line = nextLines[index].trim();
+  if (hasMeaningfulEvidence(activeAttempt)) {
+    activeAttempt.status = "reset";
+    activeAttempt.endedAt = timestamp;
+    activeAttempt.activeStageId = null;
 
-    if (line.startsWith("### ") || line.startsWith("## ")) {
-      insertIndex = index;
-      break;
-    }
+    const number = session.attempts.length + 1;
+    const nextAttempt = createFreshAttempt(
+      `attempt-${number}`,
+      number,
+      timestamp,
+      activeAttempt.stages,
+    );
+    session.attempts.push(nextAttempt);
+    session.activeAttemptId = nextAttempt.id;
+    console.log(`Archived ${activeAttempt.id} and created ${nextAttempt.id}.`);
+  } else {
+    session.attempts[activeIndex] = createFreshAttempt(
+      activeAttempt.id,
+      activeAttempt.number,
+      timestamp,
+      activeAttempt.stages,
+    );
+    console.log(`Reinitialized empty ${activeAttempt.id}.`);
   }
 
-  const beforeInsert = nextLines.slice(0, insertIndex);
-  const afterInsert = nextLines.slice(insertIndex);
+  await fs.writeFile(sessionFile, `${JSON.stringify(session, null, 2)}\n`, "utf8");
+}
 
-  while (beforeInsert.at(-1) === "") {
-    beforeInsert.pop();
-  }
+async function finalizeTasks() {
+  const executable = process.platform === "win32" ? "npm.cmd" : "npm";
 
-  while (afterInsert[0] === "") {
-    afterInsert.shift();
-  }
+  await new Promise((resolve, reject) => {
+    const child = spawn(executable, ["run", "finalize:tasks"], {
+      cwd: ROOT,
+      stdio: "inherit",
+    });
 
-  const nextTopics = [
-    ...beforeInsert,
-    "",
-    ...resetEntryLines,
-    ...(afterInsert.length > 0 ? ["", ...afterInsert] : []),
-  ].join("\n");
+    child.on("error", reject);
+    child.on("exit", (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
 
-  await fs.writeFile(TOPICS_FILE, nextTopics, "utf8");
-  console.log(`Reset ${slug} topic status to generated.`);
+      reject(new Error(`npm run finalize:tasks exited with code ${code}.`));
+    });
+  });
 }
 
 async function main() {
@@ -207,8 +218,8 @@ async function main() {
 
   console.log(`Restored ${path.relative(ROOT, restoredFile)} from scaffold snapshot.`);
   await removeReview(taskDir);
-  await resetTopicStatus(taskDir);
-  console.log("Run npm run finalize:tasks to refresh generated metadata.");
+  await resetSession(taskDir);
+  await finalizeTasks();
 }
 
 void main();

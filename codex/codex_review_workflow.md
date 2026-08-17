@@ -15,7 +15,7 @@ Review the candidate's solution like a realistic technical interviewer.
 Anchor the review in the actual task requirements.
 Before criticizing implementation details, first decide whether the solution meets the required behavior.
 Use `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus` from `task.md` frontmatter to calibrate what matters most.
-Calibrate severity using the explicit task requirements, `reviewFocus`, and the priority rules in this document.
+Read `interviewer.md` and the active attempt in `session.json`. Calibrate severity using the Core requirements, every completed or adapted follow-up, checkpoint evidence, assistance context, `reviewFocus`, and the priority rules in this document.
 
 Prefer high-signal review over exhaustive review.
 Do not let one minor issue dominate the whole review if the core task is solved.
@@ -36,18 +36,22 @@ Use this workflow when:
 
 If one of the trigger phrases above is used, treat it as a full review request and do not stop at chat-only feedback.
 
+The active attempt must be `ready-for-review`. If a Core or follow-up stage is still active, route the request through `agent-skills/interview-session.md` first; do not silently skip planned stages.
+
 Complete the workflow end-to-end:
 
-1. inspect `task.md` and extract the explicit requirements
-2. read frontmatter, especially `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus`
-3. inspect the current solution files
-   When the user provides an explicit task path or opens/adds a file from a task folder, treat that folder as the current task. Inspect only that task folder, shared workflow files, and `/gpt/gpt_topics.md`. Do not inspect unrelated task folders unless explicitly asked.
-4. compare the implementation against each explicit requirement
-5. identify the highest-signal findings
-6. infer an evidence-based Mastery level from the requirements, `reviewFocus`, and highest-signal findings
-7. create or update `review.md`
-8. move or update the matching task entry under `### Reviewed` in `/gpt/gpt_topics.md`
-9. run `npm run finalize:tasks`
+1. inspect `task.md` and extract the explicit Core requirements
+2. read `interviewer.md`, the active attempt in `session.json`, and all completed/adapted follow-ups
+3. read frontmatter, especially `category`, `taskType`, `primarySkill`, `problemShape`, and `reviewFocus`
+4. inspect the current solution files and relevant tests
+   When the user provides an explicit task path or opens/adds a file from a task folder, treat that folder as the current task. Inspect only that task folder and shared workflow/data files. Do not inspect unrelated task folders unless explicitly asked.
+5. compare the implementation against each Core and active follow-up requirement
+6. identify the highest-signal findings and interpret checkpoint/coach evidence contextually
+7. infer an evidence-based Mastery level from the complete session
+8. create or update `review.md`
+9. write the matching structured review and topic signals to the active attempt in `session.json`
+10. set the attempt status to `reviewed`, set `endedAt`, and clear `activeStageId`
+11. run `npm run finalize:tasks`
 
 ---
 
@@ -250,7 +254,7 @@ If the remaining issue is only markup polish, wording preference, or non-blockin
 
 Infer Mastery during review. The user should not provide it manually.
 Treat it as positive progress feedback, not punishment, while keeping the rating honest and evidence-based.
-Base it on the actual task requirements, `reviewFocus`, and the highest-signal findings.
+Base it on the actual task requirements, active follow-ups, `reviewFocus`, checkpoint evidence, assistance context, and the highest-signal findings. A hint is evidence, not an automatic point deduction; consider whether the candidate later demonstrated the topic independently.
 
 Use exactly one of these levels and labels:
 
@@ -343,15 +347,22 @@ Keep the questions practical and relevant.
 
 ---
 
-## Updating topic tracking
+## Structured learning signals
 
-After saving `review.md`, move or update the matching task entry under `### Reviewed` in `/gpt/gpt_topics.md`.
+After saving `review.md`, write a compact review object to the active attempt in `session.json` using `docs/data-contracts.md`.
 
-Track generated task history and coverage, not raw topic lists.
+It must include:
 
-Only add or update entries that reflect real task history.
+- `reviewedAt`;
+- the same requirement verdict and Mastery stored in `review.md`;
+- one or more topic signals grounded in the task, checkpoints, solution, and coaching evidence;
+- derived `needsRepetition`.
 
-Do not spam the file with near-duplicates.
+Use `needs-practice` with `high` priority for a misunderstood core concept, important unmet requirement, repeated gap, or strong coaching not followed by independent demonstration. Use `medium` for a meaningful gap that remains unstable or required clear guidance. Use `low` for minor issues that do not by themselves set `needsRepetition`.
+
+Use `improved` when the candidate progressed but the topic is not yet stable. Use `demonstrated` when the candidate showed sufficient understanding. Record independence honestly as `independent`, `minimal-help`, `guided`, or `not-demonstrated`.
+
+`needsRepetition` must be true if and only if at least one `needs-practice` topic has medium or high priority.
 
 After review-related updates, run:
 
@@ -367,7 +378,7 @@ When the review is complete, keep the final chat response concise and include:
 - the Mastery level
 - the suggested git name, printed in chat only and not saved to `review.md`
 - whether `review.md` was saved
-- whether `/gpt/gpt_topics.md` was updated
+- whether `session.json` learning signals were saved
 - which validation commands passed, if any were run
 
 Use this exact format for the suggested git name:

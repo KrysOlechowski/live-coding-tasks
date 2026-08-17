@@ -1,0 +1,650 @@
+{
+  "schemaVersion": 1,
+  "topicsToRevisit": [],
+  "underPracticedTopics": [
+    {
+      "topicId": "accessibility-interactions",
+      "label": "Accessible interactions",
+      "category": "react"
+    },
+    {
+      "topicId": "error-mapping",
+      "label": "API error mapping",
+      "category": "api-integration"
+    },
+    {
+      "topicId": "async-state-modeling",
+      "label": "Async state modeling",
+      "category": "async"
+    },
+    {
+      "topicId": "async-testing",
+      "label": "Async testing",
+      "category": "testing"
+    },
+    {
+      "topicId": "behavior-oriented-tests",
+      "label": "Behavior-oriented tests",
+      "category": "testing"
+    },
+    {
+      "topicId": "cache-invalidation",
+      "label": "Cache invalidation",
+      "category": "api-integration"
+    },
+    {
+      "topicId": "complexity-analysis",
+      "label": "Complexity analysis",
+      "category": "algorithms"
+    },
+    {
+      "topicId": "component-composition",
+      "label": "Component composition",
+      "category": "react"
+    },
+    {
+      "topicId": "concurrency-control",
+      "label": "Concurrency control",
+      "category": "async"
+    },
+    {
+      "topicId": "controlled-inputs",
+      "label": "Controlled inputs",
+      "category": "react"
+    },
+    {
+      "topicId": "derived-ui-state",
+      "label": "Derived UI state",
+      "category": "react"
+    },
+    {
+      "topicId": "discriminated-unions",
+      "label": "Discriminated unions",
+      "category": "typescript"
+    },
+    {
+      "topicId": "edge-case-coverage",
+      "label": "Edge-case coverage",
+      "category": "testing"
+    },
+    {
+      "topicId": "effect-lifecycle",
+      "label": "Effect lifecycle",
+      "category": "react"
+    },
+    {
+      "topicId": "exhaustive-checking",
+      "label": "Exhaustive checking",
+      "category": "typescript"
+    },
+    {
+      "topicId": "graph-and-tree-traversal",
+      "label": "Graph and tree traversal",
+      "category": "algorithms"
+    },
+    {
+      "topicId": "grouping-and-aggregation",
+      "label": "Grouping and aggregation",
+      "category": "data-transformation"
+    },
+    {
+      "topicId": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation"
+    },
+    {
+      "topicId": "interval-reasoning",
+      "label": "Interval reasoning",
+      "category": "algorithms"
+    },
+    {
+      "topicId": "large-list-rendering",
+      "label": "Large-list rendering",
+      "category": "performance"
+    },
+    {
+      "topicId": "lookup-and-matching",
+      "label": "Lookup and matching",
+      "category": "algorithms"
+    },
+    {
+      "topicId": "memoization-tradeoffs",
+      "label": "Memoization trade-offs",
+      "category": "performance"
+    },
+    {
+      "topicId": "mocking-boundaries",
+      "label": "Mocking boundaries",
+      "category": "testing"
+    },
+    {
+      "topicId": "normalization-and-lookups",
+      "label": "Normalization and lookups",
+      "category": "data-transformation"
+    },
+    {
+      "topicId": "optimistic-updates",
+      "label": "Optimistic updates",
+      "category": "api-integration"
+    },
+    {
+      "topicId": "pagination-boundaries",
+      "label": "Pagination boundaries",
+      "category": "api-integration"
+    },
+    {
+      "topicId": "priority-selection",
+      "label": "Priority selection",
+      "category": "algorithms"
+    },
+    {
+      "topicId": "profiling-and-measurement",
+      "label": "Profiling and measurement",
+      "category": "performance"
+    },
+    {
+      "topicId": "promise-ordering",
+      "label": "Promise ordering",
+      "category": "async"
+    },
+    {
+      "topicId": "react-state-updates",
+      "label": "React state updates",
+      "category": "react"
+    },
+    {
+      "topicId": "render-cost",
+      "label": "Render cost",
+      "category": "performance"
+    },
+    {
+      "topicId": "request-cancellation",
+      "label": "Request cancellation",
+      "category": "async"
+    },
+    {
+      "topicId": "network-request-deduplication",
+      "label": "Request deduplication",
+      "category": "performance"
+    },
+    {
+      "topicId": "response-adaptation",
+      "label": "Response adaptation",
+      "category": "api-integration"
+    },
+    {
+      "topicId": "retries-and-backoff",
+      "label": "Retries and backoff",
+      "category": "async"
+    },
+    {
+      "topicId": "stable-ordering",
+      "label": "Stable ordering",
+      "category": "data-transformation"
+    },
+    {
+      "topicId": "stale-async-responses",
+      "label": "Stale async responses",
+      "category": "async"
+    },
+    {
+      "topicId": "test-isolation",
+      "label": "Test isolation",
+      "category": "testing"
+    },
+    {
+      "topicId": "type-narrowing",
+      "label": "Type narrowing",
+      "category": "typescript"
+    },
+    {
+      "topicId": "type-safe-api-modeling",
+      "label": "Type-safe API modeling",
+      "category": "typescript"
+    },
+    {
+      "topicId": "generics",
+      "label": "TypeScript generics",
+      "category": "typescript"
+    },
+    {
+      "topicId": "validation-and-sanitization",
+      "label": "Validation and sanitization",
+      "category": "data-transformation"
+    }
+  ],
+  "topicCoverage": [
+    {
+      "topicId": "accessibility-interactions",
+      "label": "Accessible interactions",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "error-mapping",
+      "label": "API error mapping",
+      "category": "api-integration",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "async-state-modeling",
+      "label": "Async state modeling",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "async-testing",
+      "label": "Async testing",
+      "category": "testing",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "behavior-oriented-tests",
+      "label": "Behavior-oriented tests",
+      "category": "testing",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "cache-invalidation",
+      "label": "Cache invalidation",
+      "category": "api-integration",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "complexity-analysis",
+      "label": "Complexity analysis",
+      "category": "algorithms",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "component-composition",
+      "label": "Component composition",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "concurrency-control",
+      "label": "Concurrency control",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "controlled-inputs",
+      "label": "Controlled inputs",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "derived-ui-state",
+      "label": "Derived UI state",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "discriminated-unions",
+      "label": "Discriminated unions",
+      "category": "typescript",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "edge-case-coverage",
+      "label": "Edge-case coverage",
+      "category": "testing",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "effect-lifecycle",
+      "label": "Effect lifecycle",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "exhaustive-checking",
+      "label": "Exhaustive checking",
+      "category": "typescript",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "graph-and-tree-traversal",
+      "label": "Graph and tree traversal",
+      "category": "algorithms",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "grouping-and-aggregation",
+      "label": "Grouping and aggregation",
+      "category": "data-transformation",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "interval-reasoning",
+      "label": "Interval reasoning",
+      "category": "algorithms",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "large-list-rendering",
+      "label": "Large-list rendering",
+      "category": "performance",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "lookup-and-matching",
+      "label": "Lookup and matching",
+      "category": "algorithms",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "memoization-tradeoffs",
+      "label": "Memoization trade-offs",
+      "category": "performance",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "mocking-boundaries",
+      "label": "Mocking boundaries",
+      "category": "testing",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "normalization-and-lookups",
+      "label": "Normalization and lookups",
+      "category": "data-transformation",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "optimistic-updates",
+      "label": "Optimistic updates",
+      "category": "api-integration",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "pagination-boundaries",
+      "label": "Pagination boundaries",
+      "category": "api-integration",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "priority-selection",
+      "label": "Priority selection",
+      "category": "algorithms",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "profiling-and-measurement",
+      "label": "Profiling and measurement",
+      "category": "performance",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "promise-ordering",
+      "label": "Promise ordering",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "react-state-updates",
+      "label": "React state updates",
+      "category": "react",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "render-cost",
+      "label": "Render cost",
+      "category": "performance",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "request-cancellation",
+      "label": "Request cancellation",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "network-request-deduplication",
+      "label": "Request deduplication",
+      "category": "performance",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "response-adaptation",
+      "label": "Response adaptation",
+      "category": "api-integration",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "retries-and-backoff",
+      "label": "Retries and backoff",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "stable-ordering",
+      "label": "Stable ordering",
+      "category": "data-transformation",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "stale-async-responses",
+      "label": "Stale async responses",
+      "category": "async",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "test-isolation",
+      "label": "Test isolation",
+      "category": "testing",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "type-narrowing",
+      "label": "Type narrowing",
+      "category": "typescript",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "type-safe-api-modeling",
+      "label": "Type-safe API modeling",
+      "category": "typescript",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "generics",
+      "label": "TypeScript generics",
+      "category": "typescript",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    },
+    {
+      "topicId": "validation-and-sanitization",
+      "label": "Validation and sanitization",
+      "category": "data-transformation",
+      "assignedTasks": 0,
+      "reviewedAttempts": 0,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": null
+    }
+  ],
+  "recentTasks": [],
+  "categoryCoverage": {
+    "algorithms": 0,
+    "api-integration": 0,
+    "async": 0,
+    "data-transformation": 0,
+    "performance": 0,
+    "react": 0,
+    "testing": 0,
+    "typescript": 0
+  },
+  "taskTypeCoverage": {}
+}

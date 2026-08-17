@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document explains how Codex should scaffold new live-coding tasks in this repository.
+This document explains how Codex should scaffold a validated Live Coding Task Package v1 in this repository.
 
 The goal is to create a minimal, interview-appropriate starting point for a task without solving the core problem.
 
@@ -13,6 +13,8 @@ Create the smallest useful scaffold.
 Do not overengineer the task structure.
 Do not create unnecessary files.
 Do not implement the full solution.
+
+Read `docs/data-contracts.md` before scaffolding. The package provides complete `task.md` and `interviewer.md` artifacts; Codex creates session state and starter code.
 
 ---
 
@@ -66,6 +68,8 @@ Do not create tasks directly under `tasks/` without a category folder.
 Create:
 
 - `task.md`
+- `interviewer.md`
+- `session.json`
 - `main.tsx`
 - `main.scaffold.tsx` (restorable snapshot of the initial `main.tsx` scaffold)
 
@@ -85,6 +89,8 @@ Do not add preview metadata for pure utility, algorithm, TypeScript-only, or oth
 Create:
 
 - `task.md`
+- `interviewer.md`
+- `session.json`
 - `main.ts`
 - `main.scaffold.ts` (restorable snapshot of the initial `main.ts` scaffold)
 
@@ -137,6 +143,30 @@ Keep it short and readable.
 
 Do not include the solution in `task.md`.
 Do not duplicate `category`, `taskType`, or `difficulty` in the markdown body when they already exist in frontmatter.
+
+---
+
+## interviewer.md
+
+Materialize the validated interviewer artifact from the Task Package. Keep it out of candidate-facing task pages and final scaffold summaries. Verify that `plannedFollowUps`, topic IDs, follow-up headings, and declared follow-up topics match `docs/data-contracts.md`.
+
+Do not add a solution, code, or pseudocode to the interviewer plan.
+
+---
+
+## session.json
+
+Create schema version 1 session state using `docs/data-contracts.md`:
+
+- create `attempt-1` with status `ready`;
+- set `createdAt` to the current ISO 8601 UTC time;
+- leave `startedAt`, `endedAt`, and `review` as `null`;
+- set `activeStageId` to `core`;
+- create an `available` Core stage;
+- create one `locked` stage for every planned follow-up;
+- start with an empty `coachEvents` array.
+
+ChatGPT never creates `session.json`.
 
 ---
 
@@ -255,30 +285,20 @@ For algorithm / data transformation / utility tasks:
 
 ## Important behavior
 
-When given a task brief:
+When given a validated Task Package:
 
-1. read `category`, `taskType`, and `difficulty` from the task brief
+1. read the package slug plus `category`, `taskType`, and `difficulty` from `task.md`
 2. create the task folder under `tasks/<category>/<slug>/`
-3. choose the smallest useful scaffold
-4. create `task.md` with frontmatter metadata and the structured task brief body
-5. create only the necessary starter code files
-6. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
-7. preserve the distinction between `main.scaffold.*` and `main.*`
-8. update `/gpt/gpt_topics.md` by adding one task entry under `### Generated` in Task History
-9. run `npm run finalize:tasks` and fix any reported task-structure or metadata issues
+3. materialize `task.md` and `interviewer.md`
+4. initialize `session.json`
+5. choose the smallest useful code scaffold
+6. create only the necessary starter code files
+7. add TODO comments where appropriate, without revealing hidden bugs, refactor targets, or performance issues
+8. preserve the distinction between `main.scaffold.*` and `main.*`
+9. run `npm run finalize:tasks` and fix task, session, learning-data, and preview failures
 10. stop before solving the task
 
-The `gpt_topics.md` task entry should use:
-
-- `slug`: task folder name
-- `category`: from task frontmatter
-- `taskType`: from task frontmatter
-- `difficulty`: from task frontmatter
-- `primarySkill`: from task frontmatter
-- `problemShape`: from task frontmatter
-- `notes`: short useful note for repetition avoidance, or `-` if none
-
-`npm run finalize:tasks` is mandatory.  
+`npm run finalize:tasks` is mandatory.
 Do not ask the user to run validation or metadata commands manually.
 
 ## Final response after scaffolding

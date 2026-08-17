@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "id": "accessibility-interactions",
+      "label": "Accessible interactions",
+      "category": "react",
+      "description": "Build keyboard, focus, labeling, and semantic interaction behavior into UI components.",
+      "aliases": [
+        "a11y interactions",
+        "keyboard accessibility",
+        "focus management"
+      ]
+    },
+    {
+      "id": "component-composition",
+      "label": "Component composition",
+      "category": "react",
+      "description": "Choose component boundaries and APIs that keep behavior reusable without unnecessary abstraction.",
+      "aliases": [
+        "component boundaries",
+        "composition patterns",
+        "reusable components"
+      ]
+    },
+    {
+      "id": "controlled-inputs",
+      "label": "Controlled inputs",
+      "category": "react",
+      "description": "Keep form controls and application state synchronized across user interactions.",
+      "aliases": [
+        "controlled components",
+        "form state",
+        "input synchronization"
+      ]
+    },
+    {
+      "id": "derived-ui-state",
+      "label": "Derived UI state",
+      "category": "react",
+      "description": "Derive visible state from canonical inputs instead of storing redundant or conflicting state.",
+      "aliases": [
+        "derived state",
+        "computed UI state",
+        "state duplication"
+      ]
+    },
+    {
+      "id": "effect-lifecycle",
+      "label": "Effect lifecycle",
+      "category": "react",
+      "description": "Reason about effect execution, dependencies, cleanup, and component lifecycle boundaries.",
+      "aliases": [
+        "useEffect lifecycle",
+        "effect cleanup",
+        "effect dependencies"
+      ]
+    },
+    {
+      "id": "react-state-updates",
+      "label": "React state updates",
+      "category": "react",
+      "description": "Apply React state updates correctly when values depend on events, batching, or previous state.",
+      "aliases": [
+        "functional state updates",
+        "batched state",
+        "state transitions"
+      ]
+    },
+    {
+      "id": "discriminated-unions",
+      "label": "Discriminated unions",
+      "category": "typescript",
+      "description": "Model variants with a stable discriminator so invalid combinations are difficult to represent.",
+      "aliases": [
+        "tagged unions",
+        "variant modeling",
+        "union states"
+      ]
+    },
+    {
+      "id": "exhaustive-checking",
+      "label": "Exhaustive checking",
+      "category": "typescript",
+      "description": "Make variant handling complete and surface missing cases during type checking.",
+      "aliases": [
+        "never checks",
+        "exhaustive switch",
+        "missing union cases"
+      ]
+    },
+    {
+      "id": "generics",
+      "label": "TypeScript generics",
+      "category": "typescript",
+      "description": "Express relationships between reusable inputs and outputs without losing useful type information.",
+      "aliases": [
+        "generic functions",
+        "generic constraints",
+        "reusable types"
+      ]
+    },
+    {
+      "id": "type-narrowing",
+      "label": "Type narrowing",
+      "category": "typescript",
+      "description": "Narrow uncertain values safely using runtime evidence understood by TypeScript.",
+      "aliases": [
+        "type guards",
+        "control flow analysis",
+        "unknown narrowing"
+      ]
+    },
+    {
+      "id": "type-safe-api-modeling",
+      "label": "Type-safe API modeling",
+      "category": "typescript",
+      "description": "Represent API success, error, optional, and variant data without unsafe assertions.",
+      "aliases": [
+        "API response types",
+        "typed endpoints",
+        "safe API shapes"
+      ]
+    },
+    {
+      "id": "grouping-and-aggregation",
+      "label": "Grouping and aggregation",
+      "category": "data-transformation",
+      "description": "Group records and calculate summaries while preserving the required output shape.",
+      "aliases": [
+        "group by",
+        "aggregation",
+        "summary calculation"
+      ]
+    },
+    {
+      "id": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation",
+      "description": "Transform collections without mutating caller-owned inputs or shared nested values.",
+      "aliases": [
+        "non-mutating arrays",
+        "immutable updates",
+        "input preservation"
+      ]
+    },
+    {
+      "id": "normalization-and-lookups",
+      "label": "Normalization and lookups",
+      "category": "data-transformation",
+      "description": "Reshape nested or repeated data into stable keyed structures for efficient access.",
+      "aliases": [
+        "data normalization",
+        "lookup maps",
+        "entities by id"
+      ]
+    },
+    {
+      "id": "stable-ordering",
+      "label": "Stable ordering",
+      "category": "data-transformation",
+      "description": "Preserve or deliberately define record order while filtering, merging, and sorting data.",
+      "aliases": [
+        "stable sort",
+        "input order",
+        "ordering guarantees"
+      ]
+    },
+    {
+      "id": "validation-and-sanitization",
+      "label": "Validation and sanitization",
+      "category": "data-transformation",
+      "description": "Validate uncertain input and produce a safe normalized output without hiding invalid cases.",
+      "aliases": [
+        "input validation",
+        "data cleanup",
+        "invalid records"
+      ]
+    },
+    {
+      "id": "complexity-analysis",
+      "label": "Complexity analysis",
+      "category": "algorithms",
+      "description": "Evaluate time and space costs and explain how input growth affects an approach.",
+      "aliases": [
+        "big O",
+        "time complexity",
+        "space complexity"
+      ]
+    },
+    {
+      "id": "graph-and-tree-traversal",
+      "label": "Graph and tree traversal",
+      "category": "algorithms",
+      "description": "Traverse hierarchical or connected data while handling visitation, depth, and termination correctly.",
+      "aliases": [
+        "tree traversal",
+        "graph traversal",
+        "DFS and BFS"
+      ]
+    },
+    {
+      "id": "interval-reasoning",
+      "label": "Interval reasoning",
+      "category": "algorithms",
+      "description": "Compare, merge, or select ranges while handling boundary conditions explicitly.",
+      "aliases": [
+        "interval overlap",
+        "range merging",
+        "time windows"
+      ]
+    },
+    {
+      "id": "lookup-and-matching",
+      "label": "Lookup and matching",
+      "category": "algorithms",
+      "description": "Choose appropriate lookup structures and matching strategies for repeated comparisons.",
+      "aliases": [
+        "hash map lookup",
+        "record matching",
+        "indexing"
+      ]
+    },
+    {
+      "id": "priority-selection",
+      "label": "Priority selection",
+      "category": "algorithms",
+      "description": "Select or schedule candidates according to explicit priorities and tie-breaking rules.",
+      "aliases": [
+        "ranking",
+        "scheduling",
+        "top candidate selection"
+      ]
+    },
+    {
+      "id": "async-state-modeling",
+      "label": "Async state modeling",
+      "category": "async",
+      "description": "Keep loading, success, empty, and error states consistent throughout asynchronous work.",
+      "aliases": [
+        "loading state",
+        "request state",
+        "async UI states"
+      ]
+    },
+    {
+      "id": "concurrency-control",
+      "label": "Concurrency control",
+      "category": "async",
+      "description": "Limit, coordinate, or serialize simultaneous asynchronous operations deliberately.",
+      "aliases": [
+        "concurrency limits",
+        "parallel requests",
+        "async queue"
+      ]
+    },
+    {
+      "id": "promise-ordering",
+      "label": "Promise ordering",
+      "category": "async",
+      "description": "Reason about initiation, completion, and result ordering across multiple promises.",
+      "aliases": [
+        "promise sequence",
+        "completion order",
+        "Promise.all ordering"
+      ]
+    },
+    {
+      "id": "request-cancellation",
+      "label": "Request cancellation",
+      "category": "async",
+      "description": "Stop or disregard asynchronous work that is no longer relevant to the current lifecycle.",
+      "aliases": [
+        "AbortController",
+        "cancel fetch",
+        "async cleanup"
+      ]
+    },
+    {
+      "id": "retries-and-backoff",
+      "label": "Retries and backoff",
+      "category": "async",
+      "description": "Retry transient failures with explicit limits, delays, and terminal-error behavior.",
+      "aliases": [
+        "retry logic",
+        "exponential backoff",
+        "transient errors"
+      ]
+    },
+    {
+      "id": "stale-async-responses",
+      "label": "Stale async responses",
+      "category": "async",
+      "description": "Prevent older asynchronous results from replacing state associated with newer work.",
+      "aliases": [
+        "race conditions",
+        "out-of-order responses",
+        "stale requests"
+      ]
+    },
+    {
+      "id": "cache-invalidation",
+      "label": "Cache invalidation",
+      "category": "api-integration",
+      "description": "Decide when cached server data remains valid and when it must be refreshed or removed.",
+      "aliases": [
+        "stale cache",
+        "cache refresh",
+        "data freshness"
+      ]
+    },
+    {
+      "id": "error-mapping",
+      "label": "API error mapping",
+      "category": "api-integration",
+      "description": "Convert transport and domain failures into stable application-facing error states.",
+      "aliases": [
+        "API errors",
+        "error normalization",
+        "server error handling"
+      ]
+    },
+    {
+      "id": "optimistic-updates",
+      "label": "Optimistic updates",
+      "category": "api-integration",
+      "description": "Update local state before server confirmation and reconcile success, failure, and overlap.",
+      "aliases": [
+        "optimistic UI",
+        "rollback",
+        "mutation reconciliation"
+      ]
+    },
+    {
+      "id": "pagination-boundaries",
+      "label": "Pagination boundaries",
+      "category": "api-integration",
+      "description": "Handle page cursors, termination, duplicates, and boundary transitions correctly.",
+      "aliases": [
+        "pagination",
+        "cursor pagination",
+        "load more"
+      ]
+    },
+    {
+      "id": "response-adaptation",
+      "label": "Response adaptation",
+      "category": "api-integration",
+      "description": "Translate external response shapes into stable application models at a clear boundary.",
+      "aliases": [
+        "API adapters",
+        "response mapping",
+        "DTO conversion"
+      ]
+    },
+    {
+      "id": "async-testing",
+      "label": "Async testing",
+      "category": "testing",
+      "description": "Test asynchronous observable behavior without relying on accidental timing.",
+      "aliases": [
+        "promise tests",
+        "waitFor",
+        "timing tests"
+      ]
+    },
+    {
+      "id": "behavior-oriented-tests",
+      "label": "Behavior-oriented tests",
+      "category": "testing",
+      "description": "Verify public observable behavior instead of coupling tests to implementation details.",
+      "aliases": [
+        "behavior tests",
+        "black-box tests",
+        "user-facing assertions"
+      ]
+    },
+    {
+      "id": "edge-case-coverage",
+      "label": "Edge-case coverage",
+      "category": "testing",
+      "description": "Identify meaningful boundaries and failure modes that deserve explicit test cases.",
+      "aliases": [
+        "boundary tests",
+        "missing cases",
+        "negative tests"
+      ]
+    },
+    {
+      "id": "mocking-boundaries",
+      "label": "Mocking boundaries",
+      "category": "testing",
+      "description": "Mock external boundaries deliberately while preserving useful behavior and integration signal.",
+      "aliases": [
+        "test mocks",
+        "API mocking",
+        "dependency stubs"
+      ]
+    },
+    {
+      "id": "test-isolation",
+      "label": "Test isolation",
+      "category": "testing",
+      "description": "Keep tests independent from execution order, shared state, and leaked side effects.",
+      "aliases": [
+        "independent tests",
+        "test cleanup",
+        "flaky tests"
+      ]
+    },
+    {
+      "id": "large-list-rendering",
+      "label": "Large-list rendering",
+      "category": "performance",
+      "description": "Keep large collections responsive through appropriate rendering and update strategies.",
+      "aliases": [
+        "list virtualization",
+        "large tables",
+        "windowing"
+      ]
+    },
+    {
+      "id": "memoization-tradeoffs",
+      "label": "Memoization trade-offs",
+      "category": "performance",
+      "description": "Use memoization only where its comparison, memory, and complexity costs are justified.",
+      "aliases": [
+        "useMemo",
+        "React memo",
+        "caching computations"
+      ]
+    },
+    {
+      "id": "network-request-deduplication",
+      "label": "Request deduplication",
+      "category": "performance",
+      "description": "Avoid redundant equivalent network work while preserving correct freshness and consumers.",
+      "aliases": [
+        "duplicate requests",
+        "request coalescing",
+        "network deduplication"
+      ]
+    },
+    {
+      "id": "profiling-and-measurement",
+      "label": "Profiling and measurement",
+      "category": "performance",
+      "description": "Measure actual cost and confirm that an optimization improves the relevant bottleneck.",
+      "aliases": [
+        "profiling",
+        "performance measurement",
+        "benchmarking"
+      ]
+    },
+    {
+      "id": "render-cost",
+      "label": "Render cost",
+      "category": "performance",
+      "description": "Reduce unnecessary rendering and repeated work without breaking observable behavior.",
+      "aliases": [
+        "unnecessary renders",
+        "React performance",
+        "render optimization"
+      ]
+    }
+  ]
+}

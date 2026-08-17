@@ -10,11 +10,12 @@ Examples: `$coach tiny hint`, `$coach small hint`, `$coach strong hint`, `$coach
 2. Otherwise infer the task from an open file inside a task folder.
 3. If neither works, ask briefly for the task path.
 
-Read the current `task.md` and `main.ts` or `main.tsx`. Read `review.md` only for questions about previous review feedback. Avoid unrelated task folders.
+Read the current `task.md`, `interviewer.md`, `session.json`, and `main.ts` or `main.tsx`. Read `review.md` only for questions about previous review feedback. Avoid unrelated task folders and never reveal locked follow-ups.
 
 ## Hard rules
 
-- Stay read-only: do not edit files, write `review.md`, update `gpt/gpt_topics.md`, or run restore commands.
+- Stay read-only with respect to candidate code, `task.md`, `interviewer.md`, and `review.md`.
+- The only allowed write is one compact coach event in the active attempt's `session.json` when assistance materially advances the candidate.
 - Do not assign Mastery.
 - Do not provide a full solution unless explicitly requested.
 - Do not paste complete replacement functions by default.
@@ -28,6 +29,18 @@ Start with the least revealing useful help. Increase gradually on repeated reque
 `tiny hint` → `small hint` → `strong hint` → `short example` → `solution outline`
 
 Never jump to a full solution unless explicitly requested.
+
+## Session telemetry
+
+After giving material help:
+
+1. If the attempt is `ready`, treat the request as an implicit session start: set it to `in-progress`, set `startedAt`, and mark the active stage `in-progress`.
+2. Append one `coach-N` event with the active stage, the best matching declared topic ID, help level, mode, and current ISO UTC timestamp.
+3. Use levels 1–5 from `docs/data-contracts.md`; the level describes disclosure strength, not candidate quality.
+4. Do not record ordinary encouragement, a pure interviewer question, or a response that provides no guidance.
+5. Run `npm run finalize:tasks` after writing telemetry.
+
+Do not calculate Mastery or repetition priority from an event. Final review evaluates assistance together with later independent evidence.
 
 ## Mode selection
 

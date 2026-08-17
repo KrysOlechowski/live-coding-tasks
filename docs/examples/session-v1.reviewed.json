@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "taskSlug": "fix-stale-customer-search",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-08-17T14:25:00Z",
+      "startedAt": "2026-08-17T14:30:00Z",
+      "endedAt": "2026-08-17T15:30:00Z",
+      "activeStageId": null,
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T14:55:00Z",
+            "outcome": "passed",
+            "observations": [
+              "Latest-query results and loading state remained consistent during rapid input changes."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "stale-async-responses",
+                "signal": "demonstrated",
+                "evidence": "Explained why request and completion order can differ and defended the chosen guard."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-17T15:20:00Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "Unmount cleanup works, but the candidate needed direct guidance to choose an appropriate lifecycle boundary."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "request-cancellation",
+                "signal": "uncertain",
+                "evidence": "Could explain the final behavior but did not arrive at it independently."
+              },
+              {
+                "topicId": "effect-lifecycle",
+                "signal": "demonstrated",
+                "evidence": "Correctly explained when cleanup runs after the implementation was complete."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-08-17T15:08:00Z",
+          "stageId": "follow-up-1",
+          "topicId": "request-cancellation",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-08-17T15:30:00Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "Core request ordering is solid, while lifecycle cancellation still required meaningful guidance."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "stale-async-responses",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "The candidate fixed and explained stale-response protection with only a small initial nudge.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "async-state-modeling",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "Loading, error, and results became consistent after the candidate revisited all state transitions.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "request-cancellation",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The lifecycle cleanup requirement was completed only after a direct concept explanation.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "effect-lifecycle",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "The candidate accurately explained cleanup timing after implementing the follow-up.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
