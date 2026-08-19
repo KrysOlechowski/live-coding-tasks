@@ -16,7 +16,9 @@ The contracts deliberately preserve the existing `task.md` frontmatter so the 2.
 - Topic IDs come from one canonical catalog.
 - IDs use lowercase kebab-case and remain stable after creation.
 - Timestamps use ISO 8601 UTC, for example `2026-08-17T14:30:00Z`.
-- Every serialized contract contains `schemaVersion: 1`.
+- Every serialized contract contains its declared `schemaVersion`; Task Package,
+  interviewer, scaffold manifest, and topic catalog currently use version 1,
+  while `session.json` uses version 2.
 
 ## Task Package v1
 

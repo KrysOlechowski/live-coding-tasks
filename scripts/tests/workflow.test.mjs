@@ -53,7 +53,7 @@ test("the current task repository passes contract validation", async () => {
     "scripts/validate-tasks.mjs",
   );
 
-  assert.match(stdout, /Validated 2 task folder\(s\)/);
+  assert.match(stdout, /Validated [1-9]\d* task folder\(s\)/);
 });
 
 test("validation rejects an active question ID without a pending question", async (t) => {

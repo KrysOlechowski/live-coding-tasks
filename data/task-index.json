@@ -2,6 +2,47 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "fix-stale-customer-search-results",
+      "title": "Fix stale customer search results",
+      "category": "async",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "primarySkill": "Keep search UI state aligned with the latest asynchronous request",
+      "secondarySkill": "Handle loading, error, result, and empty states consistently",
+      "problemShape": "stale-async-response",
+      "reviewFocus": [
+        "correctness",
+        "async-safety",
+        "ui-behavior",
+        "error-handling"
+      ],
+      "tags": [
+        "react",
+        "async",
+        "search",
+        "stale-responses"
+      ],
+      "primaryTopics": [
+        "stale-async-responses",
+        "async-state-modeling"
+      ],
+      "secondaryTopics": [
+        "request-cancellation",
+        "effect-lifecycle"
+      ],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "status": "reviewed",
+      "createdAt": "2026-08-17T16:00:11Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "Core behavior is correct, but it required substantial guidance and the revealed cancellation and lifecycle follow-up remains incomplete."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-08-19T08:50:08Z"
+    },
+    {
       "slug": "fix-cart-summary-state",
       "title": "Fix the cart summary",
       "category": "react",

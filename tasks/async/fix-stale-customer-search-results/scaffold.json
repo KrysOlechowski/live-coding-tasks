@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "working": "main.tsx",
+      "snapshot": "main.scaffold.tsx",
+      "sha256": "f6efc553a53853682f7958d1b696981b723a9b0305d756ee351fc2c01c5f5cc7"
+    }
+  ]
+}

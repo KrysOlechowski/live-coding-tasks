@@ -2,6 +2,32 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
+      "topicId": "request-cancellation",
+      "label": "Request cancellation",
+      "category": "async",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 3,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-08-19T08:50:08Z",
+      "relatedTasks": [
+        "fix-stale-customer-search-results"
+      ]
+    },
+    {
+      "topicId": "effect-lifecycle",
+      "label": "Effect lifecycle",
+      "category": "react",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 0,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-08-19T08:50:08Z",
+      "relatedTasks": [
+        "fix-stale-customer-search-results"
+      ]
+    },
+    {
       "topicId": "type-narrowing",
       "label": "Type narrowing",
       "category": "typescript",
@@ -25,11 +51,6 @@
       "topicId": "error-mapping",
       "label": "API error mapping",
       "category": "api-integration"
-    },
-    {
-      "topicId": "async-state-modeling",
-      "label": "Async state modeling",
-      "category": "async"
     },
     {
       "topicId": "async-testing",
@@ -70,11 +91,6 @@
       "topicId": "edge-case-coverage",
       "label": "Edge-case coverage",
       "category": "testing"
-    },
-    {
-      "topicId": "effect-lifecycle",
-      "label": "Effect lifecycle",
-      "category": "react"
     },
     {
       "topicId": "graph-and-tree-traversal",
@@ -152,11 +168,6 @@
       "category": "performance"
     },
     {
-      "topicId": "request-cancellation",
-      "label": "Request cancellation",
-      "category": "async"
-    },
-    {
       "topicId": "network-request-deduplication",
       "label": "Request deduplication",
       "category": "performance"
@@ -175,11 +186,6 @@
       "topicId": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation"
-    },
-    {
-      "topicId": "stale-async-responses",
-      "label": "Stale async responses",
-      "category": "async"
     },
     {
       "topicId": "test-isolation",
@@ -227,11 +233,11 @@
       "topicId": "async-state-modeling",
       "label": "Async state modeling",
       "category": "async",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 2,
+      "lastReviewedAt": "2026-08-19T08:50:08Z"
     },
     {
       "topicId": "async-testing",
@@ -337,11 +343,11 @@
       "topicId": "effect-lifecycle",
       "label": "Effect lifecycle",
       "category": "react",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
       "coachHints": 0,
-      "lastReviewedAt": null
+      "lastReviewedAt": "2026-08-19T08:50:08Z"
     },
     {
       "topicId": "exhaustive-checking",
@@ -517,11 +523,11 @@
       "topicId": "request-cancellation",
       "label": "Request cancellation",
       "category": "async",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 3,
+      "lastReviewedAt": "2026-08-19T08:50:08Z"
     },
     {
       "topicId": "network-request-deduplication",
@@ -567,11 +573,11 @@
       "topicId": "stale-async-responses",
       "label": "Stale async responses",
       "category": "async",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 5,
+      "lastReviewedAt": "2026-08-19T08:50:08Z"
     },
     {
       "topicId": "test-isolation",
@@ -626,6 +632,19 @@
   ],
   "recentTasks": [
     {
+      "slug": "fix-stale-customer-search-results",
+      "category": "async",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "problemShape": "stale-async-response",
+      "primaryTopics": [
+        "stale-async-responses",
+        "async-state-modeling"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
+    {
       "slug": "fix-cart-summary-state",
       "category": "react",
       "taskType": "fix-bug",
@@ -653,7 +672,7 @@
   "categoryCoverage": {
     "algorithms": 0,
     "api-integration": 0,
-    "async": 0,
+    "async": 1,
     "data-transformation": 0,
     "performance": 0,
     "react": 1,
@@ -661,7 +680,7 @@
     "typescript": 1
   },
   "taskTypeCoverage": {
-    "fix-bug": 1,
+    "fix-bug": 2,
     "model-types": 1
   }
 }

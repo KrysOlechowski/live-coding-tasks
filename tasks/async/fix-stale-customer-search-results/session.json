@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "fix-stale-customer-search-results",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-08-17T16:00:11Z",
+      "startedAt": "2026-08-17T16:11:26Z",
+      "endedAt": "2026-08-19T08:50:08Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "stale-async-responses",
+          "prompt": "If `al` is entered and then `ali` is entered before the first search finishes, what completion orders are possible and what could the current widget display?",
+          "source": "planned",
+          "askedAt": "2026-08-17T16:11:26Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T18:21:49Z",
+          "evidence": "The candidate identified that the older `al` completion can overwrite the newer `ali` state, but did not describe both possible completion orders."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "async-state-modeling",
+          "prompt": "Which visible values must belong to the same logical search for the widget to be internally consistent?",
+          "source": "planned",
+          "askedAt": "2026-08-17T18:22:04Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T18:25:57Z",
+          "evidence": "The candidate identified the result list as state that must match the current search, but did not include loading, error, or empty-result messaging."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "stale-async-responses",
+          "prompt": "What prevents an older failed request from showing an error after the newest request has already succeeded?",
+          "source": "planned",
+          "askedAt": "2026-08-17T19:04:06Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T19:06:15Z",
+          "evidence": "The candidate could not explain the guard that prevents an older failed request from updating the current error state."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "teaching",
+          "topicId": "async-state-modeling",
+          "prompt": "Explain how your implementation decides when loading may become false and why an older request cannot make that decision for a newer one.",
+          "source": "planned",
+          "askedAt": "2026-08-17T19:06:30Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-17T19:22:10Z",
+          "evidence": "The candidate connected loading completion to pending work, but did not distinguish the latest relevant request from older requests that may still be in flight."
+        },
+        {
+          "id": "follow-up-1-start-1",
+          "stageId": "follow-up-1",
+          "timing": "start",
+          "kind": "tradeoff",
+          "topicId": "request-cancellation",
+          "prompt": "What is the difference between ignoring a completion that is no longer relevant and stopping the underlying work?",
+          "source": "planned",
+          "askedAt": "2026-08-19T08:21:17Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-19T08:25:29Z",
+          "evidence": "The candidate clearly distinguished stale UI-write protection from cancellation of unnecessary work and noted that cancellation races do not replace the ordering guard."
+        },
+        {
+          "id": "follow-up-1-start-2",
+          "stageId": "follow-up-1",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "effect-lifecycle",
+          "prompt": "At which two lifecycle transitions does the currently owned search become obsolete in this requirement?",
+          "source": "planned",
+          "askedAt": "2026-08-19T08:25:46Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-19T08:29:46Z",
+          "evidence": "The candidate identified replacement by a new query and clearing the input, but missed component unmount as the second required cancellation boundary."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-19T08:21:17Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "A per-component request identifier now guards results, errors, and loading while input clearing invalidates pending work.",
+              "The working Core solution required repeated implementation guidance and retains redundant currentQuery state."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "stale-async-responses",
+                "signal": "uncertain",
+                "evidence": "The correct request-identity strategy was implemented after direct useRef and branch-guard guidance."
+              },
+              {
+                "topicId": "async-state-modeling",
+                "signal": "uncertain",
+                "evidence": "Direct guidance was needed to align loading and visible results with the latest request."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "skipped",
+          "adaptation": null,
+          "skipReason": "The candidate stopped because AbortSignal integration and component-lifecycle cancellation were too difficult to implement.",
+          "checkpoint": null
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-08-17T18:45:06Z",
+          "stageId": "core",
+          "topicId": "stale-async-responses",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-08-19T07:37:12Z",
+          "stageId": "core",
+          "topicId": "async-state-modeling",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-08-19T07:40:43Z",
+          "stageId": "core",
+          "topicId": "request-cancellation",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-08-19T07:42:13Z",
+          "stageId": "core",
+          "topicId": "stale-async-responses",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-08-19T07:46:59Z",
+          "stageId": "core",
+          "topicId": "stale-async-responses",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-6",
+          "createdAt": "2026-08-19T07:48:57Z",
+          "stageId": "core",
+          "topicId": "stale-async-responses",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-7",
+          "createdAt": "2026-08-19T07:53:46Z",
+          "stageId": "core",
+          "topicId": "stale-async-responses",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-8",
+          "createdAt": "2026-08-19T08:12:14Z",
+          "stageId": "core",
+          "topicId": "async-state-modeling",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-9",
+          "createdAt": "2026-08-19T08:32:46Z",
+          "stageId": "follow-up-1",
+          "topicId": "request-cancellation",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-10",
+          "createdAt": "2026-08-19T08:39:23Z",
+          "stageId": "follow-up-1",
+          "topicId": "request-cancellation",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-08-19T08:50:08Z",
+        "requirementVerdict": "partially",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "Core behavior is correct, but it required substantial guidance and the revealed cancellation and lifecycle follow-up remains incomplete."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "stale-async-responses",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The final Core implementation consistently guards success, failure, and loading with request identity after direct implementation guidance.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "async-state-modeling",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The final UI state follows the latest query, but loading and result ownership required repeated guidance.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "request-cancellation",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "not-demonstrated",
+            "evidence": "AbortSignal was added to the API call, but no request is aborted and the candidate stopped after substantial coaching.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "effect-lifecycle",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "not-demonstrated",
+            "evidence": "The candidate missed unmount as a required ownership boundary and did not implement component cleanup.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

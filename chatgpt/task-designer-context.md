@@ -19,13 +19,14 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Current topics to revisit
 
+- request-cancellation (high): 1 unresolved signal(s), 3 coach event(s), tasks: fix-stale-customer-search-results
+- effect-lifecycle (high): 1 unresolved signal(s), 0 coach event(s), tasks: fix-stale-customer-search-results
 - type-narrowing (medium): 1 unresolved signal(s), 0 coach event(s), tasks: model-process-state-with-discriminated-union
 
 ## Under-practiced topics (bounded view)
 
 - accessibility-interactions — Accessible interactions (react)
 - error-mapping — API error mapping (api-integration)
-- async-state-modeling — Async state modeling (async)
 - async-testing — Async testing (testing)
 - behavior-oriented-tests — Behavior-oriented tests (testing)
 - cache-invalidation — Cache invalidation (api-integration)
@@ -34,18 +35,20 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - concurrency-control — Concurrency control (async)
 - controlled-inputs — Controlled inputs (react)
 - edge-case-coverage — Edge-case coverage (testing)
-- effect-lifecycle — Effect lifecycle (react)
+- graph-and-tree-traversal — Graph and tree traversal (algorithms)
+- grouping-and-aggregation — Grouping and aggregation (data-transformation)
 
 ## Recent tasks
 
+- fix-stale-customer-search-results: async / fix-bug / medium; shape=stale-async-response; status=reviewed; mastery=3
 - fix-cart-summary-state: react / fix-bug / easy; shape=Repair duplicated derived state that falls behind its source state; status=reviewed; mastery=4
 - model-process-state-with-discriminated-union: typescript / model-types / medium; shape=Replace loosely modeled optional fields with explicit process states; status=reviewed; mastery=3
 
 ## Coverage
 
-- Total tasks: 2
-- Categories: algorithms=0, api-integration=0, async=0, data-transformation=0, performance=0, react=1, testing=0, typescript=1
-- Task types: fix-bug=1, model-types=1
+- Total tasks: 3
+- Categories: algorithms=0, api-integration=0, async=1, data-transformation=0, performance=0, react=1, testing=0, typescript=1
+- Task types: fix-bug=2, model-types=1
 
 ## Allowed taxonomy
 
