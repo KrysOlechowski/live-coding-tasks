@@ -80,6 +80,47 @@
       "reviewedAt": "2026-08-17T14:11:25Z"
     },
     {
+      "slug": "handle-unknown-account-response",
+      "title": "Handle an unknown account API response safely",
+      "category": "api-integration",
+      "taskType": "complete-partial-implementation",
+      "difficulty": "medium",
+      "primarySkill": "Narrow an unknown API payload into a safe application model",
+      "secondarySkill": "Keep valid service errors separate from malformed responses",
+      "problemShape": "unknown-response-narrowing",
+      "reviewFocus": [
+        "correctness",
+        "type-safety",
+        "error-handling",
+        "ui-behavior"
+      ],
+      "tags": [
+        "typescript",
+        "api",
+        "unknown",
+        "type-narrowing"
+      ],
+      "primaryTopics": [
+        "type-narrowing",
+        "type-safe-api-modeling"
+      ],
+      "secondaryTopics": [
+        "response-adaptation",
+        "exhaustive-checking"
+      ],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "status": "reviewed",
+      "createdAt": "2026-08-21T06:47:02Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "All Core and follow-up requirements are met, but the API-boundary and exhaustive-checking decisions required repeated direct guidance and were not yet explained precisely."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-08-21T11:30:55Z"
+    },
+    {
       "slug": "model-process-state-with-discriminated-union",
       "title": "Model process state with a discriminated union",
       "category": "typescript",

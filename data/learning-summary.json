@@ -33,11 +33,37 @@
       "category": "typescript",
       "priority": "medium",
       "evidenceCount": 1,
-      "coachHints": 0,
+      "coachHints": 7,
       "lastMastery": 3,
-      "lastReviewedAt": "2026-08-17T12:04:15Z",
+      "lastReviewedAt": "2026-08-21T11:30:55Z",
       "relatedTasks": [
         "model-process-state-with-discriminated-union"
+      ]
+    },
+    {
+      "topicId": "exhaustive-checking",
+      "label": "Exhaustive checking",
+      "category": "typescript",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 3,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-08-21T11:30:55Z",
+      "relatedTasks": [
+        "handle-unknown-account-response"
+      ]
+    },
+    {
+      "topicId": "response-adaptation",
+      "label": "Response adaptation",
+      "category": "api-integration",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 1,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-08-21T11:30:55Z",
+      "relatedTasks": [
+        "handle-unknown-account-response"
       ]
     }
   ],
@@ -173,11 +199,6 @@
       "category": "performance"
     },
     {
-      "topicId": "response-adaptation",
-      "label": "Response adaptation",
-      "category": "api-integration"
-    },
-    {
       "topicId": "retries-and-backoff",
       "label": "Retries and backoff",
       "category": "async"
@@ -191,11 +212,6 @@
       "topicId": "test-isolation",
       "label": "Test isolation",
       "category": "testing"
-    },
-    {
-      "topicId": "type-safe-api-modeling",
-      "label": "Type-safe API modeling",
-      "category": "typescript"
     },
     {
       "topicId": "generics",
@@ -353,11 +369,11 @@
       "topicId": "exhaustive-checking",
       "label": "Exhaustive checking",
       "category": "typescript",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": "2026-08-17T12:04:15Z"
+      "coachHints": 3,
+      "lastReviewedAt": "2026-08-21T11:30:55Z"
     },
     {
       "topicId": "graph-and-tree-traversal",
@@ -543,11 +559,11 @@
       "topicId": "response-adaptation",
       "label": "Response adaptation",
       "category": "api-integration",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 1,
+      "lastReviewedAt": "2026-08-21T11:30:55Z"
     },
     {
       "topicId": "retries-and-backoff",
@@ -593,21 +609,21 @@
       "topicId": "type-narrowing",
       "label": "Type narrowing",
       "category": "typescript",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": "2026-08-17T12:04:15Z"
+      "coachHints": 7,
+      "lastReviewedAt": "2026-08-21T11:30:55Z"
     },
     {
       "topicId": "type-safe-api-modeling",
       "label": "Type-safe API modeling",
       "category": "typescript",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 2,
+      "lastReviewedAt": "2026-08-21T11:30:55Z"
     },
     {
       "topicId": "generics",
@@ -631,6 +647,19 @@
     }
   ],
   "recentTasks": [
+    {
+      "slug": "handle-unknown-account-response",
+      "category": "api-integration",
+      "taskType": "complete-partial-implementation",
+      "difficulty": "medium",
+      "problemShape": "unknown-response-narrowing",
+      "primaryTopics": [
+        "type-narrowing",
+        "type-safe-api-modeling"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
     {
       "slug": "fix-stale-customer-search-results",
       "category": "async",
@@ -671,7 +700,7 @@
   ],
   "categoryCoverage": {
     "algorithms": 0,
-    "api-integration": 0,
+    "api-integration": 1,
     "async": 1,
     "data-transformation": 0,
     "performance": 0,
@@ -680,6 +709,7 @@
     "typescript": 1
   },
   "taskTypeCoverage": {
+    "complete-partial-implementation": 1,
     "fix-bug": 2,
     "model-types": 1
   }

@@ -21,7 +21,9 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 - request-cancellation (high): 1 unresolved signal(s), 3 coach event(s), tasks: fix-stale-customer-search-results
 - effect-lifecycle (high): 1 unresolved signal(s), 0 coach event(s), tasks: fix-stale-customer-search-results
-- type-narrowing (medium): 1 unresolved signal(s), 0 coach event(s), tasks: model-process-state-with-discriminated-union
+- type-narrowing (medium): 1 unresolved signal(s), 7 coach event(s), tasks: model-process-state-with-discriminated-union
+- exhaustive-checking (medium): 1 unresolved signal(s), 3 coach event(s), tasks: handle-unknown-account-response
+- response-adaptation (medium): 1 unresolved signal(s), 1 coach event(s), tasks: handle-unknown-account-response
 
 ## Under-practiced topics (bounded view)
 
@@ -40,15 +42,16 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Recent tasks
 
+- handle-unknown-account-response: api-integration / complete-partial-implementation / medium; shape=unknown-response-narrowing; status=reviewed; mastery=3
 - fix-stale-customer-search-results: async / fix-bug / medium; shape=stale-async-response; status=reviewed; mastery=3
 - fix-cart-summary-state: react / fix-bug / easy; shape=Repair duplicated derived state that falls behind its source state; status=reviewed; mastery=4
 - model-process-state-with-discriminated-union: typescript / model-types / medium; shape=Replace loosely modeled optional fields with explicit process states; status=reviewed; mastery=3
 
 ## Coverage
 
-- Total tasks: 3
-- Categories: algorithms=0, api-integration=0, async=1, data-transformation=0, performance=0, react=1, testing=0, typescript=1
-- Task types: fix-bug=2, model-types=1
+- Total tasks: 4
+- Categories: algorithms=0, api-integration=1, async=1, data-transformation=0, performance=0, react=1, testing=0, typescript=1
+- Task types: complete-partial-implementation=1, fix-bug=2, model-types=1
 
 ## Allowed taxonomy
 

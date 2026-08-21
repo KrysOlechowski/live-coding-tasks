@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "handle-unknown-account-response",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-08-21T06:47:02Z",
+      "startedAt": "2026-08-21T06:56:40Z",
+      "endedAt": "2026-08-21T11:30:55Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "type-narrowing",
+          "prompt": "The request has resolved successfully, but its result is typed as `unknown`. Which account properties can the UI safely read at that moment, and why?",
+          "source": "planned",
+          "askedAt": "2026-08-21T06:56:40Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-21T07:08:10Z",
+          "evidence": "The candidate named the `invalid-response` application-result variant but did not identify that no account property is safe before narrowing the unknown payload."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "type-safe-api-modeling",
+          "prompt": "What kinds of payloads could look roughly like a success response but still be unsafe for this UI to consume?",
+          "source": "planned",
+          "askedAt": "2026-08-21T07:08:23Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-21T07:19:58Z",
+          "evidence": "After clarification, the candidate identified that every nested account field in the `broken` payload is invalid despite its success status."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "type-narrowing",
+          "prompt": "Why is checking only that the payload is an object and has `status: \"success\"` insufficient before returning a typed account?",
+          "source": "planned",
+          "askedAt": "2026-08-21T09:19:59Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-21T09:22:34Z",
+          "evidence": "The candidate correctly explained that a success discriminant does not prove the presence or runtime types of the nested account fields."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "transfer",
+          "topicId": "response-adaptation",
+          "prompt": "At what boundary should `unknown` stop flowing through the application, and what does the rest of the UI gain from that decision?",
+          "source": "planned",
+          "askedAt": "2026-08-21T09:22:46Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-21T09:26:16Z",
+          "evidence": "The candidate recognized that unknown should not remain in nested application data, but did not identify the decoder/API boundary or explain the downstream UI benefit."
+        },
+        {
+          "id": "follow-up-1-start-1",
+          "stageId": "follow-up-1",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "type-safe-api-modeling",
+          "prompt": "When a new valid API outcome is introduced, which boundaries and consumers in the current design need to change together?",
+          "source": "planned",
+          "askedAt": "2026-08-21T09:26:52Z",
+          "status": "declined",
+          "resolvedAt": "2026-08-21T09:29:03Z",
+          "evidence": "The candidate explicitly declined the follow-up start question."
+        },
+        {
+          "id": "follow-up-1-checkpoint-1",
+          "stageId": "follow-up-1",
+          "timing": "checkpoint",
+          "kind": "teaching",
+          "topicId": "exhaustive-checking",
+          "prompt": "What compile-time signal should appear if a future application-result variant is added but the renderer is not updated?",
+          "source": "planned",
+          "askedAt": "2026-08-21T11:11:17Z",
+          "status": "answered",
+          "resolvedAt": "2026-08-21T11:27:22Z",
+          "evidence": "The candidate associated the exhaustive boundary with `never`, but described the signal imprecisely rather than stating that the unhandled variant is not assignable to `never`."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-21T09:26:52Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The decoder validates top-level and nested containers, required field types, and supported literals for both valid API variants.",
+              "The implementation passes lint and build, but explaining the API decoding boundary and its downstream benefit remained incomplete after repeated coaching."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "type-narrowing",
+                "signal": "demonstrated",
+                "evidence": "The final Core implementation safely narrows unknown nested data and the candidate explained why the status alone is insufficient."
+              },
+              {
+                "topicId": "response-adaptation",
+                "signal": "uncertain",
+                "evidence": "The candidate did not yet identify the decoder as the boundary where unknown should become a stable application model."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-08-21T11:27:53Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The maintenance response is modeled, validated, adapted, and rendered while malformed maintenance data falls through to the invalid-response path.",
+              "The renderer now handles the application-result union through an exhaustive switch and assertNever, but implementation-level coaching was required and the compile-time signal was explained imprecisely."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "type-safe-api-modeling",
+                "signal": "demonstrated",
+                "evidence": "The final implementation extends the API boundary, application union, mock scenarios, and UI consumer consistently."
+              },
+              {
+                "topicId": "exhaustive-checking",
+                "signal": "uncertain",
+                "evidence": "The exhaustive assertNever implementation is correct after direct guidance, but the candidate did not precisely explain the resulting TypeScript error."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-08-21T07:22:31Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-08-21T08:06:53Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-08-21T08:18:18Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-08-21T08:20:14Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-08-21T08:29:56Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 2,
+          "mode": "debug-nudge"
+        },
+        {
+          "id": "coach-6",
+          "createdAt": "2026-08-21T08:42:52Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 2,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-7",
+          "createdAt": "2026-08-21T09:17:25Z",
+          "stageId": "core",
+          "topicId": "type-narrowing",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-8",
+          "createdAt": "2026-08-21T09:29:49Z",
+          "stageId": "follow-up-1",
+          "topicId": "response-adaptation",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-9",
+          "createdAt": "2026-08-21T09:31:27Z",
+          "stageId": "follow-up-1",
+          "topicId": "type-safe-api-modeling",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-10",
+          "createdAt": "2026-08-21T10:22:36Z",
+          "stageId": "follow-up-1",
+          "topicId": "exhaustive-checking",
+          "level": 4,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-11",
+          "createdAt": "2026-08-21T10:23:51Z",
+          "stageId": "follow-up-1",
+          "topicId": "exhaustive-checking",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-12",
+          "createdAt": "2026-08-21T10:49:48Z",
+          "stageId": "follow-up-1",
+          "topicId": "type-safe-api-modeling",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-13",
+          "createdAt": "2026-08-21T10:54:17Z",
+          "stageId": "follow-up-1",
+          "topicId": "exhaustive-checking",
+          "level": 4,
+          "mode": "next-step"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-08-21T11:30:55Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "All Core and follow-up requirements are met, but the API-boundary and exhaustive-checking decisions required repeated direct guidance and were not yet explained precisely."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "type-narrowing",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The final decoder safely narrows all required nested values, but the implementation followed repeated hints and concept explanations.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "type-safe-api-modeling",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The final model, decoder, mocks, and renderer were extended consistently after direct implementation guidance.",
+            "stageIds": [
+              "core",
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "response-adaptation",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The candidate did not identify the decoder as the API trust boundary until receiving a full concept explanation.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "exhaustive-checking",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The assertNever renderer is correct after multiple level-4 coaching events, but the compiler signal remained imprecisely explained.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
