@@ -2,27 +2,28 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
-      "topicId": "request-cancellation",
-      "label": "Request cancellation",
-      "category": "async",
-      "priority": "high",
-      "evidenceCount": 1,
-      "coachHints": 3,
-      "lastMastery": 3,
-      "lastReviewedAt": "2026-08-19T08:50:08Z",
-      "relatedTasks": [
-        "fix-stale-customer-search-results"
-      ]
-    },
-    {
       "topicId": "effect-lifecycle",
       "label": "Effect lifecycle",
       "category": "react",
       "priority": "high",
-      "evidenceCount": 1,
-      "coachHints": 0,
+      "evidenceCount": 2,
+      "coachHints": 1,
       "lastMastery": 3,
-      "lastReviewedAt": "2026-08-19T08:50:08Z",
+      "lastReviewedAt": "2026-09-01T18:53:55Z",
+      "relatedTasks": [
+        "cancel-obsolete-report-preview",
+        "fix-stale-customer-search-results"
+      ]
+    },
+    {
+      "topicId": "request-cancellation",
+      "label": "Request cancellation",
+      "category": "async",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 5,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-09-01T18:53:55Z",
       "relatedTasks": [
         "fix-stale-customer-search-results"
       ]
@@ -359,11 +360,11 @@
       "topicId": "effect-lifecycle",
       "label": "Effect lifecycle",
       "category": "react",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": "2026-08-19T08:50:08Z"
+      "coachHints": 1,
+      "lastReviewedAt": "2026-09-01T18:53:55Z"
     },
     {
       "topicId": "exhaustive-checking",
@@ -539,11 +540,11 @@
       "topicId": "request-cancellation",
       "label": "Request cancellation",
       "category": "async",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 3,
-      "lastReviewedAt": "2026-08-19T08:50:08Z"
+      "coachHints": 5,
+      "lastReviewedAt": "2026-09-01T18:53:55Z"
     },
     {
       "topicId": "network-request-deduplication",
@@ -648,6 +649,19 @@
   ],
   "recentTasks": [
     {
+      "slug": "cancel-obsolete-report-preview",
+      "category": "async",
+      "taskType": "complete-partial-implementation",
+      "difficulty": "easy",
+      "problemShape": "effect-owned-request-cancellation",
+      "primaryTopics": [
+        "request-cancellation",
+        "effect-lifecycle"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
+    {
       "slug": "handle-unknown-account-response",
       "category": "api-integration",
       "taskType": "complete-partial-implementation",
@@ -701,7 +715,7 @@
   "categoryCoverage": {
     "algorithms": 0,
     "api-integration": 1,
-    "async": 1,
+    "async": 2,
     "data-transformation": 0,
     "performance": 0,
     "react": 1,
@@ -709,7 +723,7 @@
     "typescript": 1
   },
   "taskTypeCoverage": {
-    "complete-partial-implementation": 1,
+    "complete-partial-implementation": 2,
     "fix-bug": 2,
     "model-types": 1
   }

@@ -2,6 +2,44 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "cancel-obsolete-report-preview",
+      "title": "Cancel an obsolete report preview request",
+      "category": "async",
+      "taskType": "complete-partial-implementation",
+      "difficulty": "easy",
+      "primarySkill": "Cancel asynchronous work owned by an obsolete React effect",
+      "secondarySkill": "Distinguish expected cancellation from a genuine request failure",
+      "problemShape": "effect-owned-request-cancellation",
+      "reviewFocus": [
+        "correctness",
+        "async-safety",
+        "ui-behavior",
+        "error-handling"
+      ],
+      "tags": [
+        "react",
+        "async",
+        "abort-controller",
+        "effect-cleanup"
+      ],
+      "primaryTopics": [
+        "request-cancellation",
+        "effect-lifecycle"
+      ],
+      "secondaryTopics": [],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "status": "reviewed",
+      "createdAt": "2026-09-01T09:05:54Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "The final implementation is correct, but the core cancellation syntax required direct guidance and the lifecycle explanation remained incomplete."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-01T18:53:55Z"
+    },
+    {
       "slug": "fix-stale-customer-search-results",
       "title": "Fix stale customer search results",
       "category": "async",

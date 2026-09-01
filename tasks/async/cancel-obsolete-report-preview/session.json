@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "cancel-obsolete-report-preview",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-01T09:05:54Z",
+      "startedAt": "2026-09-01T09:30:48Z",
+      "endedAt": "2026-09-01T18:53:55Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "effect-lifecycle",
+          "prompt": "When the selected report changes while loading is still in progress, what happens to the previous effect execution and to the asynchronous work it already started?",
+          "source": "planned",
+          "askedAt": "2026-09-01T09:30:48Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-01T18:33:33Z",
+          "evidence": "The candidate said they did not know what happens to the previous effect execution or its asynchronous work and requested a direct concept explanation."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "request-cancellation",
+          "prompt": "Which outcomes from `fetchReport` represent a real failure for the user, and which outcome represents work that is no longer needed?",
+          "source": "planned",
+          "askedAt": "2026-09-01T18:33:48Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-01T18:37:26Z",
+          "evidence": "The candidate did not understand which fetch outcomes should be user-visible and requested a direct explanation distinguishing real failure from expected cancellation."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "teaching",
+          "topicId": "request-cancellation",
+          "prompt": "Why is the controller created for one effect execution instead of being shared by every report request?",
+          "source": "planned",
+          "askedAt": "2026-09-01T18:48:09Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-01T18:49:44Z",
+          "evidence": "The candidate correctly explained that an aborted controller remains aborted and therefore cannot be reset for a later request."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "transfer",
+          "topicId": "effect-lifecycle",
+          "prompt": "At which lifecycle moments can this cleanup run, and why does the same cleanup correctly cover each of them?",
+          "source": "planned",
+          "askedAt": "2026-09-01T18:49:58Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-01T18:51:46Z",
+          "evidence": "The candidate identified cleanup before an effect reruns after its dependency changes, but did not mention component unmount."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-01T18:52:17Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The implementation gives each effect execution its own controller, passes the signal, aborts during cleanup, ignores expected AbortError failures, and preserves genuine error handling.",
+              "The implementation passed lint and the production TypeScript build, but lifecycle and cancellation concepts required direct guidance."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "request-cancellation",
+                "signal": "uncertain",
+                "evidence": "The final cancellation behavior is correct and the one-shot controller rule was explained, but the implementation syntax required direct guidance."
+              },
+              {
+                "topicId": "effect-lifecycle",
+                "signal": "uncertain",
+                "evidence": "The candidate identified cleanup before dependency-driven reruns but omitted unmount and needed an earlier direct lifecycle explanation."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-01T18:33:33Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-01T18:37:26Z",
+          "stageId": "core",
+          "topicId": "request-cancellation",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-09-01T18:40:04Z",
+          "stageId": "core",
+          "topicId": "request-cancellation",
+          "level": 4,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-01T18:53:55Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "The final implementation is correct, but the core cancellation syntax required direct guidance and the lifecycle explanation remained incomplete."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "request-cancellation",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "The final code correctly scopes, passes, and aborts a controller and the candidate later explained its one-shot nature, but exact implementation syntax required level-4 guidance.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "effect-lifecycle",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "The candidate needed a direct lifecycle explanation and later identified dependency-change cleanup but still omitted component unmount.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
