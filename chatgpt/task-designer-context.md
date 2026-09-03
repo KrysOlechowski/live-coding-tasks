@@ -20,6 +20,8 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 ## Current topics to revisit
 
 - effect-lifecycle (high): 3 unresolved signal(s), 11 coach event(s), tasks: cancel-obsolete-report-preview, fix-duplicate-channel-subscriptions, fix-stale-customer-search-results
+- immutable-transformations (medium): 1 unresolved signal(s), 6 coach event(s), tasks: map-orders-to-list-items
+- grouping-and-aggregation (medium): 1 unresolved signal(s), 3 coach event(s), tasks: map-orders-to-list-items
 - request-cancellation (medium): 1 unresolved signal(s), 5 coach event(s), tasks: fix-stale-customer-search-results
 - type-narrowing (medium): 1 unresolved signal(s), 7 coach event(s), tasks: model-process-state-with-discriminated-union
 - exhaustive-checking (medium): 1 unresolved signal(s), 3 coach event(s), tasks: handle-unknown-account-response
@@ -38,10 +40,11 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - controlled-inputs — Controlled inputs (react)
 - edge-case-coverage — Edge-case coverage (testing)
 - graph-and-tree-traversal — Graph and tree traversal (algorithms)
-- grouping-and-aggregation — Grouping and aggregation (data-transformation)
+- interval-reasoning — Interval reasoning (algorithms)
 
 ## Recent tasks
 
+- map-orders-to-list-items: data-transformation / build-from-requirements / easy; shape=one-to-one-record-projection; status=reviewed; mastery=3
 - fix-duplicate-channel-subscriptions: react / fix-bug / easy; shape=effect-subscription-cleanup; status=reviewed; mastery=3
 - cancel-obsolete-report-preview: async / complete-partial-implementation / easy; shape=effect-owned-request-cancellation; status=reviewed; mastery=3
 - handle-unknown-account-response: api-integration / complete-partial-implementation / medium; shape=unknown-response-narrowing; status=reviewed; mastery=3
@@ -51,9 +54,9 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Coverage
 
-- Total tasks: 6
-- Categories: algorithms=0, api-integration=1, async=2, data-transformation=0, performance=0, react=2, testing=0, typescript=1
-- Task types: complete-partial-implementation=2, fix-bug=3, model-types=1
+- Total tasks: 7
+- Categories: algorithms=0, api-integration=1, async=2, data-transformation=1, performance=0, react=2, testing=0, typescript=1
+- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=3, model-types=1
 
 ## Allowed taxonomy
 

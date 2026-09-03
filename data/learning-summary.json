@@ -17,6 +17,32 @@
       ]
     },
     {
+      "topicId": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 6,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-09-03T21:19:52Z",
+      "relatedTasks": [
+        "map-orders-to-list-items"
+      ]
+    },
+    {
+      "topicId": "grouping-and-aggregation",
+      "label": "Grouping and aggregation",
+      "category": "data-transformation",
+      "priority": "medium",
+      "evidenceCount": 1,
+      "coachHints": 3,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-09-03T21:19:52Z",
+      "relatedTasks": [
+        "map-orders-to-list-items"
+      ]
+    },
+    {
       "topicId": "request-cancellation",
       "label": "Request cancellation",
       "category": "async",
@@ -126,16 +152,6 @@
       "category": "algorithms"
     },
     {
-      "topicId": "grouping-and-aggregation",
-      "label": "Grouping and aggregation",
-      "category": "data-transformation"
-    },
-    {
-      "topicId": "immutable-transformations",
-      "label": "Immutable transformations",
-      "category": "data-transformation"
-    },
-    {
       "topicId": "interval-reasoning",
       "label": "Interval reasoning",
       "category": "algorithms"
@@ -204,11 +220,6 @@
       "topicId": "retries-and-backoff",
       "label": "Retries and backoff",
       "category": "async"
-    },
-    {
-      "topicId": "stable-ordering",
-      "label": "Stable ordering",
-      "category": "data-transformation"
     },
     {
       "topicId": "test-isolation",
@@ -391,21 +402,21 @@
       "topicId": "grouping-and-aggregation",
       "label": "Grouping and aggregation",
       "category": "data-transformation",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 3,
+      "lastReviewedAt": "2026-09-03T21:19:52Z"
     },
     {
       "topicId": "immutable-transformations",
       "label": "Immutable transformations",
       "category": "data-transformation",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 6,
+      "lastReviewedAt": "2026-09-03T21:19:52Z"
     },
     {
       "topicId": "interval-reasoning",
@@ -581,11 +592,11 @@
       "topicId": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
-      "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 1,
+      "coachHints": 1,
+      "lastReviewedAt": "2026-09-03T21:19:52Z"
     },
     {
       "topicId": "stale-async-responses",
@@ -649,6 +660,19 @@
     }
   ],
   "recentTasks": [
+    {
+      "slug": "map-orders-to-list-items",
+      "category": "data-transformation",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "problemShape": "one-to-one-record-projection",
+      "primaryTopics": [
+        "immutable-transformations",
+        "stable-ordering"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
     {
       "slug": "fix-duplicate-channel-subscriptions",
       "category": "react",
@@ -729,13 +753,14 @@
     "algorithms": 0,
     "api-integration": 1,
     "async": 2,
-    "data-transformation": 0,
+    "data-transformation": 1,
     "performance": 0,
     "react": 2,
     "testing": 0,
     "typescript": 1
   },
   "taskTypeCoverage": {
+    "build-from-requirements": 1,
     "complete-partial-implementation": 2,
     "fix-bug": 3,
     "model-types": 1

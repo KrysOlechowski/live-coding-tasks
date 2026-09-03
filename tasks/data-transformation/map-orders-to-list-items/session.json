@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "map-orders-to-list-items",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-03T12:24:37Z",
+      "startedAt": "2026-09-03T13:14:03Z",
+      "endedAt": "2026-09-03T21:19:52Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "stable-ordering",
+          "prompt": "Before coding, describe the first output record you expect from the sample input and where each value comes from.",
+          "source": "planned",
+          "askedAt": "2026-09-03T13:14:03Z",
+          "status": "declined",
+          "resolvedAt": "2026-09-03T13:19:03Z",
+          "evidence": "The candidate explicitly declined to answer after receiving the expected output as coaching."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "immutable-transformations",
+          "prompt": "What observable check could show that this function accidentally changed a source order instead of only creating output records?",
+          "source": "planned",
+          "askedAt": "2026-09-03T14:02:36Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-03T14:08:39Z",
+          "evidence": "The candidate recognized that map creates a new outer array but did not identify a concrete before-and-after check or the possibility of mutation inside the callback."
+        },
+        {
+          "id": "follow-up-1-checkpoint-1",
+          "stageId": "follow-up-1",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "grouping-and-aggregation",
+          "prompt": "Which two small inputs would demonstrate both quantity aggregation and the empty-items boundary?",
+          "source": "planned",
+          "askedAt": "2026-09-03T20:22:48Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-03T21:17:14Z",
+          "evidence": "The candidate supplied a correct 2 + 3 = 5 aggregation example but did not state the separate empty-items expectation."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-03T14:09:17Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The implementation produces correctly typed list items, preserves order, handles empty input, and leaves the source unchanged.",
+              "The candidate recognized that map returns a new array but needed coaching to identify a concrete mutation check and the callback mutation caveat."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "immutable-transformations",
+                "signal": "uncertain",
+                "evidence": "The implementation is non-mutating, but the concrete before-and-after verification and callback mutation risk required direct explanation."
+              },
+              {
+                "topicId": "stable-ordering",
+                "signal": "demonstrated",
+                "evidence": "The one-to-one map preserves source order and produced the expected sample sequence."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-03T21:18:01Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The implementation sums item quantities per order, returns zero for empty items, preserves Core behavior, and leaves the input unchanged.",
+              "The candidate gave a valid aggregation example but omitted the empty-items expectation after repeated clarification."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "grouping-and-aggregation",
+                "signal": "uncertain",
+                "evidence": "The final reduce implementation is correct, but understanding the requirement and identifying both test cases required substantial guidance."
+              },
+              {
+                "topicId": "immutable-transformations",
+                "signal": "demonstrated",
+                "evidence": "The extended transformation creates new output records and preserves the nested input data."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-03T13:16:55Z",
+          "stageId": "core",
+          "topicId": "stable-ordering",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-03T13:33:25Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-09-03T13:54:49Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 4,
+          "mode": "debug-nudge"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-09-03T13:57:29Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-09-03T14:01:26Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 2,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-6",
+          "createdAt": "2026-09-03T14:05:45Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 1,
+          "mode": "hint"
+        },
+        {
+          "id": "coach-7",
+          "createdAt": "2026-09-03T14:09:17Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-8",
+          "createdAt": "2026-09-03T14:24:53Z",
+          "stageId": "follow-up-1",
+          "topicId": "grouping-and-aggregation",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-9",
+          "createdAt": "2026-09-03T14:27:38Z",
+          "stageId": "follow-up-1",
+          "topicId": "grouping-and-aggregation",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-10",
+          "createdAt": "2026-09-03T21:15:44Z",
+          "stageId": "follow-up-1",
+          "topicId": "grouping-and-aggregation",
+          "level": 2,
+          "mode": "hint"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-03T21:19:52Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "The final Core and follow-up behavior is correct and readable, but the key immutability, TypeScript inference, and aggregation boundaries required substantial guidance."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "immutable-transformations",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The code preserves its input, but identifying a concrete mutation check and explaining that a map callback can still mutate nested values required direct guidance.",
+            "stageIds": [
+              "core",
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "stable-ordering",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "The final one-to-one map preserves the original order and all order-sensitive behavior checks passed.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "grouping-and-aggregation",
+            "outcome": "needs-practice",
+            "priority": "medium",
+            "independence": "guided",
+            "evidence": "The final reduce implementation and empty-array result are correct, but understanding the requirement and identifying both test cases required substantial guidance.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

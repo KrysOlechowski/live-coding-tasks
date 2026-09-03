@@ -195,6 +195,46 @@
       "reviewedAt": "2026-08-21T11:30:55Z"
     },
     {
+      "slug": "map-orders-to-list-items",
+      "title": "Map orders to list items",
+      "category": "data-transformation",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "primarySkill": "Transform nested order data into a display-ready shape with Array.map",
+      "secondarySkill": "Preserve input order and avoid mutating source records",
+      "problemShape": "one-to-one-record-projection",
+      "reviewFocus": [
+        "correctness",
+        "type-safety",
+        "readability",
+        "maintainability"
+      ],
+      "tags": [
+        "typescript",
+        "data-transformation",
+        "array-map",
+        "immutable-data"
+      ],
+      "primaryTopics": [
+        "immutable-transformations",
+        "stable-ordering"
+      ],
+      "secondaryTopics": [
+        "grouping-and-aggregation"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-03T12:24:37Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "The final Core and follow-up behavior is correct and readable, but the key immutability, TypeScript inference, and aggregation boundaries required substantial guidance."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-03T21:19:52Z"
+    },
+    {
       "slug": "model-process-state-with-discriminated-union",
       "title": "Model process state with a discriminated union",
       "category": "typescript",
