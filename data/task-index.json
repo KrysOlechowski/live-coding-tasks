@@ -40,6 +40,42 @@
       "reviewedAt": "2026-09-01T18:53:55Z"
     },
     {
+      "slug": "fix-duplicate-channel-subscriptions",
+      "title": "Fix duplicate channel subscriptions",
+      "category": "react",
+      "taskType": "fix-bug",
+      "difficulty": "easy",
+      "primarySkill": "Match an external subscription lifetime to a React effect",
+      "secondarySkill": "Prevent obsolete event sources from updating current UI state",
+      "problemShape": "effect-subscription-cleanup",
+      "reviewFocus": [
+        "correctness",
+        "ui-behavior",
+        "maintainability"
+      ],
+      "tags": [
+        "react",
+        "use-effect",
+        "subscriptions",
+        "cleanup"
+      ],
+      "primaryTopics": [
+        "effect-lifecycle"
+      ],
+      "secondaryTopics": [],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "status": "reviewed",
+      "createdAt": "2026-09-02T11:11:55Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "The final implementation is correct and minimal, but the callback, returned-cleanup, and effect-lifecycle reasoning required extensive direct guidance."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-03T09:43:16Z"
+    },
+    {
       "slug": "fix-stale-customer-search-results",
       "title": "Fix stale customer search results",
       "category": "async",

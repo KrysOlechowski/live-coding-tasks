@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "fix-duplicate-channel-subscriptions",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-02T11:11:55Z",
+      "startedAt": "2026-09-02T11:25:18Z",
+      "endedAt": "2026-09-03T09:43:16Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "effect-lifecycle",
+          "prompt": "After the component subscribes to Operations and the user selects Support, which callbacks can still update the event list with the current implementation?",
+          "source": "planned",
+          "askedAt": "2026-09-02T11:25:18Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-02T11:26:11Z",
+          "evidence": "The candidate said they did not know which callbacks remain able to update the event list after switching channels."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "effect-lifecycle",
+          "prompt": "Which operation started by this effect has a lifetime independent from the effect function finishing, and what evidence in the provided API exposes that lifetime?",
+          "source": "planned",
+          "askedAt": "2026-09-02T11:26:32Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-02T11:27:32Z",
+          "evidence": "The candidate said they did not know which effect-owned operation continues after setup finishes or what API evidence exposes its lifetime."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "teaching",
+          "topicId": "effect-lifecycle",
+          "prompt": "Why does returning the unsubscribe operation from this effect cover both a selected-channel change and component unmount?",
+          "source": "planned",
+          "askedAt": "2026-09-03T09:28:24Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-03T09:33:02Z",
+          "evidence": "The candidate did not understand why one returned cleanup covers both dependency replacement and unmount and requested the answer directly."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "prediction",
+          "topicId": "effect-lifecycle",
+          "prompt": "In development Strict Mode, React may run setup, cleanup, and setup again. What console sequence would indicate that this subscription lifecycle is handled correctly?",
+          "source": "planned",
+          "askedAt": "2026-09-03T09:33:28Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-03T09:40:54Z",
+          "evidence": "The candidate correctly predicted the Strict Mode console sequence as subscribe, unsubscribe, then subscribe again."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-03T09:41:25Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The effect now retains the returned unsubscribe operation and invokes it from React cleanup, preventing obsolete channel intervals from remaining active.",
+              "The implementation passed lint and the production TypeScript build, but callback and effect-lifecycle reasoning required extensive direct explanation."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "effect-lifecycle",
+                "signal": "uncertain",
+                "evidence": "The final implementation and Strict Mode sequence are correct, but the candidate needed repeated direct explanations of callback values, returned cleanup functions, dependency replacement, and unmount."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-02T11:30:02Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-02T11:36:29Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-09-02T11:42:56Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-09-02T11:45:24Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-09-02T11:49:06Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-6",
+          "createdAt": "2026-09-02T11:54:15Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-7",
+          "createdAt": "2026-09-02T12:01:19Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-8",
+          "createdAt": "2026-09-02T12:06:31Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-9",
+          "createdAt": "2026-09-03T09:17:59Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 4,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-10",
+          "createdAt": "2026-09-03T09:33:02Z",
+          "stageId": "core",
+          "topicId": "effect-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-03T09:43:16Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "The final implementation is correct and minimal, but the callback, returned-cleanup, and effect-lifecycle reasoning required extensive direct guidance."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "effect-lifecycle",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "The final cleanup is correct and the candidate later predicted the Strict Mode sequence, but callbacks, returned cleanup functions, dependency replacement, and unmount required repeated direct explanations.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
