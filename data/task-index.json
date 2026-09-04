@@ -40,6 +40,45 @@
       "reviewedAt": "2026-09-01T18:53:55Z"
     },
     {
+      "slug": "fix-delayed-message-formatters",
+      "title": "Fix delayed message formatters",
+      "category": "typescript",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "primarySkill": "Reason about lexical scope and closures when callbacks run later",
+      "secondarySkill": "Distinguish shadowed bindings from values shared by multiple closures",
+      "problemShape": "closure-captured-binding",
+      "reviewFocus": [
+        "correctness",
+        "readability",
+        "maintainability"
+      ],
+      "tags": [
+        "typescript",
+        "javascript",
+        "closures",
+        "lexical-scope",
+        "shadowing"
+      ],
+      "primaryTopics": [
+        "scope-and-closures"
+      ],
+      "secondaryTopics": [
+        "declaration-lifecycle"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-03T21:34:18Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "The final implementation is correct and concise, and closure reasoning improved, but TDZ, hoisting, and var initialization required repeated direct explanation."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-04T10:36:49Z"
+    },
+    {
       "slug": "fix-duplicate-channel-subscriptions",
       "title": "Fix duplicate channel subscriptions",
       "category": "react",

@@ -2,6 +2,19 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
+      "topicId": "declaration-lifecycle",
+      "label": "Declaration lifecycle",
+      "category": "typescript",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 2,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-09-04T10:36:49Z",
+      "relatedTasks": [
+        "fix-delayed-message-formatters"
+      ]
+    },
+    {
       "topicId": "effect-lifecycle",
       "label": "Effect lifecycle",
       "category": "react",
@@ -339,6 +352,16 @@
       "lastReviewedAt": null
     },
     {
+      "topicId": "declaration-lifecycle",
+      "label": "Declaration lifecycle",
+      "category": "typescript",
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 0,
+      "coachHints": 2,
+      "lastReviewedAt": "2026-09-04T10:36:49Z"
+    },
+    {
       "topicId": "derived-ui-state",
       "label": "Derived UI state",
       "category": "react",
@@ -589,6 +612,16 @@
       "lastReviewedAt": null
     },
     {
+      "topicId": "scope-and-closures",
+      "label": "Scope and closures",
+      "category": "typescript",
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 0,
+      "coachHints": 0,
+      "lastReviewedAt": "2026-09-04T10:36:49Z"
+    },
+    {
       "topicId": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation",
@@ -660,6 +693,18 @@
     }
   ],
   "recentTasks": [
+    {
+      "slug": "fix-delayed-message-formatters",
+      "category": "typescript",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "problemShape": "closure-captured-binding",
+      "primaryTopics": [
+        "scope-and-closures"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
     {
       "slug": "map-orders-to-list-items",
       "category": "data-transformation",
@@ -757,12 +802,12 @@
     "performance": 0,
     "react": 2,
     "testing": 0,
-    "typescript": 1
+    "typescript": 2
   },
   "taskTypeCoverage": {
     "build-from-requirements": 1,
     "complete-partial-implementation": 2,
-    "fix-bug": 3,
+    "fix-bug": 4,
     "model-types": 1
   }
 }

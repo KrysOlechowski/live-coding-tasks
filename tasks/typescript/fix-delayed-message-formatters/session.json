@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "fix-delayed-message-formatters",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-03T21:34:18Z",
+      "startedAt": "2026-09-04T08:48:13Z",
+      "endedAt": "2026-09-04T10:36:49Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "scope-and-closures",
+          "prompt": "Before editing the code, what four strings will the sample formatters produce, and which declaration supplies the displayed name in each case?",
+          "source": "planned",
+          "askedAt": "2026-09-04T08:48:13Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T09:14:37Z",
+          "evidence": "The candidate could not predict the four outputs and attributed both returned callbacks to the same block-scoped displayName instead of distinguishing the outer shared let binding from the inner const binding."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "scope-and-closures",
+          "prompt": "The returned functions run after `createMessageFormatters` has finished. Which values or bindings do they still need access to at that point?",
+          "source": "planned",
+          "askedAt": "2026-09-04T09:14:54Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T09:16:40Z",
+          "evidence": "The candidate identified that the returned function forms a closure over displayName, but did not mention the captured prefix or distinguish shared from per-recipient bindings."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "transfer",
+          "topicId": "scope-and-closures",
+          "prompt": "Why can a returned formatter still read locally declared data after the factory call that created it has returned?",
+          "source": "planned",
+          "askedAt": "2026-09-04T09:36:34Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T09:39:06Z",
+          "evidence": "The candidate correctly connected the formatter's continued access with closure and lexical scope, but did not explicitly distinguish retaining a binding from copying its current value."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "scope-and-closures",
+          "prompt": "What behavior would reappear if one mutable display-name binding were declared outside the per-recipient callback and reassigned for each recipient?",
+          "source": "planned",
+          "askedAt": "2026-09-04T09:39:23Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T09:41:22Z",
+          "evidence": "The candidate recognized that the original failure would return, but did not independently specify that callbacks sharing the mutable binding would observe its final assigned value."
+        },
+        {
+          "id": "follow-up-1-start-1",
+          "stageId": "follow-up-1",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "declaration-lifecycle",
+          "prompt": "Inside a block that contains a later `let` declaration with the same name as an outer variable, which binding does an earlier read target, and what happens at runtime?",
+          "source": "planned",
+          "askedAt": "2026-09-04T09:42:07Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T09:49:42Z",
+          "evidence": "The candidate predicted that the earlier read would reach the outer const binding, missing that the later let declaration shadows it for the entire block and leaves it in the temporal dead zone before initialization."
+        },
+        {
+          "id": "follow-up-1-start-2",
+          "stageId": "follow-up-1",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "declaration-lifecycle",
+          "prompt": "How would that earlier read behave differently if the inner declaration used `var` instead?",
+          "source": "planned",
+          "askedAt": "2026-09-04T09:50:01Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T10:09:32Z",
+          "evidence": "The candidate correctly identified var as function-scoped and without a temporal dead zone, but predicted the later assigned string instead of the hoisted binding's pre-assignment undefined value."
+        },
+        {
+          "id": "follow-up-1-checkpoint-1",
+          "stageId": "follow-up-1",
+          "timing": "checkpoint",
+          "kind": "teaching",
+          "topicId": "declaration-lifecycle",
+          "prompt": "Why is the phrase “the declaration is hoisted” insufficient to predict whether a value can be read before its source line?",
+          "source": "planned",
+          "askedAt": "2026-09-04T10:20:43Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T10:27:03Z",
+          "evidence": "The candidate explained hoisting only as initialization to undefined, which is correct for var but omitted that let and const bindings remain uninitialized in the temporal dead zone."
+        },
+        {
+          "id": "follow-up-1-checkpoint-2",
+          "stageId": "follow-up-1",
+          "timing": "checkpoint",
+          "kind": "transfer",
+          "topicId": "scope-and-closures",
+          "prompt": "If a formatter captured a binding before that binding was reassigned, would it preserve the earlier value automatically? Explain the condition that determines the result.",
+          "source": "planned",
+          "askedAt": "2026-09-04T10:27:29Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-04T10:30:18Z",
+          "evidence": "The candidate correctly stated that a closure retains access to a binding rather than an automatic value snapshot, but did not explicitly state that a distinct unreassigned per-iteration binding preserves recipient-specific behavior."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-04T09:42:07Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The implementation gives each map callback its own displayName binding and produces all four required sample strings.",
+              "The closure model improved during the checkpoint, but prediction of captured bindings and the final-value behavior remained imprecise without clarification."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "scope-and-closures",
+                "signal": "uncertain",
+                "evidence": "The candidate implemented separate per-recipient bindings correctly but needed clarification to distinguish shared bindings from copied values in explanations."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-04T10:31:06Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "The final implementation uses branch-local const bindings and passes the required sample, repeated-call, empty-input, and input-preservation checks.",
+              "Closure binding behavior was explained correctly by the end, while TDZ and var initialization predictions required direct correction."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "scope-and-closures",
+                "signal": "demonstrated",
+                "evidence": "The candidate implemented distinct recipient-owned bindings and correctly explained that closures retain access to bindings rather than automatic value snapshots."
+              },
+              {
+                "topicId": "declaration-lifecycle",
+                "signal": "gap",
+                "evidence": "The candidate did not independently predict let TDZ behavior, var's pre-assignment undefined value, or the initialization distinction after hoisting."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-04T10:09:32Z",
+          "stageId": "follow-up-1",
+          "topicId": "declaration-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-04T10:27:03Z",
+          "stageId": "follow-up-1",
+          "topicId": "declaration-lifecycle",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-04T10:36:49Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "The final implementation is correct and concise, and closure reasoning improved, but TDZ, hoisting, and var initialization required repeated direct explanation."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "scope-and-closures",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "The final code uses distinct recipient-owned bindings and the candidate ultimately explained binding capture correctly, although the initial predictions and explanations were imprecise.",
+            "stageIds": [
+              "core",
+              "follow-up-1"
+            ]
+          },
+          {
+            "topicId": "declaration-lifecycle",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "The candidate needed two direct concept explanations for let TDZ, var's pre-assignment undefined value, and the distinction between hoisting and initialization.",
+            "stageIds": [
+              "follow-up-1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

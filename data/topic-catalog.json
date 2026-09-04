@@ -79,6 +79,17 @@
       ]
     },
     {
+      "id": "declaration-lifecycle",
+      "label": "Declaration lifecycle",
+      "category": "typescript",
+      "description": "Reason about hoisting, initialization, and temporal dead zone behavior for var, let, and const declarations.",
+      "aliases": [
+        "hoisting",
+        "temporal dead zone",
+        "var let const"
+      ]
+    },
+    {
       "id": "exhaustive-checking",
       "label": "Exhaustive checking",
       "category": "typescript",
@@ -98,6 +109,17 @@
         "generic functions",
         "generic constraints",
         "reusable types"
+      ]
+    },
+    {
+      "id": "scope-and-closures",
+      "label": "Scope and closures",
+      "category": "typescript",
+      "description": "Reason about lexical bindings captured by functions and how nested scopes or shadowing change which binding is read.",
+      "aliases": [
+        "lexical scope",
+        "closure capture",
+        "shadowing"
       ]
     },
     {

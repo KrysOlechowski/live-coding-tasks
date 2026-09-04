@@ -19,6 +19,7 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Current topics to revisit
 
+- declaration-lifecycle (high): 1 unresolved signal(s), 2 coach event(s), tasks: fix-delayed-message-formatters
 - effect-lifecycle (high): 3 unresolved signal(s), 11 coach event(s), tasks: cancel-obsolete-report-preview, fix-duplicate-channel-subscriptions, fix-stale-customer-search-results
 - immutable-transformations (medium): 1 unresolved signal(s), 6 coach event(s), tasks: map-orders-to-list-items
 - grouping-and-aggregation (medium): 1 unresolved signal(s), 3 coach event(s), tasks: map-orders-to-list-items
@@ -44,6 +45,7 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Recent tasks
 
+- fix-delayed-message-formatters: typescript / fix-bug / medium; shape=closure-captured-binding; status=reviewed; mastery=3
 - map-orders-to-list-items: data-transformation / build-from-requirements / easy; shape=one-to-one-record-projection; status=reviewed; mastery=3
 - fix-duplicate-channel-subscriptions: react / fix-bug / easy; shape=effect-subscription-cleanup; status=reviewed; mastery=3
 - cancel-obsolete-report-preview: async / complete-partial-implementation / easy; shape=effect-owned-request-cancellation; status=reviewed; mastery=3
@@ -54,9 +56,9 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Coverage
 
-- Total tasks: 7
-- Categories: algorithms=0, api-integration=1, async=2, data-transformation=1, performance=0, react=2, testing=0, typescript=1
-- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=3, model-types=1
+- Total tasks: 8
+- Categories: algorithms=0, api-integration=1, async=2, data-transformation=1, performance=0, react=2, testing=0, typescript=2
+- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=4, model-types=1
 
 ## Allowed taxonomy
 
@@ -77,8 +79,10 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - effect-lifecycle — Effect lifecycle (react)
 - react-state-updates — React state updates (react)
 - discriminated-unions — Discriminated unions (typescript)
+- declaration-lifecycle — Declaration lifecycle (typescript)
 - exhaustive-checking — Exhaustive checking (typescript)
 - generics — TypeScript generics (typescript)
+- scope-and-closures — Scope and closures (typescript)
 - type-narrowing — Type narrowing (typescript)
 - type-safe-api-modeling — Type-safe API modeling (typescript)
 - grouping-and-aggregation — Grouping and aggregation (data-transformation)
