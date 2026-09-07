@@ -115,6 +115,44 @@
       "reviewedAt": "2026-09-03T09:43:16Z"
     },
     {
+      "slug": "fix-project-member-role-update",
+      "title": "Fix project member role updates",
+      "category": "data-transformation",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "primarySkill": "Apply an immutable update across nested shared references",
+      "secondarySkill": "Use reference identity deliberately for changed and unchanged data",
+      "problemShape": "nested-immutable-update-with-structural-sharing",
+      "reviewFocus": [
+        "correctness",
+        "edge-cases",
+        "readability",
+        "maintainability"
+      ],
+      "tags": [
+        "typescript",
+        "immutable-data",
+        "reference-equality",
+        "structural-sharing"
+      ],
+      "primaryTopics": [
+        "immutable-transformations",
+        "reference-identity"
+      ],
+      "secondaryTopics": [],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-04T11:37:49Z",
+      "mastery": {
+        "level": 1,
+        "label": "Needs another pass",
+        "reason": "Core update remains unimplemented, and the attempt ended after repeated concept explanations and step-by-step implementation guidance."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-07T08:48:02Z"
+    },
+    {
       "slug": "fix-stale-customer-search-results",
       "title": "Fix stale customer search results",
       "category": "async",

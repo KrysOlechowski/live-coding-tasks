@@ -19,9 +19,10 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Current topics to revisit
 
+- immutable-transformations (high): 2 unresolved signal(s), 9 coach event(s), tasks: fix-project-member-role-update, map-orders-to-list-items
+- reference-identity (high): 1 unresolved signal(s), 2 coach event(s), tasks: fix-project-member-role-update
 - declaration-lifecycle (high): 1 unresolved signal(s), 2 coach event(s), tasks: fix-delayed-message-formatters
 - effect-lifecycle (high): 3 unresolved signal(s), 11 coach event(s), tasks: cancel-obsolete-report-preview, fix-duplicate-channel-subscriptions, fix-stale-customer-search-results
-- immutable-transformations (medium): 1 unresolved signal(s), 6 coach event(s), tasks: map-orders-to-list-items
 - grouping-and-aggregation (medium): 1 unresolved signal(s), 3 coach event(s), tasks: map-orders-to-list-items
 - request-cancellation (medium): 1 unresolved signal(s), 5 coach event(s), tasks: fix-stale-customer-search-results
 - type-narrowing (medium): 1 unresolved signal(s), 7 coach event(s), tasks: model-process-state-with-discriminated-union
@@ -45,6 +46,7 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Recent tasks
 
+- fix-project-member-role-update: data-transformation / fix-bug / medium; shape=nested-immutable-update-with-structural-sharing; status=reviewed; mastery=1
 - fix-delayed-message-formatters: typescript / fix-bug / medium; shape=closure-captured-binding; status=reviewed; mastery=3
 - map-orders-to-list-items: data-transformation / build-from-requirements / easy; shape=one-to-one-record-projection; status=reviewed; mastery=3
 - fix-duplicate-channel-subscriptions: react / fix-bug / easy; shape=effect-subscription-cleanup; status=reviewed; mastery=3
@@ -56,9 +58,9 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Coverage
 
-- Total tasks: 8
-- Categories: algorithms=0, api-integration=1, async=2, data-transformation=1, performance=0, react=2, testing=0, typescript=2
-- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=4, model-types=1
+- Total tasks: 9
+- Categories: algorithms=0, api-integration=1, async=2, data-transformation=2, performance=0, react=2, testing=0, typescript=2
+- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=5, model-types=1
 
 ## Allowed taxonomy
 
@@ -88,6 +90,7 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - grouping-and-aggregation — Grouping and aggregation (data-transformation)
 - immutable-transformations — Immutable transformations (data-transformation)
 - normalization-and-lookups — Normalization and lookups (data-transformation)
+- reference-identity — Reference identity (data-transformation)
 - stable-ordering — Stable ordering (data-transformation)
 - validation-and-sanitization — Validation and sanitization (data-transformation)
 - complexity-analysis — Complexity analysis (algorithms)

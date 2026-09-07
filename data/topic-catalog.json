@@ -178,6 +178,17 @@
       ]
     },
     {
+      "id": "reference-identity",
+      "label": "Reference identity",
+      "category": "data-transformation",
+      "description": "Reason about object aliasing, reference equality, and structural sharing when updating nested data.",
+      "aliases": [
+        "object identity",
+        "reference equality",
+        "structural sharing"
+      ]
+    },
+    {
       "id": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation",

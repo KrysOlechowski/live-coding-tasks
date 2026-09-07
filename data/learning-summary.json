@@ -2,6 +2,33 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
+      "topicId": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation",
+      "priority": "high",
+      "evidenceCount": 2,
+      "coachHints": 9,
+      "lastMastery": 1,
+      "lastReviewedAt": "2026-09-07T08:48:02Z",
+      "relatedTasks": [
+        "fix-project-member-role-update",
+        "map-orders-to-list-items"
+      ]
+    },
+    {
+      "topicId": "reference-identity",
+      "label": "Reference identity",
+      "category": "data-transformation",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 2,
+      "lastMastery": 1,
+      "lastReviewedAt": "2026-09-07T08:48:02Z",
+      "relatedTasks": [
+        "fix-project-member-role-update"
+      ]
+    },
+    {
       "topicId": "declaration-lifecycle",
       "label": "Declaration lifecycle",
       "category": "typescript",
@@ -27,19 +54,6 @@
         "cancel-obsolete-report-preview",
         "fix-duplicate-channel-subscriptions",
         "fix-stale-customer-search-results"
-      ]
-    },
-    {
-      "topicId": "immutable-transformations",
-      "label": "Immutable transformations",
-      "category": "data-transformation",
-      "priority": "medium",
-      "evidenceCount": 1,
-      "coachHints": 6,
-      "lastMastery": 3,
-      "lastReviewedAt": "2026-09-03T21:19:52Z",
-      "relatedTasks": [
-        "map-orders-to-list-items"
       ]
     },
     {
@@ -435,11 +449,11 @@
       "topicId": "immutable-transformations",
       "label": "Immutable transformations",
       "category": "data-transformation",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 6,
-      "lastReviewedAt": "2026-09-03T21:19:52Z"
+      "coachHints": 9,
+      "lastReviewedAt": "2026-09-07T08:48:02Z"
     },
     {
       "topicId": "interval-reasoning",
@@ -560,6 +574,16 @@
       "demonstratedAttempts": 1,
       "coachHints": 0,
       "lastReviewedAt": "2026-08-17T14:11:25Z"
+    },
+    {
+      "topicId": "reference-identity",
+      "label": "Reference identity",
+      "category": "data-transformation",
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 0,
+      "coachHints": 2,
+      "lastReviewedAt": "2026-09-07T08:48:02Z"
     },
     {
       "topicId": "render-cost",
@@ -694,6 +718,19 @@
   ],
   "recentTasks": [
     {
+      "slug": "fix-project-member-role-update",
+      "category": "data-transformation",
+      "taskType": "fix-bug",
+      "difficulty": "medium",
+      "problemShape": "nested-immutable-update-with-structural-sharing",
+      "primaryTopics": [
+        "immutable-transformations",
+        "reference-identity"
+      ],
+      "status": "reviewed",
+      "mastery": 1
+    },
+    {
       "slug": "fix-delayed-message-formatters",
       "category": "typescript",
       "taskType": "fix-bug",
@@ -798,7 +835,7 @@
     "algorithms": 0,
     "api-integration": 1,
     "async": 2,
-    "data-transformation": 1,
+    "data-transformation": 2,
     "performance": 0,
     "react": 2,
     "testing": 0,
@@ -807,7 +844,7 @@
   "taskTypeCoverage": {
     "build-from-requirements": 1,
     "complete-partial-implementation": 2,
-    "fix-bug": 4,
+    "fix-bug": 5,
     "model-types": 1
   }
 }

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "fix-project-member-role-update",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-04T11:37:49Z",
+      "startedAt": "2026-09-04T12:57:03Z",
+      "endedAt": "2026-09-07T08:48:02Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "reference-identity",
+          "prompt": "After the current sample runs, what role remains in `sampleMembers[0]`, and which of the printed reference comparisons will be true?",
+          "source": "planned",
+          "askedAt": "2026-09-04T12:57:03Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-07T08:19:57Z",
+          "evidence": "The candidate correctly predicted that the source member is mutated to admin, the outer array differs, and all member, history, profile, and unaffected-member references remain shared."
+        },
+        {
+          "id": "core-start-2",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "diagnostic",
+          "topicId": "immutable-transformations",
+          "prompt": "What does copying the outer members array isolate, and which values inside it can still be shared with the caller?",
+          "source": "planned",
+          "askedAt": "2026-09-07T08:20:16Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-07T08:23:07Z",
+          "evidence": "The candidate stated that they did not know what the outer array copy isolates or which nested references remain shared."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "skipped",
+          "adaptation": null,
+          "skipReason": "The candidate explicitly stopped after partial guided edits; the Core implementation remained incomplete despite step-by-step coaching.",
+          "checkpoint": null
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "skipped",
+          "adaptation": null,
+          "skipReason": "The candidate ended the attempt before completing Core, so this follow-up was not attempted.",
+          "checkpoint": null
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-07T08:25:08Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-07T08:27:36Z",
+          "stageId": "core",
+          "topicId": "reference-identity",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-09-07T08:36:20Z",
+          "stageId": "core",
+          "topicId": "reference-identity",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-09-07T08:38:04Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-09-07T08:43:37Z",
+          "stageId": "core",
+          "topicId": "immutable-transformations",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-07T08:48:02Z",
+        "requirementVerdict": "no",
+        "mastery": {
+          "level": 1,
+          "label": "Needs another pass",
+          "reason": "Core update remains unimplemented, and the attempt ended after repeated concept explanations and step-by-step implementation guidance."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "immutable-transformations",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "not-demonstrated",
+            "evidence": "The candidate could not explain the shallow-copy boundary and did not connect the new history array to an immutable member replacement despite repeated guidance.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "reference-identity",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "The candidate predicted the initial aliases and fixed the missing-member return with direct guidance, but did not implement the required changed member and history identities.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
