@@ -429,6 +429,46 @@
       },
       "needsRepetition": true,
       "reviewedAt": "2026-08-17T12:04:15Z"
+    },
+    {
+      "slug": "unique-event-attendees",
+      "title": "Unique event attendees",
+      "category": "data-transformation",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "primarySkill": "Deduplicate attendee IDs using Set while preserving first-occurrence order",
+      "secondarySkill": "Explain the time and memory costs of processing duplicates",
+      "problemShape": "first-occurrence-deduplication",
+      "reviewFocus": [
+        "correctness",
+        "performance",
+        "readability"
+      ],
+      "tags": [
+        "typescript",
+        "set",
+        "deduplication",
+        "stable-ordering",
+        "big-o"
+      ],
+      "primaryTopics": [
+        "stable-ordering",
+        "lookup-and-matching"
+      ],
+      "secondaryTopics": [
+        "complexity-analysis"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-08T09:33:20Z",
+      "mastery": {
+        "level": 4,
+        "label": "Interview-ready",
+        "reason": "The implementation meets the requirements, and the candidate independently explained uniqueness, ordering, and total linear time. Only the distinction between worst-case O(n) memory and the tighter O(k) bound needed clarification."
+      },
+      "needsRepetition": false,
+      "reviewedAt": "2026-09-08T21:10:33Z"
     }
   ]
 }

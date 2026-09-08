@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "unique-event-attendees",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-08T09:33:20Z",
+      "startedAt": "2026-09-08T09:44:41Z",
+      "endedAt": "2026-09-08T21:10:33Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "counterexample",
+          "topicId": "stable-ordering",
+          "prompt": "For the input [\"u-3\", \"u-1\", \"u-3\", \"u-2\", \"u-1\"], what is the output, and what in your implementation ensures that repeated IDs do not change the order?",
+          "source": "planned",
+          "askedAt": "2026-09-08T09:56:40Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-08T09:58:51Z",
+          "evidence": "Independently predicted u-3, u-1, u-2 and explained that duplicate IDs are not added again, preserving the original insertion order."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "tradeoff",
+          "topicId": "complexity-analysis",
+          "prompt": "For n input entries and k distinct IDs, what are the expected time cost and the memory costs of your Set and returned array? Explain what changes when every input ID is the same.",
+          "source": "planned",
+          "askedAt": "2026-09-08T09:58:52Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-08T10:05:11Z",
+          "evidence": "Correctly combined O(n) input processing and O(k) distinct-value work as O(n), and retained O(n) time for identical IDs; gave the valid worst-case O(n) memory bound without separating Set/output O(k) storage or the constant-space all-identical case."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-08T10:05:29Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "Strict TypeScript and all six focused behavior cases passed, including frozen input preservation and separate output arrays in every case.",
+              "The Set construction and spread correctly preserve first-occurrence order and require expected O(n+k) time with O(k) Set and output storage.",
+              "Candidate independently explained ordering and total linear work; memory was stated as the valid worst-case O(n) bound, but the tighter k-dependent bound and identical-ID storage needed clarification."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "stable-ordering",
+                "signal": "demonstrated",
+                "evidence": "Correctly predicted first-occurrence order and explained that duplicates are not inserted again; both sample and counterexample passed."
+              },
+              {
+                "topicId": "lookup-and-matching",
+                "signal": "demonstrated",
+                "evidence": "Used Set directly for uniqueness with no repeated result-array searches, and explained duplicate handling."
+              },
+              {
+                "topicId": "complexity-analysis",
+                "signal": "uncertain",
+                "evidence": "Correctly reasoned O(n)+O(k)=O(n) and linear time for identical IDs, but did not independently distinguish O(k) storage from the worst-case O(n) bound."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-08T10:05:11Z",
+          "stageId": "core",
+          "topicId": "complexity-analysis",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-08T21:10:33Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 4,
+          "label": "Interview-ready",
+          "reason": "The implementation meets the requirements, and the candidate independently explained uniqueness, ordering, and total linear time. Only the distinction between worst-case O(n) memory and the tighter O(k) bound needed clarification."
+        },
+        "needsRepetition": false,
+        "topicSignals": [
+          {
+            "topicId": "stable-ordering",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "independent",
+            "evidence": "Independently predicted first-occurrence order and explained why duplicates do not create or move Set entries; implementation passed the ordering cases.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "lookup-and-matching",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "independent",
+            "evidence": "Used Set meaningfully for uniqueness and explained duplicate handling without implementation guidance.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "complexity-analysis",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "guided",
+            "evidence": "Independently derived O(n+k)=O(n) and retained linear time for identical IDs; the valid worst-case O(n) memory answer needed clarification to express separate O(k) storage and the identical-ID constant-space case.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
