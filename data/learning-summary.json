@@ -2,38 +2,26 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
+      "topicId": "complexity-analysis",
+      "label": "Complexity analysis",
+      "category": "algorithms",
+      "priority": "high",
+      "evidenceCount": 2,
+      "coachHints": 2,
+      "lastMastery": 3,
+      "lastReviewedAt": "2026-09-08T09:20:33Z",
+      "relatedTasks": [
+        "build-product-id-index",
+        "compare-product-snapshots"
+      ]
+    },
+    {
       "topicId": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation",
       "priority": "high",
       "evidenceCount": 1,
       "coachHints": 4,
-      "lastMastery": 2,
-      "lastReviewedAt": "2026-09-08T07:39:24Z",
-      "relatedTasks": [
-        "compare-product-snapshots"
-      ]
-    },
-    {
-      "topicId": "lookup-and-matching",
-      "label": "Lookup and matching",
-      "category": "algorithms",
-      "priority": "high",
-      "evidenceCount": 1,
-      "coachHints": 3,
-      "lastMastery": 2,
-      "lastReviewedAt": "2026-09-08T07:39:24Z",
-      "relatedTasks": [
-        "compare-product-snapshots"
-      ]
-    },
-    {
-      "topicId": "complexity-analysis",
-      "label": "Complexity analysis",
-      "category": "algorithms",
-      "priority": "high",
-      "evidenceCount": 1,
-      "coachHints": 1,
       "lastMastery": 2,
       "lastReviewedAt": "2026-09-08T07:39:24Z",
       "relatedTasks": [
@@ -353,11 +341,11 @@
       "topicId": "complexity-analysis",
       "label": "Complexity analysis",
       "category": "algorithms",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 0,
-      "coachHints": 1,
-      "lastReviewedAt": "2026-09-08T07:39:24Z"
+      "coachHints": 2,
+      "lastReviewedAt": "2026-09-08T09:20:33Z"
     },
     {
       "topicId": "component-composition",
@@ -503,11 +491,11 @@
       "topicId": "lookup-and-matching",
       "label": "Lookup and matching",
       "category": "algorithms",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
-      "demonstratedAttempts": 0,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
+      "demonstratedAttempts": 1,
       "coachHints": 3,
-      "lastReviewedAt": "2026-09-08T07:39:24Z"
+      "lastReviewedAt": "2026-09-08T09:20:33Z"
     },
     {
       "topicId": "memoization-tradeoffs",
@@ -533,11 +521,11 @@
       "topicId": "normalization-and-lookups",
       "label": "Normalization and lookups",
       "category": "data-transformation",
-      "assignedTasks": 1,
-      "reviewedAttempts": 0,
-      "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "assignedTasks": 2,
+      "reviewedAttempts": 1,
+      "demonstratedAttempts": 1,
+      "coachHints": 1,
+      "lastReviewedAt": "2026-09-08T09:20:33Z"
     },
     {
       "topicId": "optimistic-updates",
@@ -742,6 +730,19 @@
   ],
   "recentTasks": [
     {
+      "slug": "build-product-id-index",
+      "category": "algorithms",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "problemShape": "build-once-query-by-id",
+      "primaryTopics": [
+        "lookup-and-matching",
+        "normalization-and-lookups"
+      ],
+      "status": "reviewed",
+      "mastery": 3
+    },
+    {
       "slug": "compare-product-snapshots",
       "category": "algorithms",
       "taskType": "build-from-requirements",
@@ -869,7 +870,7 @@
     }
   ],
   "categoryCoverage": {
-    "algorithms": 1,
+    "algorithms": 2,
     "api-integration": 1,
     "async": 2,
     "data-transformation": 2,
@@ -879,7 +880,7 @@
     "typescript": 2
   },
   "taskTypeCoverage": {
-    "build-from-requirements": 2,
+    "build-from-requirements": 3,
     "complete-partial-implementation": 2,
     "fix-bug": 5,
     "model-types": 1

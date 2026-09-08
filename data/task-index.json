@@ -315,6 +315,45 @@
       "reviewedAt": "2026-08-21T11:30:55Z"
     },
     {
+      "slug": "build-product-id-index",
+      "title": "Katalog produktów po ID",
+      "category": "algorithms",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "primarySkill": "Build and query a product index using Map",
+      "secondarySkill": "Distinguish index construction cost from individual lookup cost",
+      "problemShape": "build-once-query-by-id",
+      "reviewFocus": [
+        "correctness",
+        "performance",
+        "readability"
+      ],
+      "tags": [
+        "typescript",
+        "map",
+        "indexing",
+        "big-o"
+      ],
+      "primaryTopics": [
+        "lookup-and-matching",
+        "normalization-and-lookups"
+      ],
+      "secondaryTopics": [
+        "complexity-analysis"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-08T08:13:16Z",
+      "mastery": {
+        "level": 3,
+        "label": "Mostly working",
+        "reason": "Implementacja jest poprawna i czytelna; do samodzielnego wyjaśnienia kosztu budowy indeksu i pojedynczego odczytu potrzebne było doprecyzowanie, choć późniejsza odpowiedź pokazała postęp."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-08T09:20:33Z"
+    },
+    {
       "slug": "map-orders-to-list-items",
       "title": "Map orders to list items",
       "category": "data-transformation",

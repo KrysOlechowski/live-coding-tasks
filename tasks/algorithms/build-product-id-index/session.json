@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "build-product-id-index",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-08T08:13:16Z",
+      "startedAt": "2026-09-08T08:53:58Z",
+      "endedAt": "2026-09-08T09:20:33Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "normalization-and-lookups",
+          "prompt": "Jakiej pełnej wartości oczekujesz po odczycie ID \"p-2\" z indeksu zbudowanego na przykładowych produktach?",
+          "source": "planned",
+          "askedAt": "2026-09-08T08:53:58Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-08T08:59:37Z",
+          "evidence": "Candidate explicitly said they did not know the expected lookup result; the full-record prediction was not demonstrated before explanation."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "tradeoff",
+          "topicId": "complexity-analysis",
+          "prompt": "Dla n produktów podaj osobno koszt zbudowania indeksu, jednego późniejszego odczytu oraz pamięci na indeks. Skąd bierze się każdy z tych kosztów w Twoim kodzie?",
+          "source": "planned",
+          "askedAt": "2026-09-08T09:12:21Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-08T09:14:19Z",
+          "evidence": "Recognized that index memory grows with entry count, but did not know construction cost and incorrectly estimated a single indexed read as approximately O(n)."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "transfer",
+          "topicId": "lookup-and-matching",
+          "prompt": "Co stałoby się z kosztem kolejnych odczytów, gdyby przed każdym z nich budować indeks od nowa?",
+          "source": "planned",
+          "askedAt": "2026-09-08T09:14:35Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-08T09:18:19Z",
+          "evidence": "After the cost explanation, correctly combined rebuilding and lookup as O(n) + O(1) per requested read, showing emerging understanding of index reuse."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "completed",
+          "adaptation": null,
+          "skipReason": null,
+          "checkpoint": {
+            "recordedAt": "2026-09-08T09:18:43Z",
+            "outcome": "passed-with-issues",
+            "observations": [
+              "Strict TypeScript validation and focused runtime checks passed for complete indexing, existing/missing/case-sensitive keys, repeated reads, empty input, fresh indexes, and source/index preservation.",
+              "Implementation constructs an index with linear expected work and uses one keyed get per read; temporary entry pairs and the index each require linear memory.",
+              "Construction and lookup complexity initially required correction; the candidate then correctly combined rebuilding and reading as O(n) + O(1)."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "normalization-and-lookups",
+                "signal": "demonstrated",
+                "evidence": "After clarification of the expected record, implemented ID-to-product entries correctly for every input product."
+              },
+              {
+                "topicId": "lookup-and-matching",
+                "signal": "demonstrated",
+                "evidence": "Uses the supplied index for direct get without scanning or rebuilding; after explanation recognized the cost of rebuilding for each read."
+              },
+              {
+                "topicId": "complexity-analysis",
+                "signal": "uncertain",
+                "evidence": "Initially did not know construction cost and estimated a keyed read as O(n); recognized memory growth and answered the transfer question after corrective explanation."
+              }
+            ]
+          }
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-08T08:59:37Z",
+          "stageId": "core",
+          "topicId": "normalization-and-lookups",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-08T09:14:19Z",
+          "stageId": "core",
+          "topicId": "complexity-analysis",
+          "level": 3,
+          "mode": "concept-explanation"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-08T09:20:33Z",
+        "requirementVerdict": "yes",
+        "mastery": {
+          "level": 3,
+          "label": "Mostly working",
+          "reason": "Implementacja jest poprawna i czytelna; do samodzielnego wyjaśnienia kosztu budowy indeksu i pojedynczego odczytu potrzebne było doprecyzowanie, choć późniejsza odpowiedź pokazała postęp."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "lookup-and-matching",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "Implemented direct get on the supplied index without scanning or rebuilding; correctly described rebuilding plus lookup after the complexity explanation.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "normalization-and-lookups",
+            "outcome": "demonstrated",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "After clarification of the expected full product value, independently implemented ID-to-product pairs and new index construction; all behavior checks passed.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "complexity-analysis",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "Could not state construction cost and estimated get as O(n); recognized growing memory and answered the transfer question correctly only after explicit cost clarification.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
