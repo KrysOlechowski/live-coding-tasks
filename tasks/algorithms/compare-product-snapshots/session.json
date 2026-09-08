@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 2,
+  "taskSlug": "compare-product-snapshots",
+  "activeAttemptId": "attempt-1",
+  "attempts": [
+    {
+      "id": "attempt-1",
+      "number": 1,
+      "status": "reviewed",
+      "createdAt": "2026-09-07T09:09:31Z",
+      "startedAt": "2026-09-07T09:34:40Z",
+      "endedAt": "2026-09-08T07:39:24Z",
+      "activeStageId": null,
+      "activeQuestionId": null,
+      "questions": [
+        {
+          "id": "core-start-1",
+          "stageId": "core",
+          "timing": "start",
+          "kind": "prediction",
+          "topicId": "lookup-and-matching",
+          "prompt": "What should the report contain if a product keeps its ID and values but moves to a different position and is represented by a new object?",
+          "source": "planned",
+          "askedAt": "2026-09-07T09:34:40Z",
+          "status": "declined",
+          "resolvedAt": "2026-09-07T09:46:05Z",
+          "evidence": "After requesting and receiving the full explanation, the candidate explicitly requested moving on instead of providing their own prediction."
+        },
+        {
+          "id": "core-checkpoint-1",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "tradeoff",
+          "topicId": "complexity-analysis",
+          "prompt": "With n previous and m current products, what are the time and auxiliary-space costs of your implementation, and which operation-cost assumptions support those bounds?",
+          "source": "planned",
+          "askedAt": "2026-09-07T10:30:21Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-07T10:58:34Z",
+          "evidence": "Identified quadratic cross-list work as O(n*m), but conflated constant-time hash lookup with total algorithm time and explicitly requested an explanation of auxiliary memory."
+        },
+        {
+          "id": "core-checkpoint-2",
+          "stageId": "core",
+          "timing": "checkpoint",
+          "kind": "tradeoff",
+          "topicId": "lookup-and-matching",
+          "prompt": "In your implementation, where would a Set of IDs be sufficient, and where would access to the corresponding product record still be necessary?",
+          "source": "planned",
+          "askedAt": "2026-09-07T10:58:35Z",
+          "status": "answered",
+          "resolvedAt": "2026-09-07T11:24:29Z",
+          "evidence": "Correctly identified addition and removal detection as membership-only checks; did not explicitly discuss record access for field comparison."
+        }
+      ],
+      "stages": [
+        {
+          "id": "core",
+          "kind": "core",
+          "title": "Core Task",
+          "status": "skipped",
+          "adaptation": null,
+          "skipReason": "Candidate explicitly stopped the unfinished Core and requested review of the existing code.",
+          "checkpoint": {
+            "recordedAt": "2026-09-07T11:24:48Z",
+            "outcome": "incomplete",
+            "observations": [
+              "Six focused behavior checks passed, including empty sides, ID replacement, value equality, and name/price changes, with frozen inputs.",
+              "Changed records follow previous order rather than the required current order; a reversed two-product case failed.",
+              "Both traversals perform full-array find calls, retaining O(n*m+n+m) worst-case work instead of the expected linear target."
+            ],
+            "knowledgeSignals": [
+              {
+                "topicId": "lookup-and-matching",
+                "signal": "demonstrated",
+                "evidence": "Correctly identified addition/removal detection as ID membership checks and implemented baseline matching by ID."
+              },
+              {
+                "topicId": "complexity-analysis",
+                "signal": "uncertain",
+                "evidence": "Recognized O(n*m) work but required explanation to distinguish lookup cost from total cost and to analyze auxiliary/output memory."
+              },
+              {
+                "topicId": "stable-ordering",
+                "signal": "gap",
+                "evidence": "Changed results use previous traversal order; the current-order acceptance check fails."
+              },
+              {
+                "topicId": "immutable-transformations",
+                "signal": "demonstrated",
+                "evidence": "Focused checks run successfully with frozen source arrays and records; outputs retain source references without mutating inputs."
+              }
+            ]
+          }
+        },
+        {
+          "id": "follow-up-1",
+          "kind": "follow-up",
+          "title": "Follow-up 1",
+          "status": "skipped",
+          "adaptation": null,
+          "skipReason": "Candidate ended the attempt before this follow-up was revealed.",
+          "checkpoint": null
+        }
+      ],
+      "coachEvents": [
+        {
+          "id": "coach-1",
+          "createdAt": "2026-09-07T09:44:39Z",
+          "stageId": "core",
+          "topicId": "lookup-and-matching",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-2",
+          "createdAt": "2026-09-07T09:47:33Z",
+          "stageId": "core",
+          "topicId": "lookup-and-matching",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-3",
+          "createdAt": "2026-09-07T10:15:58Z",
+          "stageId": "core",
+          "topicId": "lookup-and-matching",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-4",
+          "createdAt": "2026-09-07T10:58:34Z",
+          "stageId": "core",
+          "topicId": "complexity-analysis",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-5",
+          "createdAt": "2026-09-07T11:31:55Z",
+          "stageId": "core",
+          "topicId": "stable-ordering",
+          "level": 3,
+          "mode": "concept-explanation"
+        },
+        {
+          "id": "coach-6",
+          "createdAt": "2026-09-07T11:36:44Z",
+          "stageId": "core",
+          "topicId": "stable-ordering",
+          "level": 4,
+          "mode": "next-step"
+        },
+        {
+          "id": "coach-7",
+          "createdAt": "2026-09-07T11:41:36Z",
+          "stageId": "core",
+          "topicId": "stable-ordering",
+          "level": 4,
+          "mode": "next-step"
+        }
+      ],
+      "review": {
+        "reviewedAt": "2026-09-08T07:39:24Z",
+        "requirementVerdict": "partially",
+        "mastery": {
+          "level": 2,
+          "label": "Partially working",
+          "reason": "Podstawowa klasyfikacja produkt\u00f3w dzia\u0142a, ale dwa istotne wymagania \u2014 kolejno\u015b\u0107 zmian i liniowe por\u00f3wnanie list \u2014 pozostaj\u0105 niespe\u0142nione; samodzielna analiza pami\u0119ci oraz prze\u0142o\u017cenie indeksowania na kod wymagaj\u0105 dalszej praktyki."
+        },
+        "needsRepetition": true,
+        "topicSignals": [
+          {
+            "topicId": "lookup-and-matching",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "Baseline ID matching works and the candidate identified membership-only checks, but could not implement indexed lookup to meet the core linear-time target.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "complexity-analysis",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "Recognized cross-list O(n*m) work; confused one hash lookup with total algorithm cost and required an explanation of auxiliary and output memory.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "stable-ordering",
+            "outcome": "needs-practice",
+            "priority": "high",
+            "independence": "guided",
+            "evidence": "Changed results still use unshift during previous traversal after explanation and step-by-step guidance; the same-order two-change check fails.",
+            "stageIds": [
+              "core"
+            ]
+          },
+          {
+            "topicId": "immutable-transformations",
+            "outcome": "improved",
+            "priority": null,
+            "independence": "minimal-help",
+            "evidence": "Current flat-record comparison preserves frozen source arrays and products and reuses references safely; this does not establish mastery of nested immutable updates.",
+            "stageIds": [
+              "core"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

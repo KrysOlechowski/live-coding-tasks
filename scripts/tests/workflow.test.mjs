@@ -92,6 +92,66 @@ test("validation rejects an unexpectedly changed scaffold snapshot", async (t) =
   );
 });
 
+test("an incomplete checkpoint survives implementation and checkpoint retries", async (t) => {
+  const fixtureRoot = await createFixture(t);
+  const sessionPath = path.join(
+    fixtureRoot,
+    "tasks/algorithms/compare-product-snapshots/session.json",
+  );
+  const session = JSON.parse(await fs.readFile(sessionPath, "utf8"));
+  const attempt = session.attempts.find((item) => item.id === session.activeAttemptId);
+  attempt.status = "in-progress";
+  attempt.activeStageId = "core";
+  attempt.activeQuestionId = null;
+  attempt.questions = [];
+  attempt.review = null;
+  attempt.endedAt = null;
+  attempt.startedAt = attempt.createdAt;
+  const core = attempt.stages[0];
+  core.checkpoint = {
+    recordedAt: attempt.createdAt,
+    outcome: "incomplete",
+    observations: ["A required behavior remains unfinished."],
+    knowledgeSignals: [],
+  };
+  for (const stage of attempt.stages) {
+    stage.skipReason = null;
+    stage.adaptation = null;
+    if (stage.id !== "core") {
+      stage.status = "locked";
+      stage.checkpoint = null;
+    }
+  }
+  await fs.rm(path.join(path.dirname(sessionPath), "review.md"), { force: true });
+
+  for (const status of ["in-progress", "checkpoint", "skipped"]) {
+    core.status = status;
+    core.skipReason = status === "skipped" ? "Candidate stopped and requested review." : null;
+    attempt.status = status === "skipped" ? "ready-for-review" : "in-progress";
+    attempt.activeStageId = status === "skipped" ? null : "core";
+    for (const stage of attempt.stages.slice(1)) {
+      stage.status = status === "skipped" ? "skipped" : "locked";
+      stage.skipReason = status === "skipped" ? "Candidate stopped before this stage." : null;
+    }
+    await fs.writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`);
+    await runNode(fixtureRoot, "scripts/validate-tasks.mjs");
+  }
+
+  core.status = "in-progress";
+  core.skipReason = null;
+  attempt.status = "in-progress";
+  attempt.activeStageId = "core";
+  core.checkpoint.outcome = "passed";
+  await fs.writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`);
+  await assert.rejects(
+    runNode(fixtureRoot, "scripts/validate-tasks.mjs"),
+    (error) => {
+      assert.match(error.stderr, /checkpoint requires completed status/);
+      return true;
+    },
+  );
+});
+
 test("reset restores every manifest file and starts a fresh attempt", async (t) => {
   const fixtureRoot = await createFixture(t);
   const taskRelativePath = "tasks/react/fix-cart-summary-state";

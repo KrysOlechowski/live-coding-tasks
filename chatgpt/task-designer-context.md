@@ -19,15 +19,16 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Current topics to revisit
 
-- immutable-transformations (high): 2 unresolved signal(s), 9 coach event(s), tasks: fix-project-member-role-update, map-orders-to-list-items
+- stable-ordering (high): 1 unresolved signal(s), 4 coach event(s), tasks: compare-product-snapshots
+- lookup-and-matching (high): 1 unresolved signal(s), 3 coach event(s), tasks: compare-product-snapshots
+- complexity-analysis (high): 1 unresolved signal(s), 1 coach event(s), tasks: compare-product-snapshots
 - reference-identity (high): 1 unresolved signal(s), 2 coach event(s), tasks: fix-project-member-role-update
 - declaration-lifecycle (high): 1 unresolved signal(s), 2 coach event(s), tasks: fix-delayed-message-formatters
 - effect-lifecycle (high): 3 unresolved signal(s), 11 coach event(s), tasks: cancel-obsolete-report-preview, fix-duplicate-channel-subscriptions, fix-stale-customer-search-results
+- immutable-transformations (medium): 2 unresolved signal(s), 9 coach event(s), tasks: fix-project-member-role-update, map-orders-to-list-items
 - grouping-and-aggregation (medium): 1 unresolved signal(s), 3 coach event(s), tasks: map-orders-to-list-items
 - request-cancellation (medium): 1 unresolved signal(s), 5 coach event(s), tasks: fix-stale-customer-search-results
 - type-narrowing (medium): 1 unresolved signal(s), 7 coach event(s), tasks: model-process-state-with-discriminated-union
-- exhaustive-checking (medium): 1 unresolved signal(s), 3 coach event(s), tasks: handle-unknown-account-response
-- response-adaptation (medium): 1 unresolved signal(s), 1 coach event(s), tasks: handle-unknown-account-response
 
 ## Under-practiced topics (bounded view)
 
@@ -36,16 +37,17 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 - async-testing — Async testing (testing)
 - behavior-oriented-tests — Behavior-oriented tests (testing)
 - cache-invalidation — Cache invalidation (api-integration)
-- complexity-analysis — Complexity analysis (algorithms)
 - component-composition — Component composition (react)
 - concurrency-control — Concurrency control (async)
 - controlled-inputs — Controlled inputs (react)
 - edge-case-coverage — Edge-case coverage (testing)
 - graph-and-tree-traversal — Graph and tree traversal (algorithms)
 - interval-reasoning — Interval reasoning (algorithms)
+- large-list-rendering — Large-list rendering (performance)
 
 ## Recent tasks
 
+- compare-product-snapshots: algorithms / build-from-requirements / medium; shape=two-snapshot-record-diff; status=reviewed; mastery=2
 - fix-project-member-role-update: data-transformation / fix-bug / medium; shape=nested-immutable-update-with-structural-sharing; status=reviewed; mastery=1
 - fix-delayed-message-formatters: typescript / fix-bug / medium; shape=closure-captured-binding; status=reviewed; mastery=3
 - map-orders-to-list-items: data-transformation / build-from-requirements / easy; shape=one-to-one-record-projection; status=reviewed; mastery=3
@@ -58,9 +60,9 @@ Codex, not ChatGPT, validates the package, creates repository files, scaffolds c
 
 ## Coverage
 
-- Total tasks: 9
-- Categories: algorithms=0, api-integration=1, async=2, data-transformation=2, performance=0, react=2, testing=0, typescript=2
-- Task types: build-from-requirements=1, complete-partial-implementation=2, fix-bug=5, model-types=1
+- Total tasks: 10
+- Categories: algorithms=1, api-integration=1, async=2, data-transformation=2, performance=0, react=2, testing=0, typescript=2
+- Task types: build-from-requirements=2, complete-partial-implementation=2, fix-bug=5, model-types=1
 
 ## Allowed taxonomy
 

@@ -1213,10 +1213,14 @@ function validateSession(record, topicIds, questionSpecs, errors) {
         errors.push(`${label} stage ${stage.id} skipReason must be null unless skipped`);
       }
 
-      if (stage.status === "completed") {
+      const hasIncompleteCheckpoint =
+        ["in-progress", "checkpoint", "skipped"].includes(stage.status) &&
+        stage.checkpoint?.outcome === "incomplete";
+
+      if (stage.status === "completed" || hasIncompleteCheckpoint) {
         validateCheckpoint(stage.checkpoint, stage.id, topicIds, errors);
       } else if (stage.checkpoint !== null) {
-        errors.push(`${label} stage ${stage.id} checkpoint requires completed status`);
+        errors.push(`${label} stage ${stage.id} checkpoint requires completed status or an incomplete outcome on an in-progress/checkpoint/skipped stage`);
       }
     }
 

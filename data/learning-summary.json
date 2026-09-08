@@ -2,17 +2,42 @@
   "schemaVersion": 1,
   "topicsToRevisit": [
     {
-      "topicId": "immutable-transformations",
-      "label": "Immutable transformations",
+      "topicId": "stable-ordering",
+      "label": "Stable ordering",
       "category": "data-transformation",
       "priority": "high",
-      "evidenceCount": 2,
-      "coachHints": 9,
-      "lastMastery": 1,
-      "lastReviewedAt": "2026-09-07T08:48:02Z",
+      "evidenceCount": 1,
+      "coachHints": 4,
+      "lastMastery": 2,
+      "lastReviewedAt": "2026-09-08T07:39:24Z",
       "relatedTasks": [
-        "fix-project-member-role-update",
-        "map-orders-to-list-items"
+        "compare-product-snapshots"
+      ]
+    },
+    {
+      "topicId": "lookup-and-matching",
+      "label": "Lookup and matching",
+      "category": "algorithms",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 3,
+      "lastMastery": 2,
+      "lastReviewedAt": "2026-09-08T07:39:24Z",
+      "relatedTasks": [
+        "compare-product-snapshots"
+      ]
+    },
+    {
+      "topicId": "complexity-analysis",
+      "label": "Complexity analysis",
+      "category": "algorithms",
+      "priority": "high",
+      "evidenceCount": 1,
+      "coachHints": 1,
+      "lastMastery": 2,
+      "lastReviewedAt": "2026-09-08T07:39:24Z",
+      "relatedTasks": [
+        "compare-product-snapshots"
       ]
     },
     {
@@ -54,6 +79,20 @@
         "cancel-obsolete-report-preview",
         "fix-duplicate-channel-subscriptions",
         "fix-stale-customer-search-results"
+      ]
+    },
+    {
+      "topicId": "immutable-transformations",
+      "label": "Immutable transformations",
+      "category": "data-transformation",
+      "priority": "medium",
+      "evidenceCount": 2,
+      "coachHints": 9,
+      "lastMastery": 2,
+      "lastReviewedAt": "2026-09-08T07:39:24Z",
+      "relatedTasks": [
+        "fix-project-member-role-update",
+        "map-orders-to-list-items"
       ]
     },
     {
@@ -149,11 +188,6 @@
       "category": "api-integration"
     },
     {
-      "topicId": "complexity-analysis",
-      "label": "Complexity analysis",
-      "category": "algorithms"
-    },
-    {
       "topicId": "component-composition",
       "label": "Component composition",
       "category": "react"
@@ -189,11 +223,6 @@
       "category": "performance"
     },
     {
-      "topicId": "lookup-and-matching",
-      "label": "Lookup and matching",
-      "category": "algorithms"
-    },
-    {
       "topicId": "memoization-tradeoffs",
       "label": "Memoization trade-offs",
       "category": "performance"
@@ -202,11 +231,6 @@
       "topicId": "mocking-boundaries",
       "label": "Mocking boundaries",
       "category": "testing"
-    },
-    {
-      "topicId": "normalization-and-lookups",
-      "label": "Normalization and lookups",
-      "category": "data-transformation"
     },
     {
       "topicId": "optimistic-updates",
@@ -329,11 +353,11 @@
       "topicId": "complexity-analysis",
       "label": "Complexity analysis",
       "category": "algorithms",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 1,
+      "lastReviewedAt": "2026-09-08T07:39:24Z"
     },
     {
       "topicId": "component-composition",
@@ -449,11 +473,11 @@
       "topicId": "immutable-transformations",
       "label": "Immutable transformations",
       "category": "data-transformation",
-      "assignedTasks": 2,
-      "reviewedAttempts": 2,
+      "assignedTasks": 3,
+      "reviewedAttempts": 3,
       "demonstratedAttempts": 0,
       "coachHints": 9,
-      "lastReviewedAt": "2026-09-07T08:48:02Z"
+      "lastReviewedAt": "2026-09-08T07:39:24Z"
     },
     {
       "topicId": "interval-reasoning",
@@ -479,11 +503,11 @@
       "topicId": "lookup-and-matching",
       "label": "Lookup and matching",
       "category": "algorithms",
-      "assignedTasks": 0,
-      "reviewedAttempts": 0,
+      "assignedTasks": 1,
+      "reviewedAttempts": 1,
       "demonstratedAttempts": 0,
-      "coachHints": 0,
-      "lastReviewedAt": null
+      "coachHints": 3,
+      "lastReviewedAt": "2026-09-08T07:39:24Z"
     },
     {
       "topicId": "memoization-tradeoffs",
@@ -509,7 +533,7 @@
       "topicId": "normalization-and-lookups",
       "label": "Normalization and lookups",
       "category": "data-transformation",
-      "assignedTasks": 0,
+      "assignedTasks": 1,
       "reviewedAttempts": 0,
       "demonstratedAttempts": 0,
       "coachHints": 0,
@@ -649,11 +673,11 @@
       "topicId": "stable-ordering",
       "label": "Stable ordering",
       "category": "data-transformation",
-      "assignedTasks": 1,
-      "reviewedAttempts": 1,
+      "assignedTasks": 2,
+      "reviewedAttempts": 2,
       "demonstratedAttempts": 1,
-      "coachHints": 1,
-      "lastReviewedAt": "2026-09-03T21:19:52Z"
+      "coachHints": 4,
+      "lastReviewedAt": "2026-09-08T07:39:24Z"
     },
     {
       "topicId": "stale-async-responses",
@@ -717,6 +741,19 @@
     }
   ],
   "recentTasks": [
+    {
+      "slug": "compare-product-snapshots",
+      "category": "algorithms",
+      "taskType": "build-from-requirements",
+      "difficulty": "medium",
+      "problemShape": "two-snapshot-record-diff",
+      "primaryTopics": [
+        "lookup-and-matching",
+        "complexity-analysis"
+      ],
+      "status": "reviewed",
+      "mastery": 2
+    },
     {
       "slug": "fix-project-member-role-update",
       "category": "data-transformation",
@@ -832,7 +869,7 @@
     }
   ],
   "categoryCoverage": {
-    "algorithms": 0,
+    "algorithms": 1,
     "api-integration": 1,
     "async": 2,
     "data-transformation": 2,
@@ -842,7 +879,7 @@
     "typescript": 2
   },
   "taskTypeCoverage": {
-    "build-from-requirements": 1,
+    "build-from-requirements": 2,
     "complete-partial-implementation": 2,
     "fix-bug": 5,
     "model-types": 1

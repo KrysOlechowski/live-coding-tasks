@@ -410,6 +410,13 @@ A completed stage contains:
 
 Allowed checkpoint outcomes are `passed`, `passed-with-issues`, and `incomplete`. Allowed checkpoint knowledge signals are `demonstrated`, `uncertain`, and `gap`.
 
+When required behavior remains unfinished, the stage returns to `in-progress`
+and retains its latest `incomplete` checkpoint. That checkpoint may also remain
+while the stage re-enters `checkpoint` for another evaluation; the next
+evaluation replaces it. If the candidate stops, the skipped stage also retains
+this incomplete checkpoint as historical evidence. A non-completed stage in these states may retain only
+an `incomplete` outcome, with the same checkpoint validation as a completed stage.
+
 Checkpoint observations are concise interviewer evidence. They are not displayed automatically to the candidate because doing so may spoil a later follow-up.
 
 ### Coach event

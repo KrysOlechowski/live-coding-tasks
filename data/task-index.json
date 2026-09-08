@@ -40,6 +40,49 @@
       "reviewedAt": "2026-09-01T18:53:55Z"
     },
     {
+      "slug": "compare-product-snapshots",
+      "title": "Compare product snapshots",
+      "category": "algorithms",
+      "taskType": "build-from-requirements",
+      "difficulty": "medium",
+      "primarySkill": "Match records by identity across two collections efficiently",
+      "secondarySkill": "Explain time and space complexity and preserve deterministic output order",
+      "problemShape": "two-snapshot-record-diff",
+      "reviewFocus": [
+        "correctness",
+        "performance",
+        "edge-cases",
+        "readability"
+      ],
+      "tags": [
+        "typescript",
+        "map",
+        "set",
+        "record-matching",
+        "big-o"
+      ],
+      "primaryTopics": [
+        "lookup-and-matching",
+        "complexity-analysis"
+      ],
+      "secondaryTopics": [
+        "normalization-and-lookups",
+        "stable-ordering",
+        "immutable-transformations"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "status": "reviewed",
+      "createdAt": "2026-09-07T09:09:31Z",
+      "mastery": {
+        "level": 2,
+        "label": "Partially working",
+        "reason": "Podstawowa klasyfikacja produktów działa, ale dwa istotne wymagania — kolejność zmian i liniowe porównanie list — pozostają niespełnione; samodzielna analiza pamięci oraz przełożenie indeksowania na kod wymagają dalszej praktyki."
+      },
+      "needsRepetition": true,
+      "reviewedAt": "2026-09-08T07:39:24Z"
+    },
+    {
       "slug": "fix-delayed-message-formatters",
       "title": "Fix delayed message formatters",
       "category": "typescript",
