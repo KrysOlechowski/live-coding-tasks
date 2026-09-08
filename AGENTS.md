@@ -9,6 +9,7 @@ This repository is used for live-coding interview practice.
 - Keep all task scaffolding lightweight and interview-appropriate.
 - Do not solve the full task unless explicitly asked.
 - Keep task size realistic for a live coding interview.
+- Write task briefs, interviewer plans, and starter-code comments in English. Chat communication may be in Polish.
 - Prefer practical frontend tasks by default, but allow broader coding tasks such as algorithms, async, API integration, testing, performance, TypeScript modeling, and data transformation when appropriate.
 - Follow the taxonomy in `/TASK_TAXONOMY.md`.
 - Use `category` for technical domain and `taskType` for candidate activity or interview mode.
