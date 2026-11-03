@@ -21,7 +21,7 @@ export default async function TaskDetailPage({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="space-y-3">
           <Link
-            href="/tasks"
+            href="/"
             className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
           >
             ← Back to tasks
@@ -80,7 +80,7 @@ export default async function TaskDetailPage({
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-zinc-500 dark:text-zinc-400">Mastery</dt>
                   <dd className="text-right font-medium text-zinc-950 dark:text-white">
-                    {task.mastery.level}/5 — {task.mastery.label}
+                    {getMasteryLabel(task.mastery).replace("Mastery: ", "")}
                   </dd>
                 </div>
               ) : null}
@@ -98,39 +98,16 @@ export default async function TaskDetailPage({
                     : "No review yet"}
                 </dd>
               </div>
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-zinc-500 dark:text-zinc-400">
-                  Prompt brief
-                </dt>
-                <dd className="font-medium text-zinc-950 dark:text-white">
-                  {task.promptBody ? "Available" : "Missing"}
-                </dd>
-              </div>
             </dl>
           </section>
 
-          {task.reviewBody ? (
-            <section className="rounded-4xl border border-zinc-200 bg-white/80 p-5 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
-              <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
-                Latest review
-              </h2>
-              <div className="mt-4">
-                <SimpleMarkdown content={task.reviewBody} />
-              </div>
-            </section>
-          ) : null}
         </aside>
       </section>
 
-      {task.promptBody ? (
-        <details className="rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
-          <summary className="cursor-pointer text-lg font-semibold text-zinc-950 marker:text-zinc-400 dark:text-white">
-            Original prompt
-          </summary>
-          <div className="mt-5">
-            <SimpleMarkdown content={task.promptBody} />
-          </div>
-        </details>
+      {task.reviewBody ? (
+        <section aria-label="Latest review" className="rounded-4xl border border-zinc-200 bg-white/80 p-7 shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950/70">
+          <SimpleMarkdown content={task.reviewBody} />
+        </section>
       ) : null}
     </main>
   );

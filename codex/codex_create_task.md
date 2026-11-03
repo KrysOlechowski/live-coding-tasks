@@ -1,44 +1,17 @@
-# Codex Create Task Workflow
+# Task selection
 
-## Purpose
+Use the bounded output of `npm run task:design-context` instead of reading full indexes or historical review files. The command examines all saved task metadata and review signals locally and validates their contracts.
 
-Design and scaffold one new Live Coding 2.0 task using repository learning data. Codex is the default task designer; ChatGPT is optional.
+Choose in this order:
 
-## Read first
+1. User constraints: domain, difficulty, skill, available time, exclusions, or a supplied idea.
+2. A topic whose latest assessment is `needs-practice` or `improving`, using a different problem shape or activity.
+3. Under-practiced topics and domain/activity combinations.
 
-- `TASK_TAXONOMY.md`
-- `docs/data-contracts.md`
-- `data/topic-catalog.json`
-- `data/task-index.json`
-- `data/learning-summary.json`
-- `codex/codex_task_scaffold.md`
+Unreviewed assignments are not proof of mastery. A `demonstrated` signal means demonstrated in that task, not permanent mastery. Missing evidence is not a weakness.
 
-## Workflow
+Before scaffolding, query the selected topic/shape to see prior tasks and their total matching count. If matches are numerous, inspect relevant briefs or choose a meaningfully different shape. Merely changing names or the business story is not sufficient variation. Repetition is appropriate when deliberately requested or useful for a gap.
 
-1. Run `npm run generate:task-data` if generated learning data may be stale.
-2. Read current topics to revisit, assigned coverage, reviewed coverage, and recent problem shapes.
-3. Apply optional user constraints such as difficulty, category, focus, or exclusions.
-4. Choose one interview-sized learning target. Do not treat an assigned or in-progress topic as mastered.
-5. Score all six difficulty dimensions from `TASK_TAXONOMY.md`, classify the complete standard session, and record the compact calibration in `interviewer.md`.
-6. Create a valid Task Package v1 with a candidate-safe `task.md` and a separate `interviewer.md`.
-7. Design only valuable start/checkpoint questions using the question rules in `docs/data-contracts.md`.
-8. Use only canonical topic IDs from `data/topic-catalog.json`.
-9. Check that the brief and start questions do not reveal hidden follow-ups or a solution strategy.
-10. Continue directly into the scaffold workflow; do not require the user to copy the package back to Codex.
+The catalog is a temporary collection of useful patterns, not a closed syllabus or evidence of interview frequency. New exercises may be generated on request; add a concise canonical topic only if no existing ID fits. Research current interview priorities only when requested, then cite sources and distinguish recommendations from measured frequency.
 
-## Selection rules
-
-- Prefer a current medium/high repetition need when it can be tested through a meaningfully different scenario.
-- Otherwise prefer under-practiced categories, task types, problem shapes, and topics.
-- Avoid repeating only the surface story while testing the same mental pattern.
-- Keep one or two primary skills and zero to three useful follow-ups.
-- Treat two questions at each timing as a target, not a quota; omit low-value or leading questions.
-- Follow explicit user constraints over automatic selection preferences.
-
-## Hard rules
-
-- Do not solve the task.
-- Do not place hidden follow-ups in `task.md` or the final chat summary.
-- Do not invent topic aliases when an existing canonical ID matches.
-- Do not edit generated JSON or ChatGPT context manually.
-- Run the complete scaffold finalization before finishing.
+Prefer one focused exercise with explicit acceptance criteria, roughly 15–30 minutes for easy, 30–50 for medium, and 50–75 for hard. The category describes the domain; taskType describes candidate activity. Keep the actual implementation work for the candidate.

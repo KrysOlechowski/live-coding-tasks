@@ -1,204 +1,170 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
-import { execFile } from "node:child_process";
 import { promises as fs } from "node:fs";
+import { execFile } from "node:child_process";
+import { createHash } from "node:crypto";
+import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { fileURLToPath } from "node:url";
-import { promisify } from "node:util";
+import yaml from "js-yaml";
+import { buildPracticeIndex, parseFrontmatter } from "../lib/task-data.mjs";
 
-const execFileAsync = promisify(execFile);
-const TESTS_DIR = path.dirname(fileURLToPath(import.meta.url));
-const SOURCE_ROOT = path.resolve(TESTS_DIR, "../..");
-const FIXTURE_PATHS = [
-  "package.json",
-  "scripts",
-  "tasks",
-  "data",
-  "chatgpt",
-  "src/lib",
-];
+const exec = promisify(execFile);
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const run = (cwd, script, args = []) => exec(process.execPath, [path.join(cwd, script), ...args], { cwd });
 
-async function createFixture(t) {
-  const fixtureRoot = await fs.mkdtemp(
-    path.join(os.tmpdir(), "live-coding-workflow-"),
-  );
-
-  t.after(async () => {
-    await fs.rm(fixtureRoot, { recursive: true, force: true });
-  });
-
-  for (const relativePath of FIXTURE_PATHS) {
-    await fs.cp(
-      path.join(SOURCE_ROOT, relativePath),
-      path.join(fixtureRoot, relativePath),
-      { recursive: true },
-    );
-  }
-
-  return fixtureRoot;
+async function fixture(t) {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "practice-workflow-"));
+  t.after(() => fs.rm(dir, { recursive: true, force: true }));
+  for (const name of ["scripts", "data"]) await fs.cp(path.join(root, name), path.join(dir, name), { recursive: true });
+  await fs.symlink(path.join(root, "node_modules"), path.join(dir, "node_modules"), "dir");
+  return dir;
 }
 
-async function runNode(root, script, args = []) {
-  return execFileAsync(process.execPath, [script, ...args], {
-    cwd: root,
-    maxBuffer: 10 * 1024 * 1024,
-  });
+const markdown = (data, body) => `---\n${yaml.dump(data, { schema: yaml.JSON_SCHEMA })}---\n${body}\n`;
+async function task(dir, slug = "debounce-practice", topic = "debounce") {
+  const target = path.join(dir, "tasks/async", slug);
+  await fs.mkdir(target, { recursive: true });
+  const metadata = { title: slug, category: "async", taskType: "fix-bug", difficulty: "medium", problemShape: "timer-lifecycle", interviewFocus: "Timer behavior", reviewFocus: ["correctness"], topics: [topic] };
+  await fs.writeFile(path.join(target, "task.md"), markdown(metadata, "# Timer exercise\n\n## Context\nA delayed action.\n\n## Goal\nFix the behavior.\n\n## Requirements\n- Reset on repeated calls.\n\n## Acceptance Criteria\n- Only the latest call fires."));
+  await fs.writeFile(path.join(target, "interviewer.md"), "# Evaluation\n\n## Expected behavior\nLatest call fires.\n\n## Important cases\nRapid repeated calls.\n\n## Review focus\nTimer cleanup.");
+  await fs.writeFile(path.join(target, "main.ts"), "export const startingValue = 1;\n");
+  await run(dir, "scripts/init-scaffold.mjs", [`tasks/async/${slug}`]);
+  return target;
+}
+async function review(target, outcome = "needs-practice", reviewedAt = "2026-11-03T12:00:00Z", topic = "debounce") {
+  const data = { reviewedAt, mastery: outcome === "demonstrated" ? 4 : 2, requirementVerdict: outcome === "demonstrated" ? "yes" : "partially", topicSignals: [{ topic, outcome, evidence: "Repeated calls: timer reset checked (main.ts:1)." }] };
+  await fs.writeFile(path.join(target, "review.md"), markdown(data, "# Task Review\n\n## Result\nBehavior assessed.\n\n## Mastery\nConsistent with the metadata.\n\n## Findings\nTimer behavior.\n\n## Strengths\nSmall implementation.\n\n## Next step\nCheck rapid calls."));
 }
 
-test("the current task repository passes contract validation", async () => {
-  const { stdout } = await runNode(
-    SOURCE_ROOT,
-    "scripts/validate-tasks.mjs",
-  );
-
-  assert.match(stdout, /Validated [1-9]\d* task folder\(s\)/);
+// Independent CLI fixtures keep real practice history empty.
+test("empty repository validates and finalizes without seed tasks", async (t) => {
+  const dir = await fixture(t);
+  const { stdout } = await run(dir, "scripts/finalize-tasks.mjs");
+  assert.match(stdout, /Validated 0 task/);
+  assert.deepEqual(JSON.parse(await fs.readFile(path.join(dir, "data/practice-index.json"))).tasks, []);
 });
 
-test("validation rejects an active question ID without a pending question", async (t) => {
-  const fixtureRoot = await createFixture(t);
-  const sessionPath = path.join(
-    fixtureRoot,
-    "tasks/react/fix-cart-summary-state/session.json",
-  );
-  const session = JSON.parse(await fs.readFile(sessionPath, "utf8"));
-  session.attempts.at(-1).activeQuestionId = "missing-question";
-  await fs.writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`);
-
-  await assert.rejects(
-    runNode(fixtureRoot, "scripts/validate-tasks.mjs"),
-    (error) => {
-      assert.match(error.stderr, /activeQuestionId must be null without a pending question/);
-      return true;
-    },
-  );
+test("initializer creates exact snapshots and stable creation time; refuses to replace them", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  const source = await fs.readFile(path.join(target, "main.ts"));
+  assert.deepEqual(await fs.readFile(path.join(target, "main.scaffold.ts")), source);
+  const manifest = JSON.parse(await fs.readFile(path.join(target, "scaffold.json")));
+  assert.equal(manifest.files[0].sha256, createHash("sha256").update(source).digest("hex"));
+  assert.ok(parseFrontmatter(await fs.readFile(path.join(target, "task.md"), "utf8")).data.createdAt);
+  await assert.rejects(run(dir, "scripts/init-scaffold.mjs", ["tasks/async/debounce-practice"]), /already exists/);
+  await run(dir, "scripts/validate-tasks.mjs");
 });
 
-test("validation rejects an unexpectedly changed scaffold snapshot", async (t) => {
-  const fixtureRoot = await createFixture(t);
-  const snapshotPath = path.join(
-    fixtureRoot,
-    "tasks/typescript/model-process-state-with-discriminated-union/main.scaffold.ts",
-  );
-  await fs.appendFile(snapshotPath, "\n// accidental snapshot edit\n");
-
-  await assert.rejects(
-    runNode(fixtureRoot, "scripts/validate-tasks.mjs"),
-    (error) => {
-      assert.match(error.stderr, /snapshot hash mismatch/);
-      return true;
-    },
-  );
+test("aggregation uses the latest explicit assessment per topic, independent of task ordering", async (t) => {
+  const dir = await fixture(t);
+  const a = await task(dir, "z-old-gap");
+  const b = await task(dir, "a-new-success");
+  const c = await task(dir, "unrelated-review", "request-cancellation");
+  await review(a, "needs-practice", "2026-10-01T12:00:00Z");
+  await review(b, "demonstrated", "2026-11-01T12:00:00Z");
+  await review(c, "needs-practice", "2026-11-03T12:00:00Z", "request-cancellation");
+  await run(dir, "scripts/finalize-tasks.mjs");
+  const index = JSON.parse(await fs.readFile(path.join(dir, "data/practice-index.json")));
+  const signal = index.topics.find((item) => item.id === "debounce");
+  assert.equal(signal.outcome, "demonstrated");
+  assert.equal(signal.latestTask, "a-new-success");
+  assert.equal(signal.difficultyCount, 1);
+  assert.equal(signal.reviewedCount, 2);
+  const context = JSON.parse((await run(dir, "scripts/task-design-context.mjs")).stdout);
+  assert.ok(!context.priorities.some((item) => item.topic === "debounce"));
+  assert.equal(context.priorities[0].topic, "request-cancellation");
+  // Re-review replaces an assessment, never adds another event for the same task.
+  await review(b, "improving", "2026-11-04T12:00:00Z");
+  await run(dir, "scripts/finalize-tasks.mjs");
+  const next = JSON.parse(await fs.readFile(path.join(dir, "data/practice-index.json")));
+  assert.equal(next.topics.find((item) => item.id === "debounce").reviewedCount, 2);
+  assert.equal(next.topics.find((item) => item.id === "debounce").outcome, "improving");
 });
 
-test("an incomplete checkpoint survives implementation and checkpoint retries", async (t) => {
-  const fixtureRoot = await createFixture(t);
-  const sessionPath = path.join(
-    fixtureRoot,
-    "tasks/algorithms/compare-product-snapshots/session.json",
-  );
-  const session = JSON.parse(await fs.readFile(sessionPath, "utf8"));
-  const attempt = session.attempts.find((item) => item.id === session.activeAttemptId);
-  attempt.status = "in-progress";
-  attempt.activeStageId = "core";
-  attempt.activeQuestionId = null;
-  attempt.questions = [];
-  attempt.review = null;
-  attempt.endedAt = null;
-  attempt.startedAt = attempt.createdAt;
-  const core = attempt.stages[0];
-  core.checkpoint = {
-    recordedAt: attempt.createdAt,
-    outcome: "incomplete",
-    observations: ["A required behavior remains unfinished."],
-    knowledgeSignals: [],
-  };
-  for (const stage of attempt.stages) {
-    stage.skipReason = null;
-    stage.adaptation = null;
-    if (stage.id !== "core") {
-      stage.status = "locked";
-      stage.checkpoint = null;
-    }
+test("bounded context analyzes more tasks than it returns and does not depend on the generated index", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir, "sample");
+  // Copy a valid starter to simulate a large library without invoking AI or 100 CLIs.
+  for (let i = 0; i < 105; i++) await fs.cp(target, path.join(dir, "tasks/async", `sample-${String(i).padStart(3, "0")}`), { recursive: true });
+  await review(path.join(dir, "tasks/async/sample-104"));
+  const result = JSON.parse((await run(dir, "scripts/task-design-context.mjs", ["--topic", "debounce", "--shape", "timer-lifecycle"])).stdout);
+  assert.equal(result.totalTasks, 106);
+  assert.equal(result.relatedTaskCount, 106);
+  assert.equal(result.tasks.length, 10);
+  assert.equal(result.priorities[0].latestTask, "sample-104");
+  assert.equal(result.coverage.find((item) => item.topic === "debounce").assignedCount, 106);
+  assert.ok(JSON.stringify(result).length < 14000);
+});
+
+test("review validation rejects unknown topics, malformed outcomes, duplicate signals, and invalid metadata", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  await review(target);
+  const original = await fs.readFile(path.join(target, "review.md"), "utf8");
+  for (const mutate of [
+    (data) => { data.topicSignals[0].topic = "stale-responses"; },
+    (data) => { data.topicSignals[0].outcome = "unknown"; },
+    (data) => { data.topicSignals.push(data.topicSignals[0]); },
+    (data) => { data.mastery = 6; },
+    (data) => { data.reviewedAt = "not-a-date"; },
+  ]) {
+    const { data, body } = parseFrontmatter(original);
+    mutate(data);
+    await fs.writeFile(path.join(target, "review.md"), markdown(data, body));
+    await assert.rejects(run(dir, "scripts/validate-tasks.mjs"));
   }
-  await fs.rm(path.join(path.dirname(sessionPath), "review.md"), { force: true });
-
-  for (const status of ["in-progress", "checkpoint", "skipped"]) {
-    core.status = status;
-    core.skipReason = status === "skipped" ? "Candidate stopped and requested review." : null;
-    attempt.status = status === "skipped" ? "ready-for-review" : "in-progress";
-    attempt.activeStageId = status === "skipped" ? null : "core";
-    for (const stage of attempt.stages.slice(1)) {
-      stage.status = status === "skipped" ? "skipped" : "locked";
-      stage.skipReason = status === "skipped" ? "Candidate stopped before this stage." : null;
-    }
-    await fs.writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`);
-    await runNode(fixtureRoot, "scripts/validate-tasks.mjs");
-  }
-
-  core.status = "in-progress";
-  core.skipReason = null;
-  attempt.status = "in-progress";
-  attempt.activeStageId = "core";
-  core.checkpoint.outcome = "passed";
-  await fs.writeFile(sessionPath, `${JSON.stringify(session, null, 2)}\n`);
-  await assert.rejects(
-    runNode(fixtureRoot, "scripts/validate-tasks.mjs"),
-    (error) => {
-      assert.match(error.stderr, /checkpoint requires completed status/);
-      return true;
-    },
-  );
 });
 
-test("reset restores every manifest file and starts a fresh attempt", async (t) => {
-  const fixtureRoot = await createFixture(t);
-  const taskRelativePath = "tasks/react/fix-cart-summary-state";
-  const taskPath = path.join(fixtureRoot, taskRelativePath);
-  const manifestPath = path.join(taskPath, "scaffold.json");
-  const supportSnapshot = "export const initialValue = 1;\n";
-  const supportHash = createHash("sha256")
-    .update(supportSnapshot)
-    .digest("hex");
+test("reset verifies all snapshots before changes and restores multiple files without session state", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  await review(target);
+  const manifestPath = path.join(target, "scaffold.json");
+  const manifest = JSON.parse(await fs.readFile(manifestPath));
+  const support = "export const support = true;\n";
+  await fs.writeFile(path.join(target, "support.scaffold.ts"), support);
+  await fs.writeFile(path.join(target, "support.ts"), "changed support");
+  manifest.files.push({ working: "support.ts", snapshot: "support.scaffold.ts", sha256: createHash("sha256").update(support).digest("hex") });
+  await fs.writeFile(manifestPath, JSON.stringify(manifest));
+  await fs.writeFile(path.join(target, "main.ts"), "candidate work");
+  await fs.appendFile(path.join(target, "support.scaffold.ts"), "corruption");
+  await assert.rejects(run(dir, "scripts/restore-scaffold.mjs", ["tasks/async/debounce-practice"]), /hash mismatch/);
+  assert.equal(await fs.readFile(path.join(target, "main.ts"), "utf8"), "candidate work");
+  await fs.access(path.join(target, "review.md"));
+  await fs.writeFile(path.join(target, "support.scaffold.ts"), support);
+  await run(dir, "scripts/restore-scaffold.mjs", ["tasks/async/debounce-practice"]);
+  assert.equal(await fs.readFile(path.join(target, "support.ts"), "utf8"), support);
+  assert.equal(await fs.readFile(path.join(target, "main.ts"), "utf8"), "export const startingValue = 1;\n");
+  await assert.rejects(fs.access(path.join(target, "review.md")));
+  await assert.rejects(fs.access(path.join(target, "session.json")));
+  const index = JSON.parse(await fs.readFile(path.join(dir, "data/practice-index.json")));
+  assert.equal(index.tasks[0].mastery, null);
+  assert.equal(index.topics.find((item) => item.id === "debounce").outcome, null);
+});
 
-  await fs.writeFile(path.join(taskPath, "support.scaffold.ts"), supportSnapshot);
-  await fs.writeFile(path.join(taskPath, "support.ts"), "export const changed = true;\n");
+test("reset rejects traversal and symlinks before writing outside a task", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  const manifestPath = path.join(target, "scaffold.json");
+  const manifest = JSON.parse(await fs.readFile(manifestPath));
+  manifest.files[0].working = "../../outside.ts";
+  await fs.writeFile(manifestPath, JSON.stringify(manifest));
+  await assert.rejects(run(dir, "scripts/restore-scaffold.mjs", ["tasks/async/debounce-practice"]), /inside the task/);
+  const outside = path.join(dir, "outside.ts");
+  await fs.writeFile(outside, "must remain unchanged");
+  await fs.unlink(path.join(target, "main.ts"));
+  await fs.symlink(outside, path.join(target, "main.ts"));
+  manifest.files[0].working = "main.ts";
+  await fs.writeFile(manifestPath, JSON.stringify(manifest));
+  await assert.rejects(run(dir, "scripts/restore-scaffold.mjs", ["tasks/async/debounce-practice"]), /outside the task/);
+  assert.equal(await fs.readFile(outside, "utf8"), "must remain unchanged");
+});
 
-  const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
-  manifest.files.push({
-    working: "support.ts",
-    snapshot: "support.scaffold.ts",
-    sha256: supportHash,
-  });
-  await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-
-  await runNode(fixtureRoot, "scripts/restore-scaffold.mjs", [taskRelativePath]);
-
-  assert.equal(
-    await fs.readFile(path.join(taskPath, "main.tsx"), "utf8"),
-    await fs.readFile(path.join(taskPath, "main.scaffold.tsx"), "utf8"),
-  );
-  assert.equal(
-    await fs.readFile(path.join(taskPath, "support.ts"), "utf8"),
-    supportSnapshot,
-  );
-  await assert.rejects(fs.access(path.join(taskPath, "review.md")));
-
-  const session = JSON.parse(
-    await fs.readFile(path.join(taskPath, "session.json"), "utf8"),
-  );
-  assert.equal(session.activeAttemptId, "attempt-2");
-  assert.equal(session.attempts[0].status, "reset");
-  assert.equal(session.attempts[1].status, "ready");
-  assert.equal(session.attempts[1].activeQuestionId, null);
-  assert.deepEqual(session.attempts[1].questions, []);
-
-  const taskIndex = JSON.parse(
-    await fs.readFile(path.join(fixtureRoot, "data/task-index.json"), "utf8"),
-  );
-  assert.equal(
-    taskIndex.tasks.find((task) => task.slug === "fix-cart-summary-state").status,
-    "ready",
-  );
+test("empty and unassessed topics are coverage opportunities, not gaps", () => {
+  const index = buildPracticeIndex([], { topics: [{ id: "debounce", label: "Debounce", category: "async" }] });
+  assert.equal(index.topics[0].outcome, null);
+  assert.equal(index.topics[0].difficultyCount, 0);
 });
