@@ -21,3 +21,5 @@ Mastery labels: 1 Needs another pass; 2 Partially working; 3 Mostly working; 4 I
 Record only topics actually assessed. `needs-practice` identifies a concrete unresolved gap; `improving` needs observable earlier evidence of progress and a remaining weakness; `demonstrated` means correct application in this task. A missing assessment is not a negative signal. Keep evidence specific and short. The script aggregates these explicit judgments; it does not interpret prose or infer concepts.
 
 Finish with the main finding, Mastery, a link to the saved review, and checks performed. Keep the chat answer short.
+
+End the chat response with a suggested Git commit message in a copyable text block, using the repository convention `tasks/<category>/<stable-slug>` (for example, `tasks/react/selectable-product-table`). Derive both parts from the reviewed task. Keep this suggestion out of `review.md`; suggesting a message does not authorize running Git commit or staging files.

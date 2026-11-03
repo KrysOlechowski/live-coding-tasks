@@ -50,6 +50,14 @@ The latest review stores Mastery, verdict, time, and topic signals in YAML front
 
 `npm run lint` and `npm run build` independently synchronize metadata; `check` skips their repeated lifecycle hooks.
 
+## Abandon or repeat a task
+
+To abandon an exercise completely, delete its task directory and run `npm run finalize:tasks`. This removes the task and its review signals from the current index and UI. Simply leaving changes uncommitted does not hide them: the scripts read working files, including untracked files. If task files were staged, update the staging area before your next commit as well. Previously committed versions remain in Git history.
+
+To repeat an exercise, run `npm run restore:scaffold -- tasks/<category>/<slug>`. This overwrites manifest working files with their verified initial snapshots, removes the current review and its signals, and regenerates metadata. The task remains in the library as Not reviewed. There is no archived assessment or attempt log.
+
+After a review, Codex suggests a copyable commit message such as `tasks/react/selectable-product-table`. It does not stage or commit files automatically.
+
 ## References
 
 - [Taxonomy](TASK_TAXONOMY.md)
