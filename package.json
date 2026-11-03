@@ -11,7 +11,7 @@
     "finalize:tasks": "npm run sync:metadata",
     "restore:scaffold": "node scripts/restore-scaffold.mjs",
     "test:workflow": "node --test scripts/tests/*.test.mjs",
-    "check": "npm run finalize:tasks && npm run test:workflow && npm run lint && npm run build",
+    "check": "npm run finalize:tasks && npm run test:workflow && npm run --ignore-scripts lint && npm run --ignore-scripts build",
     "predev": "npm run sync:metadata",
     "prebuild": "npm run sync:metadata",
     "prelint": "npm run sync:metadata",
