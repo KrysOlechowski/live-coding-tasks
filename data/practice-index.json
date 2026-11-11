@@ -1,6 +1,26 @@
 {
   "schemaVersion": 1,
-  "tasks": [],
+  "tasks": [
+    {
+      "slug": "unique-participants",
+      "title": "Unique participants",
+      "category": "algorithms",
+      "taskType": "build-from-requirements",
+      "difficulty": "easy",
+      "problemShape": "deduplicate-by-key",
+      "topics": [
+        "map-set"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "mainFileName": "main.ts",
+      "createdAt": "2026-11-11T12:46:26.136Z",
+      "reviewedAt": null,
+      "mastery": null,
+      "requirementVerdict": null,
+      "summary": "An event registration export may contain multiple records for the same participant. The first registration is the one that should appear on the participant list."
+    }
+  ],
   "topics": [
     {
       "id": "debounce",
@@ -123,7 +143,7 @@
       "id": "map-set",
       "label": "Map and Set",
       "category": "algorithms",
-      "assignedCount": 0,
+      "assignedCount": 1,
       "reviewedCount": 0,
       "difficultyCount": 0,
       "outcome": null,
