@@ -15,9 +15,9 @@
       "previewEntry": null,
       "mainFileName": "main.ts",
       "createdAt": "2026-11-11T12:46:26.136Z",
-      "reviewedAt": null,
-      "mastery": null,
-      "requirementVerdict": null,
+      "reviewedAt": "2026-11-18T16:31:07Z",
+      "mastery": 3,
+      "requirementVerdict": "partially",
       "summary": "An event registration export may contain multiple records for the same participant. The first registration is the one that should appear on the participant list."
     }
   ],
@@ -144,13 +144,15 @@
       "label": "Map and Set",
       "category": "algorithms",
       "assignedCount": 1,
-      "reviewedCount": 0,
-      "difficultyCount": 0,
-      "outcome": null,
-      "evidence": null,
-      "reviewedAt": null,
-      "latestTask": null,
-      "relatedTasks": []
+      "reviewedCount": 1,
+      "difficultyCount": 1,
+      "outcome": "needs-practice",
+      "evidence": "The object-based lookup reorders numeric-looking IDs and skips IDs inherited from Object.prototype.",
+      "reviewedAt": "2026-11-18T16:31:07Z",
+      "latestTask": "unique-participants",
+      "relatedTasks": [
+        "unique-participants"
+      ]
     },
     {
       "id": "api-states",

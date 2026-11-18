@@ -6,16 +6,26 @@ export type Participant = {
 export function uniqueParticipants(
   participants: readonly Participant[],
 ): Participant[] {
-  // TODO: Implement the behavior described in task.md.
-  void participants;
-  return [];
+  if (participants.length === 0) {
+    return [];
+  }
+
+  let uniqueObj: Record<string, Participant> = {};
+  for (const unique of participants) {
+    const participantId = unique.id;
+
+    if (uniqueObj[participantId] === undefined) {
+      uniqueObj[participantId] = { id: participantId, name: unique.name };
+    }
+  }
+  return Object.values(uniqueObj);
 }
 
 const registrations: readonly Participant[] = [
-  { id: "p2", name: "Maya" },
-  { id: "p1", name: "Leo" },
-  { id: "p2", name: "Maya Updated" },
-  { id: "p3", name: "Maya" },
+  { id: "2", name: "Maya" },
+  { id: "1", name: "Leo" },
+  { id: "2", name: "Maya Udated" },
+  { id: "3", name: "Maya" },
 ];
 
 console.log(uniqueParticipants(registrations));
