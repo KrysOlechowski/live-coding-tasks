@@ -10,15 +10,13 @@ export function uniqueParticipants(
     return [];
   }
 
-  let uniqueObj: Record<string, Participant> = {};
-  for (const unique of participants) {
-    const participantId = unique.id;
-
-    if (uniqueObj[participantId] === undefined) {
-      uniqueObj[participantId] = { id: participantId, name: unique.name };
+  let uniqueMap = new Map<string, Participant>();
+  for (const part of participants) {
+    if (!uniqueMap.has(part.id)) {
+      uniqueMap.set(part.id, part);
     }
   }
-  return Object.values(uniqueObj);
+  return [...uniqueMap.values()];
 }
 
 const registrations: readonly Participant[] = [
