@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "notification-types",
+      "title": "Notification Types",
+      "category": "typescript",
+      "taskType": "model-types",
+      "difficulty": "easy",
+      "problemShape": "discriminated-union-modeling",
+      "topics": [
+        "discriminated-unions"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "mainFileName": "main.ts",
+      "createdAt": "2026-11-19T21:58:10.575Z",
+      "reviewedAt": "2026-11-19T22:36:58Z",
+      "mastery": 5,
+      "requirementVerdict": "yes",
+      "summary": "A notification service supports email, SMS, and push notifications. The starter"
+    },
+    {
       "slug": "product-filter-sync",
       "title": "Product Filter Sync",
       "category": "react",
@@ -138,14 +157,16 @@
       "id": "discriminated-unions",
       "label": "Discriminated unions",
       "category": "typescript",
-      "assignedCount": 0,
-      "reviewedCount": 0,
+      "assignedCount": 1,
+      "reviewedCount": 1,
       "difficultyCount": 0,
-      "outcome": null,
-      "evidence": null,
-      "reviewedAt": null,
-      "latestTask": null,
-      "relatedTasks": []
+      "outcome": "demonstrated",
+      "evidence": "Literal channel types distinguish all three variants, reject invalid payloads, and allow safe property access in describeNotification (main.ts:1-33).",
+      "reviewedAt": "2026-11-19T22:36:58Z",
+      "latestTask": "notification-types",
+      "relatedTasks": [
+        "notification-types"
+      ]
     },
     {
       "id": "normalization",
