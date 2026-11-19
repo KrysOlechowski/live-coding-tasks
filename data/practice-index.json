@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "product-filter-sync",
+      "title": "Product Filter Sync",
+      "category": "react",
+      "taskType": "fix-bug",
+      "difficulty": "easy",
+      "problemShape": "derived-view-state",
+      "topics": [
+        "derived-state"
+      ],
+      "hasPreview": true,
+      "previewEntry": "main.tsx",
+      "mainFileName": "main.tsx",
+      "createdAt": "2026-11-18T17:38:00.872Z",
+      "reviewedAt": "2026-11-19T21:46:30Z",
+      "mastery": 5,
+      "requirementVerdict": "yes",
+      "summary": "A small product catalog has a search input, a category selector, a result count, and a reset button. Users report that changing the filters can leave the product list and count inconsistent with their selections."
+    },
+    {
       "slug": "unique-participants",
       "title": "Unique participants",
       "category": "algorithms",
@@ -78,14 +97,16 @@
       "id": "derived-state",
       "label": "Derived state",
       "category": "react",
-      "assignedCount": 0,
-      "reviewedCount": 0,
+      "assignedCount": 1,
+      "reviewedCount": 1,
       "difficultyCount": 0,
-      "outcome": null,
-      "evidence": null,
-      "reviewedAt": null,
-      "latestTask": null,
-      "relatedTasks": []
+      "outcome": "demonstrated",
+      "evidence": "The list derives from the current filters and the count derives from that list; all 16 browser scenarios passed (main.tsx:24-38).",
+      "reviewedAt": "2026-11-19T21:46:30Z",
+      "latestTask": "product-filter-sync",
+      "relatedTasks": [
+        "product-filter-sync"
+      ]
     },
     {
       "id": "effect-cleanup",
