@@ -19,6 +19,8 @@ reviewFocus:
   - async-safety
 topics:
   - stale-responses
+# Optional reminder, independent of review:
+# repeat: true
 # UI tasks only:
 # hasPreview: true
 # previewEntry: main.tsx
@@ -26,6 +28,8 @@ topics:
 ```
 
 Use categories and taskTypes from `TASK_TAXONOMY.md`. Topics use canonical IDs from `data/topic-catalog.json`; a new topic may be added for custom exercises. `scaffold:init` adds an ISO UTC `createdAt` if absent.
+
+`repeat` is an optional boolean (default `false`). Set it to `true` when the user wants to revisit a task, including work completed with help. It adds a `To revisit` badge to the library and task detail and enables filtering with `?repeat=to-revisit`, combined with the other filters. It does not require a review or create Mastery/topic signals. Setting it to `false` or removing it clears the reminder. Review and scaffold reset preserve this flag; clear it explicitly when the user no longer wants the reminder.
 
 Body: one title and `## Context`, `## Goal`, `## Requirements`, `## Acceptance Criteria`. Constraints and non-goals are optional. Define relevant ordering, mutation, failure, timing, and boundary behavior explicitly without prescribing the intended implementation.
 

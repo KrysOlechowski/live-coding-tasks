@@ -52,6 +52,8 @@ The latest review stores Mastery, verdict, time, and topic signals in YAML front
 
 ## Abandon or repeat a task
 
+To keep a task for later practice without reviewing or resetting it, add `repeat: true` to its `task.md` frontmatter and run `npm run finalize:tasks`. The library and task detail show `To revisit`; the Revisit filter finds flagged tasks and combines with other filters. No review, Mastery, or topic outcome is created. Remove the field or set it to `false` to clear the reminder. Reviews and resets preserve it until explicitly cleared.
+
 To abandon an exercise completely, delete its task directory and run `npm run finalize:tasks`. This removes the task and its review signals from the current index and UI. Simply leaving changes uncommitted does not hide them: the scripts read working files, including untracked files. If task files were staged, update the staging area before your next commit as well. Previously committed versions remain in Git history.
 
 To repeat an exercise, run `npm run restore:scaffold -- tasks/<category>/<slug>`. This overwrites manifest working files with their verified initial snapshots, removes the current review and its signals, and regenerates metadata. The task remains in the library as Not reviewed. There is no archived assessment or attempt log.

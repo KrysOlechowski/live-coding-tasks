@@ -168,3 +168,49 @@ test("empty and unassessed topics are coverage opportunities, not gaps", () => {
   assert.equal(index.topics[0].outcome, null);
   assert.equal(index.topics[0].difficultyCount, 0);
 });
+
+test("revisit reminder defaults to false, stays independent of review, and survives reset", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  const taskPath = path.join(target, "task.md");
+  const { data, body } = parseFrontmatter(await fs.readFile(taskPath, "utf8"));
+  const readIndex = async () => JSON.parse(await fs.readFile(path.join(dir, "data/practice-index.json"), "utf8"));
+  await run(dir, "scripts/finalize-tasks.mjs");
+  assert.equal((await readIndex()).tasks[0].repeat, false);
+
+  await fs.writeFile(taskPath, markdown({ ...data, repeat: true }, body));
+  await run(dir, "scripts/finalize-tasks.mjs");
+  let index = await readIndex();
+  assert.equal(index.tasks[0].repeat, true);
+  assert.equal(index.tasks[0].reviewedAt, null);
+  assert.equal(index.tasks[0].mastery, null);
+  assert.equal(index.topics.find((item) => item.id === "debounce").outcome, null);
+  await assert.rejects(fs.access(path.join(target, "review.md")));
+
+  await review(target);
+  await run(dir, "scripts/finalize-tasks.mjs");
+  index = await readIndex();
+  assert.equal(index.tasks[0].repeat, true);
+  assert.equal(index.tasks[0].mastery, 2);
+  await run(dir, "scripts/restore-scaffold.mjs", ["tasks/async/debounce-practice"]);
+  index = await readIndex();
+  assert.equal(index.tasks[0].repeat, true);
+  assert.equal(index.tasks[0].mastery, null);
+
+  for (const metadata of [{ ...data, repeat: false }, data]) {
+    await fs.writeFile(taskPath, markdown(metadata, body));
+    await run(dir, "scripts/finalize-tasks.mjs");
+    assert.equal((await readIndex()).tasks[0].repeat, false);
+  }
+});
+
+test("revisit reminder rejects non-boolean metadata", async (t) => {
+  const dir = await fixture(t);
+  const target = await task(dir);
+  const taskPath = path.join(target, "task.md");
+  const { data, body } = parseFrontmatter(await fs.readFile(taskPath, "utf8"));
+  for (const repeat of ["true", "false", 1, null, []]) {
+    await fs.writeFile(taskPath, markdown({ ...data, repeat }, body));
+    await assert.rejects(run(dir, "scripts/validate-tasks.mjs"), /repeat must be a boolean/);
+  }
+});

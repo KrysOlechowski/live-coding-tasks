@@ -110,6 +110,7 @@ export async function validateRecord(record, catalog) {
   for (const heading of ["Expected behavior", "Important cases", "Review focus"]) if (!plan.includes(`## ${heading}`)) throw new Error(`interviewer.md requires ${heading}.`);
   await readScaffoldFiles(record.dir, record.scaffold);
   if (m.hasPreview !== undefined && typeof m.hasPreview !== "boolean") throw new Error("hasPreview must be a boolean.");
+  if (m.repeat !== undefined && typeof m.repeat !== "boolean") throw new Error("repeat must be a boolean.");
   if (m.hasPreview === true) {
     if (typeof m.previewEntry !== "string" || !m.previewEntry.endsWith(".tsx") || !record.scaffold.files.some((entry) => entry.working === m.previewEntry)) throw new Error("Preview entry must be a manifest working TSX file.");
     await checkedTaskFile(record.dir, m.previewEntry);
@@ -148,6 +149,7 @@ export function buildPracticeIndex(records, catalog) {
   const tasks = records.map((r) => ({ slug: r.slug, title: r.metadata.title, category: r.category, taskType: r.metadata.taskType,
     difficulty: r.metadata.difficulty, problemShape: r.metadata.problemShape, topics: r.metadata.topics,
     hasPreview: r.metadata.hasPreview === true, previewEntry: r.metadata.previewEntry ?? null,
+    repeat: r.metadata.repeat === true,
     mainFileName: r.scaffold.files.find((file) => ["main.ts", "main.tsx"].includes(file.working)).working,
     createdAt: r.metadata.createdAt,
     reviewedAt: r.review?.data.reviewedAt ?? null, mastery: r.review?.data.mastery ?? null,

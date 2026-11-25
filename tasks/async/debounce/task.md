@@ -3,6 +3,7 @@ title: Debounce
 category: async
 taskType: complete-partial-implementation
 difficulty: easy
+repeat: true
 problemShape: trailing-call-coalescing
 interviewFocus: Invoke a callback once after a quiet period with the latest arguments
 reviewFocus:

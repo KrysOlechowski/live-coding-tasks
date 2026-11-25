@@ -26,6 +26,7 @@ export default async function HomePage({
     mastery: getValue(resolvedSearchParams.mastery),
     preview: getValue(resolvedSearchParams.preview),
     progress: getValue(resolvedSearchParams.progress),
+    repeat: getValue(resolvedSearchParams.repeat),
   };
 
   const [tasks, filterOptions] = await Promise.all([
@@ -74,7 +75,7 @@ export default async function HomePage({
       <PracticePanel topics={practice.topics} tasks={tasks} />
 
       <section className="rounded-4xl border border-zinc-200 bg-white/80 p-6 shadow-sm shadow-zinc-950/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70">
-        <form className="grid gap-4 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto]">
+        <form className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <label className="grid gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
             Category
             <select
@@ -152,7 +153,19 @@ export default async function HomePage({
             </select>
           </label>
 
-          <div className="flex items-end gap-3">
+          <label className="grid gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
+            Revisit
+            <select
+              name="repeat"
+              defaultValue={filters.repeat ?? ""}
+              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-zinc-950 outline-none transition focus:border-amber-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white"
+            >
+              <option value="">All tasks</option>
+              <option value="to-revisit">To revisit</option>
+            </select>
+          </label>
+
+          <div className="flex items-end gap-3 md:col-span-2 xl:col-span-3">
             <button
               type="submit"
               className="rounded-full bg-zinc-950 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
@@ -194,6 +207,11 @@ export default async function HomePage({
               {task.hasPreview ? (
                 <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-900 dark:bg-emerald-500/20 dark:text-emerald-200">
                   Preview
+                </span>
+              ) : null}
+              {task.repeat ? (
+                <span className="rounded-full bg-orange-100 px-3 py-1 font-medium text-orange-900 dark:bg-orange-500/20 dark:text-orange-200">
+                  To revisit
                 </span>
               ) : null}
               <span className="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-900 dark:bg-sky-500/20 dark:text-sky-200">

@@ -2,7 +2,7 @@
 
 `data/practice-index.json` is generated, never authored. `finalize:tasks` reads canonical task/review files locally and produces:
 
-- `tasks`: metadata, creation/review time, Mastery, verdict, summary, and preview entry.
+- `tasks`: metadata, creation/review time, Mastery, verdict, summary, preview entry, and a boolean `repeat` reminder (default `false`).
 - `topics`: assignment/review counts, number of tasks with a `needs-practice` signal, latest explicit outcome/evidence/date/task, and related reviewed task slugs.
 
 For each topic, assessments are ordered by UTC timestamp descending, with slug as a deterministic tie-break. A later review that does not assess a topic has no effect on that topic. A newer `demonstrated` assessment removes it from current practice priorities; earlier difficulty counts remain historical context, not an unresolved deficit. It means demonstrated in the latest task, not durable mastery.

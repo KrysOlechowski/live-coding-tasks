@@ -26,6 +26,7 @@ export type TaskSummary = {
   problemShape: string;
   topics: string[];
   hasPreview: boolean;
+  repeat: boolean;
   previewEntry: string | null;
   mainFileName: string;
   createdAt: string;
@@ -36,7 +37,7 @@ export type TaskSummary = {
 };
 export type PracticeIndex = { schemaVersion: number; tasks: TaskSummary[]; topics: PracticeTopic[] };
 export type TaskDocument = TaskSummary & { taskBody: string; reviewBody: string | null };
-export type TaskFilters = { category?: string; difficulty?: string; mastery?: string; preview?: string; progress?: string };
+export type TaskFilters = { category?: string; difficulty?: string; mastery?: string; preview?: string; progress?: string; repeat?: string };
 
 export const getPracticeIndex = cache(async (): Promise<PracticeIndex> => {
   return JSON.parse(await fs.readFile(path.join(process.cwd(), "data/practice-index.json"), "utf8")) as PracticeIndex;
@@ -71,6 +72,7 @@ export function filterTasks(tasks: TaskSummary[], filters: TaskFilters): TaskSum
     if (filters.preview === "without-preview" && task.hasPreview) return false;
     if (filters.progress === "not-reviewed" && task.reviewedAt !== null) return false;
     if (filters.progress === "reviewed" && task.reviewedAt === null) return false;
+    if (filters.repeat === "to-revisit" && !task.repeat) return false;
     return true;
   });
 }

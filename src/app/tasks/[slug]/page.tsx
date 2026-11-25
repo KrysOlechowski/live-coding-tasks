@@ -41,6 +41,11 @@ export default async function TaskDetailPage({
                 {getMasteryLabel(task.mastery)}
               </span>
             ) : null}
+            {task.repeat ? (
+              <span className="rounded-full bg-orange-100 px-3 py-1 font-medium text-orange-900 dark:bg-orange-500/20 dark:text-orange-200">
+                To revisit
+              </span>
+            ) : null}
           </div>
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 dark:text-white">
             {task.title}
