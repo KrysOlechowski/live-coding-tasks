@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "tasks": [
     {
+      "slug": "debounce",
+      "title": "Debounce",
+      "category": "async",
+      "taskType": "complete-partial-implementation",
+      "difficulty": "easy",
+      "problemShape": "trailing-call-coalescing",
+      "topics": [
+        "debounce"
+      ],
+      "hasPreview": false,
+      "previewEntry": null,
+      "mainFileName": "main.ts",
+      "createdAt": "2026-11-20T10:04:51.042Z",
+      "reviewedAt": null,
+      "mastery": null,
+      "requirementVerdict": null,
+      "summary": "A search field produces a new value on every keystroke. The application should"
+    },
+    {
       "slug": "notification-types",
       "title": "Notification Types",
       "category": "typescript",
@@ -64,7 +83,7 @@
       "id": "debounce",
       "label": "Debounce",
       "category": "async",
-      "assignedCount": 0,
+      "assignedCount": 1,
       "reviewedCount": 0,
       "difficultyCount": 0,
       "outcome": null,
